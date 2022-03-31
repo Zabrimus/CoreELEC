@@ -1,0 +1,21 @@
+diff -u8bBw a/openglosd.h b/openglosd.h
+--- a/openglosd.h       2022-03-12 09:02:38.000000000 +0100
++++ b/openglosd.h       2022-03-24 13:59:39.418389698 +0100
+@@ -24,17 +24,17 @@
+ #define __SOFTHDDEVICE_OPENGLOSD_H
+ #define GL_GLEXT_PROTOTYPES
+ #include <GL/gl.h>
+ #include <GL/glu.h>
+ #include <GL/glext.h>
+ #include <GLES2/gl2.h>
+ #include <GLES2/gl2ext.h>
+ //#include <GL/glew.h>
+-#include <GL/freeglut.h>
++//#include <GL/freeglut.h>
+ //#include <GL/gl.h>
+
+ #define GLM_FORCE_RADIANS
+ #include <glm/glm.hpp>
+ #include <glm/gtc/matrix_transform.hpp>
+ #include <glm/gtc/type_ptr.hpp>
+ #include <math.h>

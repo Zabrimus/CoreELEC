@@ -25,6 +25,7 @@ This is still work in progress...
 - vdr-plugin-osdteletext
 - vdr-plugin-zaphistory
 - vdr-plugin-epg2vdr
+- vdr-plugin-skindesigner
 
 **Aktuelle Probleme**
 
