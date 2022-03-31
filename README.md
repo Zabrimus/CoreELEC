@@ -1,3 +1,53 @@
+# VDR
+VDR and plugins are integrated into the build system of CoreELEC to be able to start and use VDR and to be able to easily switch between VDR and KODI.
+
+This is still work in progress...
+
+##Aktueller Status:
+
+**Build folgender Plugins erfolgreich**
+- vdr-plugin-softhdodroid
+- vdr-plugin-satip
+- vdr-plugin-ddci2
+- vdr-plugin-dummydevice
+- vdr-plugin-dvbapi
+- vdr-plugin-eepg
+- vdr-plugin-epgfixer
+- vdr-plugin-epgsearch
+- vdr-plugin-iptv
+- vdr-plugin-live
+- vdr-plugin-restfulapi
+- vdr-plugin-robotv
+- vdr-plugin-streamdev
+- vdr-plugin-vnsiserver
+- vdr-plugin-wirbelscan
+- vdr-plugin-wirbelscancontrol
+- vdr-plugin-osdteletext
+- vdr-plugin-zaphistory
+- vdr-plugin-epg2vdr
+
+**Aktuelle Probleme**
+
+**vdr-plugin-scraper2vdr:**
+```
+tools.c:10:10: fatal error: Magick++.h: No such file or directory
+  10 | #include <Magick++.h>
+     |          ^~~~~~~~~~~~
+```
+Das liegt an imagemagick, bzw. der Meldung beim configure:
+```
+   checking if g++ supports namespace std... no
+   checking whether the compiler supports ISO C++ standard library... no
+   checking whether C++ compiler is sufficient for Magick++... no (failed tests)
+```
+Die Ursache ist noch völlig unklar.
+
+### Ideen
+Vielleicht sollte ich die Abhängigkeiten zu addons/*-depends auflösen und stattdessen speziell für VDR bauen lassen.
+Ich weiß nicht, was passiert, wenn man das Addon installiert und wieder deinstalliert.
+Wenn die Libs weg sind, führt das zu unschönen Situationen mit dem VDR.
+
+
 # CoreELEC
 
 CoreELEC is a 'Just enough OS' Linux distribution for running the award-winning [Kodi](https://kodi.tv) software on popular low-cost hardware. CoreELEC is a minor fork of [LibreELEC](https://libreelec.tv), it's built by the community for the community. [CoreELEC website](http://coreelec.org).
