@@ -1,14 +1,17 @@
 # SPDX-License-Identifier: GPL-2.0-or-later
 
 PKG_NAME="_vdr-plugin-softhdodroid"
-PKG_VERSION="fa7b4e2f8c56975b1072fbd2de6436ce3662fd8a"
-PKG_SHA256="5002335f1efcbfc10386f31eb346fc0b16312dbc4de9b644d7c3fb55c0df9e68"
+
+# PKG_VERSION="fa7b4e2f8c56975b1072fbd2de6436ce3662fd8a"
+# PKG_SHA256="5002335f1efcbfc10386f31eb346fc0b16312dbc4de9b644d7c3fb55c0df9e68"
+PKG_VERSION="01c620aeb1dda1fe53ec3f7161e7b8b9bef881b9"
+PKG_SHA256="9827137e7a07f34bbf57cd0d0275501b75f57b1149b34465b13912fcbe8c545f"
 PKG_LICENSE="GPL"
 PKG_SITE="https://github.com/jojo61/vdr-plugin-softhdodroid"
 PKG_URL="https://github.com/jojo61/vdr-plugin-softhdodroid/archive/${PKG_VERSION}.zip"
 PKG_SOURCE_DIR="vdr-plugin-softhdodroid-${PKG_VERSION}"
 #PKG_DEPENDS_TARGET="toolchain libglvnd opengl-meson glm ffmpeg _vdr glu"
-PKG_DEPENDS_TARGET="toolchain glm ffmpeg _vdr _glu libdrm opengl-meson"
+PKG_DEPENDS_TARGET="toolchain glm alsa freetype ffmpeg _vdr _glu libdrm opengl-meson"
 PKG_NEED_UNPACK="$(get_pkg_directory _vdr)"
 PKG_LONGDESC="VDR Output Device (softhdodroid)"
 PKG_TOOLCHAIN="manual"
@@ -28,7 +31,7 @@ make_target() {
   export PKG_CONFIG_PATH=${VDR_DIR}:${PKG_CONFIG_PATH}
   export CPLUS_INCLUDE_PATH=${VDR_DIR}/include
 
-  make
+  make KODIBUILD=1
 }
 
 makeinstall_target() {
@@ -36,7 +39,7 @@ makeinstall_target() {
   LIB_DIR=${LOC_DIR}/../../lib/vdr
   VDRDIR=${VDR_DIR}
 
-  make VDRDIR=${VDR_DIR} LOCDIR="${LOC_DIR}" LIBDIR="${LIB_DIR}" install
+  make VDRDIR=${VDR_DIR} LOCDIR="${LOC_DIR}" LIBDIR="${LIB_DIR}" KODIBUILD=1 install
 }
 
 post_makeinstall_target() {
