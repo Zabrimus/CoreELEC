@@ -7,24 +7,28 @@ PKG_LICENSE="GPL"
 PKG_SITE="https://github.com/jojo61/vdr-plugin-softhdodroid"
 PKG_URL="https://github.com/jojo61/vdr-plugin-softhdodroid/archive/${PKG_VERSION}.zip"
 PKG_SOURCE_DIR="vdr-plugin-softhdodroid-${PKG_VERSION}"
-PKG_DEPENDS_TARGET="toolchain libglvnd opengl-meson libdrm glm ffmpeg _vdr glu"
+#PKG_DEPENDS_TARGET="toolchain libglvnd opengl-meson glm ffmpeg _vdr glu"
+PKG_DEPENDS_TARGET="toolchain glm ffmpeg _vdr _glu libdrm opengl-meson"
 PKG_NEED_UNPACK="$(get_pkg_directory _vdr)"
 PKG_LONGDESC="VDR Output Device (softhdodroid)"
 PKG_TOOLCHAIN="manual"
 
 # libglvnd            -> graphics/libglvnd
 # opengl-meson        -> Amlogic-ce/devices/Amlogic-ng/packages/opengl-meson
-# libdrm              -> graphics/libdrm
 # glm                 -> graphics/glm
 # ffmpeg              -> multimedia/ffmpeg
 # glu                 -> graphics/glu
+
+pre_configure_target() {
+  export LDFLAGS="$(echo ${LDFLAGS} | sed -e "s|-Wl,--as-needed||") -L${SYSROOT_PREFIX}/usr/local/lib -L${SYSROOT_PREFIX}/usr/lib"
+}
 
 make_target() {
   VDR_DIR=$(get_build_dir _vdr)
   export PKG_CONFIG_PATH=${VDR_DIR}:${PKG_CONFIG_PATH}
   export CPLUS_INCLUDE_PATH=${VDR_DIR}/include
 
-  make LIBS=-L/var/lib
+  make
 }
 
 makeinstall_target() {
@@ -41,6 +45,13 @@ post_makeinstall_target() {
 
   if find ${INSTALL}/storage/.config/vdropt -mindepth 1 -maxdepth 1 2>/dev/null | read; then
     cp -ar ${INSTALL}/storage/.config/vdropt/* ${INSTALL}/storage/.config/vdropt-sample
-    rm -Rf ${INSTALL}/storage/.config/vdropt/*
+    rm -Rf ${INSTALL}/storage/.config/vdropt
   fi
+
+  # create config.zip
+  VERSION=$(pkg-config --variable=apiversion vdr)
+  cd ${INSTALL}
+  mkdir -p ${INSTALL}/usr/local/vdr-${VERSION}/config/
+  zip -qrum9 "${INSTALL}/usr/local/vdr-${VERSION}/config/softhdodroid-sample-config.zip" storage
 }
+

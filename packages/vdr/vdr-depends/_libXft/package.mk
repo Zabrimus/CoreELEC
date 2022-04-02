@@ -24,6 +24,10 @@ PKG_CONFIGURE_OPTS_TARGET="--enable-shared \
                            --libdir=/usr/local/lib \
                            --libexecdir=/usr/local/lib"
 
+pre_configure_target() {
+  export LDFLAGS="$(echo ${LDFLAGS} | sed -e "s|-Wl,--as-needed||") -L${SYSROOT_PREFIX}/usr/local/lib"
+}
+
 post_makeinstall_target() {
   cp -a ${INSTALL}/* ${PKG_CONFIG_SYSROOT_DIR}
 }

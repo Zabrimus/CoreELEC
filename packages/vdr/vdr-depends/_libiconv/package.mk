@@ -26,3 +26,7 @@ PKG_CONFIGURE_OPTS_TARGET="--host=${TARGET_NAME} \
             --disable-nls \
             --disable-extra-encodings \
             --with-gnu-ld"
+
+pre_configure_target() {
+  export LDFLAGS="$(echo ${LDFLAGS} | sed -e "s|-Wl,--as-needed||") -L${SYSROOT_PREFIX}/usr/local/lib"
+}

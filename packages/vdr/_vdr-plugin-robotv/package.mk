@@ -23,6 +23,7 @@ pre_configure_target() {
   export PKG_CONFIG_PATH=${VDR_DIR}:${PKG_CONFIG_PATH}
   export CPLUS_INCLUDE_PATH=${VDR_DIR}/include
   export VDRDIR=${VDR_DIR}
+  export LDFLAGS="$(echo ${LDFLAGS} | sed -e "s|-Wl,--as-needed||") -L${SYSROOT_PREFIX}/usr/local/lib"
 }
 
 make_target() {
@@ -41,6 +42,12 @@ post_makeinstall_target() {
 
   if find ${INSTALL}/storage/.config/vdropt -mindepth 1 -maxdepth 1 2>/dev/null | read; then
     cp -ar ${INSTALL}/storage/.config/vdropt/* ${INSTALL}/storage/.config/vdropt-sample
-    rm -Rf ${INSTALL}/storage/.config/vdropt/*
+    rm -Rf ${INSTALL}/storage/.config/vdropt
   fi
+
+  # create config.zip
+  VERSION=$(pkg-config --variable=apiversion vdr)
+  cd ${INSTALL}
+  mkdir -p ${INSTALL}/usr/local/vdr-${VERSION}/config/
+  zip -qrum9 "${INSTALL}/usr/local/vdr-${VERSION}/config/robotv-sample-config.zip" storage
 }

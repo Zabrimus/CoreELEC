@@ -28,12 +28,12 @@ make_target() {
 }
 
 post_install() {
-  mkfontdir ${INSTALL}/usr/share/fonts/android
-  mkfontscale ${INSTALL}/usr/share/fonts/android
+  mkfontdir ${INSTALL}/usr/local/share/fonts/android
+  mkfontscale ${INSTALL}/usr/local/share/fonts/android
 
-  mkfontdir ${INSTALL}/usr/share/fonts/sourcesanspro
-  mkfontscale ${INSTALL}/usr/share/fonts/sourcesanspro
+  mkfontdir ${INSTALL}/usr/local/share/fonts/sourcesanspro
+  mkfontscale ${INSTALL}/usr/local/share/fonts/sourcesanspro
 
-  mkfontdir ${INSTALL}/usr/share/fonts/ds-digital
-  mkfontscale ${INSTALL}/usr/share/fonts/ds-digital
+  mkfontdir ${INSTALL}/usr/local/share/fonts/ds-digital
+  mkfontscale ${INSTALL}/usr/local/share/fonts/ds-digital
 }

@@ -44,6 +44,7 @@ pre_configure_target() {
 
   export PKG_CONFIG_PATH="${SYSROOT_PREFIX}/usr/local/lib/pkgconfig":"${SYSROOT_PREFIX}/usr/local/share/pkgconfig":${PKG_CONFIG_PATH}
   export PATH="${SYSROOT_PREFIX}/usr/local/bin":$PATH
+  export LDFLAGS="$(echo ${LDFLAGS} | sed -e "s|-Wl,--as-needed||") -L${SYSROOT_PREFIX}/usr/local/lib"
 }
 
 #post_makeinstall_target() {

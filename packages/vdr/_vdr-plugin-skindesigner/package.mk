@@ -14,6 +14,10 @@ PKG_TOOLCHAIN="manual"
 # cairo               -> graphics/cairo
 # librsvg             -> vdr/vdr-depends/librsvg
 
+pre_configure_target() {
+  export LDFLAGS="$(echo ${LDFLAGS} | sed -e "s|-Wl,--as-needed||") -L${SYSROOT_PREFIX}/usr/local/lib"
+}
+
 make_target() {
   VDR_DIR=$(get_build_dir _vdr)
   export PKG_CONFIG_PATH=${VDR_DIR}:"${SYSROOT_PREFIX}/usr/local/lib/pkgconfig":"${SYSROOT_PREFIX}/usr/local/share/pkgconfig":${PKG_CONFIG_PATH}
@@ -41,8 +45,14 @@ post_makeinstall_target() {
 
   if find ${INSTALL}/storage/.config/vdropt -mindepth 1 -maxdepth 1 2>/dev/null | read; then
     cp -ar ${INSTALL}/storage/.config/vdropt/* ${INSTALL}/storage/.config/vdropt-sample
-    rm -Rf ${INSTALL}/storage/.config/vdropt/*
+    rm -Rf ${INSTALL}/storage/.config/vdropt
   fi
+
+  # create config.zip
+  VERSION=$(pkg-config --variable=apiversion vdr)
+  cd ${INSTALL}
+  mkdir -p ${INSTALL}/usr/local/vdr-${VERSION}/config/
+  zip -qrum9 "${INSTALL}/usr/local/vdr-${VERSION}/config/skindesigner-sample-config.zip" storage
 }
 
 post_install() {

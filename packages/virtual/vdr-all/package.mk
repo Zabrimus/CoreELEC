@@ -29,6 +29,8 @@ PKG_DEPENDS_TARGET+=" _vdr-plugin-wirbelscancontrol"
 PKG_DEPENDS_TARGET+=" _vdr-plugin-osdteletext"
 PKG_DEPENDS_TARGET+=" _vdr-plugin-zaphistory"
 PKG_DEPENDS_TARGET+=" _vdr-plugin-epg2vdr"
+PKG_DEPENDS_TARGET+=" _vdr-plugin-skindesigner"
+
 
 # Aktueller Status:
 # -----------------
@@ -44,17 +46,6 @@ PKG_DEPENDS_TARGET+=" _vdr-plugin-epg2vdr"
 # Die Ursache ist noch völlig unklar.
 #
 # PKG_DEPENDS_TARGET+=" _vdr-plugin-scraper2vdr"
-
-# Aktueller Status:
-# -----------------
-# rsvg baut nicht. Die folgende Fehlermeldung erscheint beim configure von rsvg:
-#      Package 'shared-mime-info', required by 'gdk-pixbuf-2.0', not found
-#
-# Allerdings bauen sowohl shared-mime-info, als auch gdk-pixbuf-2.0.
-# Ob das ein Folgefehler ist oder die eigentliche Ursache ist unklar. Und auch,
-# warum das gemeldet wird. Im Build-Plan ist nichts auffälliges zu entdecken.
-#
-PKG_DEPENDS_TARGET+=" _vdr-plugin-skindesigner"
 
 
 # Abhängigkeiten:

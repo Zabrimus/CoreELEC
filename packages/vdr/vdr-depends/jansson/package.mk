@@ -9,4 +9,6 @@ PKG_URL="https://github.com/akheron/jansson/releases/download/v${PKG_VERSION}/ja
 PKG_DEPENDS_TARGET="toolchain"
 PKG_LONGDESC="Jansson is a C library for encoding, decoding and manipulating JSON data."
 
-
+pre_configure_target() {
+  export LDFLAGS="$(echo ${LDFLAGS} | sed -e "s|-Wl,--as-needed||") -L${SYSROOT_PREFIX}/usr/local/lib"
+}

@@ -1,0 +1,76 @@
+diff -ru8bBw a/Makefile b/Makefile
+--- a/Makefile	2022-03-12 09:02:38.000000000 +0100
++++ b/Makefile	2022-04-01 12:10:00.949433178 +0200
+@@ -51,17 +51,17 @@
+ VERSION = $(shell grep 'static const char \*const VERSION *=' softhdodroid.cpp | awk '{ print $$7 }' | sed -e 's/[";]//g')
+ GIT_REV = $(shell git describe --always 2>/dev/null)
+ ### The name of the distribution archive:
+ 
+ ### The directory environment:
+ 
+ # Use package data if installed...otherwise assume we're under the VDR source directory:
+ PKGCFG = $(if $(VDRDIR),$(shell pkg-config --variable=$(1) $(VDRDIR)/vdr.pc),$(shell PKG_CONFIG_PATH="$$PKG_CONFIG_PATH:../../.." pkg-config --variable=$(1) vdr))
+-LIBDIR = $(call PKGCFG,libdir)
++LIBDIR ?= $(call PKGCFG,libdir)
+ LOCDIR = $(call PKGCFG,locdir)
+ PLGCFG = $(call PKGCFG,plgcfg)
+ #
+ TMPDIR ?= /tmp
+ 
+ ### The compiler options:
+ 
+ export CFLAGS	= $(call PKGCFG,cflags) -I.
+@@ -100,18 +100,17 @@
+ 
+ ARCHIVE = $(PLUGIN)-$(VERSION)
+ PACKAGE = vdr-$(ARCHIVE)
+ 
+ ### The name of the shared object file:
+ 
+ SOFILE = libvdr-$(PLUGIN).so
+ 
+-
+-LIBS += -lMali  -ldl  -lGLU   
++LIBS += -lEGL -ldl  -lGLU
+ ### Includes and Defines (add further entries here):
+ 
+ #INCLUDES += -I/usr/src/vdr/include
+ 
+ DEFINES += -DPLUGIN_NAME_I18N='"$(PLUGIN)"' -D_GNU_SOURCE $(CONFIG) \
+ 	$(if $(GIT_REV), -DGIT_REV='"$(GIT_REV)"')
+ 
+ ### Make it standard
+@@ -200,16 +199,18 @@
+ install-i18n: $(I18Nmsgs)
+ 
+ ### Targets:
+ 
+ $(OBJS): Makefile
+ 
+ 
+ $(SOFILE): $(OBJS)
++	echo "====> LIBS: $(LIBS)"
++	echo "====> ALSA LIBS: " $(shell pkg-config --libs alsa)
+ 	$(CXX) $(CXXFLAGS) $(LDFLAGS) -shared  $(OBJS) $(LIBS)  -o $@
+ 
+ install-lib: $(SOFILE)
+ 	install -D $^ $(DESTDIR)$(LIBDIR)/$^.$(APIVERSION)
+ 
+ install: install-lib install-i18n
+ 
+ dist: $(I18Npo) clean
+@@ -233,8 +234,14 @@
+ 		indent $$i; \
+ 		unexpand -a $$i | sed -e s/constconst/const/ > $$i.up; \
+ 		mv $$i.up $$i; \
+ 	done
+ 
+ video_test: video.c Makefile
+ 	$(CC) -DVIDEO_TEST -DVERSION='"$(VERSION)"' $(CFLAGS) $(LDFLAGS) $< \
+ 	$(LIBS) -o $@
++
++#LIBS += $(shell pkg-config --libs alsa)
++#LIBS += $(shell pkg-config --libs freetype2)
++#LIBS += -lMali  -ldl  -lGLU
++#LIBS += $(shell pkg-config --libs libavutil)
++#LIBS += $(shell pkg-config --libs libavcodec libavfilter)

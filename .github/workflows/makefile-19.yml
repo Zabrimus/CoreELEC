@@ -21,17 +21,6 @@ jobs:
 
       - uses: actions/checkout@v2
 
-      - name: Cache packages
-        uses: actions/cache@v2
-        env:
-          cache-name: coreelec-build-cache-19
-        with:
-          path: |
-            build.CoreELEC-Amlogic-ng.arm-19
-          key: ${{ runner.os }}-build-${{ env.cache-name }}
-          restore-keys: |
-            ${{ runner.os }}-build-${{ env.cache-name }}
-
       - name: Cache sources
         uses: actions/cache@v2
         env:
@@ -67,32 +56,32 @@ jobs:
 
       - uses: actions/upload-artifact@v3
         with:
-          name: CoreELEC-Amlogic-ng.arm-19.4-Matrix-devel-Generic.img.gz
+          name: CoreELEC-Amlogic-ng.arm-19.4-Matrix*Generic.img.gz
           path: |
-            target/CoreELEC-Amlogic-ng.arm-19.4-Matrix_devel_*-Generic.img.gz                 
+            target/CoreELEC-Amlogic-ng.arm-19.4-Matrix*Generic.img.gz                 
 
       - uses: actions/upload-artifact@v3
         with:
-          name: CoreELEC-Amlogic-ng.arm-19.4-Matrix_devel-Generic.img.gz.sha256
+          name: CoreELEC-Amlogic-ng.arm-19.4-Matrix*Generic.img.gz.sha256
           path: |
-            target/CoreELEC-Amlogic-ng.arm-19.4-Matrix_devel_*-Generic.img.gz.sha256
+            target/CoreELEC-Amlogic-ng.arm-19.4-Matrix*Generic.img.gz.sha256
 
       - uses: actions/upload-artifact@v3
         with:
-          name: CoreELEC-Amlogic-ng.arm-19.4-Matrix_devel-Odroid_C4.img.gz
-          path: target/CoreELEC-Amlogic-ng.arm-19.4-Matrix_devel_*-Odroid_C4.img.gz
+          name: CoreELEC-Amlogic-ng.arm-19.4-Matrix*Odroid_C4.img.gz
+          path: target/CoreELEC-Amlogic-ng.arm-19.4-Matrix*Odroid_C4.img.gz
 
       - uses: actions/upload-artifact@v3
         with:
-          name: CoreELEC-Amlogic-ng.arm-19.4-Matrix_devel-Odroid_C4.img.gz.sha256
-          path: target/CoreELEC-Amlogic-ng.arm-19.4-Matrix_devel_*-Odroid_C4.img.gz.sha256
+          name: CoreELEC-Amlogic-ng.arm-19.4-Matrix*Odroid_C4.img.gz.sha256
+          path: target/CoreELEC-Amlogic-ng.arm-19.4-Matrix*Odroid_C4.img.gz.sha256
 
       - uses: actions/upload-artifact@v3
         with:
-          name: CoreELEC-Amlogic-ng.arm-19.4-Matrix_devel.tar
-          path: target/CoreELEC-Amlogic-ng.arm-19.4-Matrix_devel_*.tar
+          name: CoreELEC-Amlogic-ng.arm-19.4-Matrix*.tar
+          path: target/CoreELEC-Amlogic-ng.arm-19.4-Matrix*.tar
 
       - uses: actions/upload-artifact@v3
         with:
-          name: CoreELEC-Amlogic-ng.arm-19.4-Matrix_devel.tar.sha256
-          path: target/CoreELEC-Amlogic-ng.arm-19.4-Matrix_devel_*.tar.sha256
+          name: CoreELEC-Amlogic-ng.arm-19.4-Matrix*.tar.sha256
+          path: target/CoreELEC-Amlogic-ng.arm-19.4-Matrix*.tar.sha256

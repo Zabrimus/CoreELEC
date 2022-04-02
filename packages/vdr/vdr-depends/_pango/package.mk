@@ -24,6 +24,10 @@ PKG_MESON_OPTS_TARGET="-Dgtk_doc=false \
                        --libexecdir=/usr/local/bin \
                        --sbindir=/usr/local/sbin"
 
+pre_configure_target() {
+  export LDFLAGS="$(echo ${LDFLAGS} | sed -e "s|-Wl,--as-needed||") -L${SYSROOT_PREFIX}/usr/local/lib"
+}
+
 post_makeinstall_target() {
   cp -a ${INSTALL}/* ${PKG_CONFIG_SYSROOT_DIR}
 }

@@ -10,3 +10,7 @@ PKG_DEPENDS_TARGET="toolchain"
 PKG_LONGDESC="Use ImageMagick to create, edit, compose, or convert digital images."
 
 PKG_CONFIGURE_OPTS_TARGET="--disable-openmp"
+
+pre_configure_target() {
+  export LDFLAGS="$(echo ${LDFLAGS} | sed -e "s|-Wl,--as-needed||") -L${SYSROOT_PREFIX}/usr/local/lib"
+}

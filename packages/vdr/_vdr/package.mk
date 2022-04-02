@@ -25,15 +25,20 @@ post_unpack() {
   rm -rf ${PKG_BUILD}/PLUGINS/src/skincurses
 }
 
+
 pre_configure_target() {
-  export LDFLAGS="$(echo ${LDFLAGS} | sed -e "s|-Wl,--as-needed||") -L${SYSROOT_PREFIX}/usr/local/lib"
+  export LDFLAGS="$(echo ${LDFLAGS} | sed -e "s|-Wl,--as-needed||") -L${SYSROOT_PREFIX}/usr/local/lib -liconv"
 }
 
 pre_make_target() {
+  PREFIX="/usr/local/vdr-${PKG_VERSION}"
+
   cat > Make.config <<EOF
-  PREFIX = /usr/local/vdr-2.6.1
+  PREFIX = ${PREFIX}
   VIDEODIR = /storage/videos
   CONFDIR = /storage/.config/vdropt
+  LIBDIR = ${PREFIX}/lib/vdr
+  CACHEDIR = /storage/.cache/vdr
   LIBS += -liconv
   VDR_USER=root
 EOF
@@ -44,20 +49,21 @@ make_target() {
 }
 
 makeinstall_target() {
-  PREFIX="/usr/local/vdr-2.6.1"
+  PREFIX="/usr/local/vdr-${PKG_VERSION}"
   CONFDIR="/storage/.config/vdropt"
 
   make DESTDIR="${INSTALL}" install
-  cp -r "`find ${INSTALL}/home -name sysroot`"/* ${INSTALL}
 
   cat ${PKG_DIR}/bin/start_vdr.sh | sed "s#XXCONFDIRXX#${CONFDIR}# ; s#XXBINDIRXX#${PREFIX}/bin#" > ${INSTALL}/${PREFIX}/bin/start_vdr.sh
   chmod +x ${INSTALL}/${PREFIX}/bin/start_vdr.sh
+
+  cat ${PKG_DIR}/bin/extract_sample_config.sh | sed "s#XXVERSIONXX#${PKG_VERSION}#" > ${INSTALL}/${PREFIX}/bin/extract_sample_config.sh
+  chmod +x ${INSTALL}/${PREFIX}/bin/extract_sample_config.sh
 }
 
 post_makeinstall_target() {
+  PREFIX="/usr/local/vdr-${PKG_VERSION}"
   VDR_DIR=$(get_install_dir _vdr)
-
-  rm -R ${INSTALL}/home
 
   # move configuration to another folder to prevent overwriting existing configuration after installation
   mv ${VDR_DIR}/storage/.config/vdropt ${VDR_DIR}/storage/.config/vdropt-sample
@@ -66,16 +72,24 @@ post_makeinstall_target() {
   cp -PR ${PKG_DIR}/config/*.conf ${VDR_DIR}/storage/.config/vdropt-sample/conf.d/
 
   cat >> ${VDR_DIR}/storage/.config/vdropt-sample/enabled_plugins <<EOF
-softhddroid
+softhdodroid
 satip
 EOF
 
-  cp ${PKG_DIR}/vdropt/README ${VDR_DIR}/storage/.config/vdropt
-
   if find ${INSTALL}/storage/.config/vdropt -mindepth 1 -maxdepth 1 2>/dev/null | read; then
      cp -ar ${INSTALL}/storage/.config/vdropt/* ${INSTALL}/storage/.config/vdropt-sample
-     rm -Rf ${INSTALL}/storage/.config/vdropt/*
+     rm -Rf ${INSTALL}/storage/.config/vdropt
   fi
-}
 
-# zip -qum9 test.zip test.txt
+  # create config.zip
+  mkdir -p ${INSTALL}${PREFIX}/config
+  cd ${INSTALL}
+  zip -qrum9 ${INSTALL}${PREFIX}/config/vdr-sample-config.zip storage
+
+  # copy systemd service
+  mkdir -p ${INSTALL}/usr/lib/systemd/system
+  cp ${PKG_DIR}/system.d/* ${INSTALL}/usr/lib/systemd/system
+
+  # enable the systemd service
+  enable_service extract-vdr-config.service
+}

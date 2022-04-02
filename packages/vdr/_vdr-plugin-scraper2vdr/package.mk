@@ -14,6 +14,10 @@ PKG_TOOLCHAIN="manual"
 # mariadb-connector-c -> databases/mariadb-connector-c
 # imagemagick         -> vdr/vdr-depends/imagemagick
 
+pre_configure_target() {
+  export LDFLAGS="$(echo ${LDFLAGS} | sed -e "s|-Wl,--as-needed||") -L${SYSROOT_PREFIX}/usr/local/lib"
+}
+
 make_target() {
   VDR_DIR=$(get_build_dir _vdr)
 
@@ -23,7 +27,7 @@ make_target() {
   MARIADB_CFLAGS=$(pkg-config --cflags libmariadb)
   MARIADB_LIBS=$(pkg-config --libs libmariadb)
 
-  make MARIADB_CFLAGS="${MARIADB_CFLAGS}" MARIADB_LIBS="${MARIADB_LIBS}" SHELL="sh -x"
+  make MARIADB_CFLAGS="${MARIADB_CFLAGS}" MARIADB_LIBS="${MARIADB_LIBS}"
 }
 
 makeinstall_target() {
@@ -37,6 +41,12 @@ post_makeinstall_target() {
 
   if find ${INSTALL}/storage/.config/vdropt -mindepth 1 -maxdepth 1 2>/dev/null | read; then
     cp -ar ${INSTALL}/storage/.config/vdropt/* ${INSTALL}/storage/.config/vdropt-sample
-    rm -Rf ${INSTALL}/storage/.config/vdropt/*
+    rm -Rf ${INSTALL}/storage/.config/vdropt
   fi
+
+  # create config.zip
+  VERSION=$(pkg-config --variable=apiversion vdr)
+  cd ${INSTALL}
+  mkdir -p ${INSTALL}/usr/local/vdr-${VERSION}/config/
+  zip -qrum9 "${INSTALL}/usr/local/vdr-${VERSION}/config/scraper2vdr-sample-config.zip" storage
 }
