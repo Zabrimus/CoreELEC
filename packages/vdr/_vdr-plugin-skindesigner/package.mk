@@ -23,8 +23,9 @@ make_target() {
   export PKG_CONFIG_PATH=${VDR_DIR}:"${SYSROOT_PREFIX}/usr/local/lib/pkgconfig":"${SYSROOT_PREFIX}/usr/local/share/pkgconfig":${PKG_CONFIG_PATH}
   export CPLUS_INCLUDE_PATH=${VDR_DIR}/include
   export PATH="${SYSROOT_PREFIX}/usr/local/bin":$PATH
+  SKINDESIGNER_SCRIPTDIR="/storage/.config/vdropt/plugins/skindesigner/scripts"
 
-  make
+  make SKINDESIGNER_SCRIPTDIR="${SKINDESIGNER_SCRIPTDIR}"
 }
 
 makeinstall_target() {
