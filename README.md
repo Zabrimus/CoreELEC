@@ -27,22 +27,6 @@ This is still work in progress...
 - vdr-plugin-epg2vdr
 - vdr-plugin-skindesigner
 
-**Aktuelle Probleme**
-
-**vdr-plugin-scraper2vdr:**
-```
-tools.c:10:10: fatal error: Magick++.h: No such file or directory
-  10 | #include <Magick++.h>
-     |          ^~~~~~~~~~~~
-```
-Das liegt an imagemagick, bzw. der Meldung beim configure:
-```
-   checking if g++ supports namespace std... no
-   checking whether the compiler supports ISO C++ standard library... no
-   checking whether C++ compiler is sufficient for Magick++... no (failed tests)
-```
-Die Ursache ist noch völlig unklar.
-
 ## Build 
 ```
     git checkout https://github.com/Zabrimus/CoreELEC.git
