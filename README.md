@@ -3,7 +3,7 @@ VDR and plugins are integrated into the build system of CoreELEC to be able to s
 
 This is still work in progress...
 
-##Aktueller Status:
+## Aktueller Status:
 
 **Build folgender Plugins erfolgreich**
 - vdr-plugin-softhdodroid
@@ -43,11 +43,59 @@ Das liegt an imagemagick, bzw. der Meldung beim configure:
 ```
 Die Ursache ist noch völlig unklar.
 
-### Ideen
-Vielleicht sollte ich die Abhängigkeiten zu addons/*-depends auflösen und stattdessen speziell für VDR bauen lassen.
-Ich weiß nicht, was passiert, wenn man das Addon installiert und wieder deinstalliert.
-Wenn die Libs weg sind, führt das zu unschönen Situationen mit dem VDR.
+## Build 
+```
+    git checkout https://github.com/Zabrimus/CoreELEC.git
+    make oder make image 
+```
 
+## Installation
+```
+     scp target/CoreELEC-Amlogic-ng.arm-19.4-Matrix_devel_*.tar root@<ip der box>:/storage/.update
+     reboot der Box
+     
+     oder
+     
+     Eines der Images im Verzeichnis target auf SD Karte kopieren und booten. 
+```
+
+## Das Verzeichnis-Layout und Dateien
+
+- /usr/local/lib<br>
+  enthält alle Libraries, die speziell für VDR erzeugt wurden
+- /usr/local/vdr-2.6.1 enthält<br>
+  enthält alle VDR Binaries, Plugins und sonstige unveränderliche Dateien
+- /usr/local/vdr-2.6.1/config
+  enthält die Default Konfiguration der Plugins und VDR, die beim Build erzeugt wurden. Dies können oder werden nach /storage/.config/vdropt-sample extrahiert werden.
+- storage/.config/vdropt<br>
+  enthält die komplette Konfiguration des VDR und aller Plugins. Wird nicht mehr überschrieben.
+- storage/.config/vdropt-sample<br>
+  enthält die komplette Beispiel/Default Konfiguration des VDR und aller Plugins. Änderungen können durch das Script
+  /usr/local/vdr-2.6.1/bin/extract-vdr-config.sh überschrieben werden.
+
+<br>
+
+- /usr/local/vdr-2.6.1/bin/extract-vdr-config.sh<br>
+  Löscht das Verzeichnis /storage/.config/vdropt-sample und extrahiert die Default-Konfiguration. Falls noch kein Verzeichnis /storage/.config/vdropt existiert, wird /storage/.config/vdropt-sample nach /storage/.config/vdropt kopiert.<br>
+  Das Script soll eigentlich einmalig nach dem Reboot einer Neuinstallation aufgerufen werden, aber da gibt es noch Probleme mit systemd.
+- /usr/local/vdr-2.6.1/bin/start_vdr.sh<br>
+  Das Script bereitet die komplette Parameter-Liste für den Aufruf von VDR vor und startet den VDR.
+- /storage/.config/vdropt/enabled-plugins<br>
+  Enthält pro Zeile den Namen eines Plugins, daß gestartet werden soll. Hier können neue Plugins hinzugefügt oder auch bestehende gelöscht werden.<br>
+  Der Default ist <br>
+  > softhdodroid<br>
+  > satip
+
+
+## Ersteinrichtung
+Solange das Problem mit systemd nicht gelöst wurde, sollte nach Installation des Images/Update-Tar, das Script /usr/local/vdr-2.6.1/bin/extract-vdr-config.sh auf der Shell aufgerufen werden.<br>
+Die Konfiguration des VDR und aller Plugins findet sich an den bekannten Stellen.
+
+## Start des VDR
+```
+systemctl stop kodi
+/usr/local/vdr-2.6.1/bin/start_vdr.sh
+```
 
 # CoreELEC
 
