@@ -1,7 +1,7 @@
-diff -ru8Bbw a/libskindesignerapi/Makefile b/libskindesignerapi/Makefile
+diff -ru8bBw a/libskindesignerapi/Makefile b/libskindesignerapi/Makefile
 --- a/libskindesignerapi/Makefile	2022-02-09 13:55:34.000000000 +0100
-+++ b/libskindesignerapi/Makefile	2022-03-29 14:13:29.449117322 +0200
-@@ -65,19 +65,19 @@
++++ b/libskindesignerapi/Makefile	2022-04-02 13:21:20.930656649 +0200
+@@ -65,19 +65,20 @@
  	@echo "Description: skindesigner API Library" >> $@
  	@echo "Version: $(VERSION)" >> $@
  	@echo "Cflags: -I$(INCDIR)" >> $@
@@ -15,6 +15,7 @@ diff -ru8Bbw a/libskindesignerapi/Makefile b/libskindesignerapi/Makefile
  	if [ -z "$(DESTDIR)" ] ; then ldconfig; fi
 -	cd $(DESTDIR)$(LIBDIR) ; if [ ! -e $(LIBNAME).so ] ; then ln -s $(TARGET_LIB) $(LIBNAME).so; fi
 +	cd $(LIBDIR) ; if [ ! -e $(LIBNAME).so ] ; then ln -s $(TARGET_LIB) $(LIBNAME).so; fi
++	cd $(LIBDIR) ; if [ ! -e $(LIBNAME).so.0 ] ; then ln -s $(TARGET_LIB) $(LIBNAME).so.0; fi
  
  install-includes:
  	@mkdir -p $(DESTDIR)$(INCDIR)/$(LIBNAME)
@@ -23,9 +24,9 @@ diff -ru8Bbw a/libskindesignerapi/Makefile b/libskindesignerapi/Makefile
  install-pc: $(LIBNAME).pc
  	if [ -n "$(PCDIR)" ] ; then\
  	  mkdir -p $(DESTDIR)$(PCDIR) ;\
-diff -ru8Bbw a/Makefile b/Makefile
+diff -ru8bBw a/Makefile b/Makefile
 --- a/Makefile	2022-02-09 13:55:34.000000000 +0100
-+++ b/Makefile	2022-03-29 14:39:09.822897761 +0200
++++ b/Makefile	2022-04-02 13:56:35.656914838 +0200
 @@ -12,21 +12,21 @@
  
  ### The version number of this plugin (taken from the main source file):
@@ -50,7 +51,7 @@ diff -ru8Bbw a/Makefile b/Makefile
  export CXXFLAGS = $(call PKGCFG,cxxflags)
  CXXFLAGS += -std=c++11
  ### Allow user defined options to overwrite defaults:
-@@ -183,31 +183,31 @@
+@@ -183,27 +183,27 @@
  ### Targets:
  
  $(SOFILE): $(OBJS)
@@ -79,15 +80,9 @@ diff -ru8Bbw a/Makefile b/Makefile
 +	cp -r dtd/* $(PLGRESDIR)/dtd
  
  install-scripts:
--	mkdir -p $(DESTDIR)$(SKINDESIGNER_SCRIPTDIR)
--	cp -r scripts/* $(DESTDIR)$(SKINDESIGNER_SCRIPTDIR)
-+	mkdir -p $(SKINDESIGNER_SCRIPTDIR)
-+	cp -r scripts/* $(SKINDESIGNER_SCRIPTDIR)
+ 	mkdir -p $(DESTDIR)$(SKINDESIGNER_SCRIPTDIR)
+ 	cp -r scripts/* $(DESTDIR)$(SKINDESIGNER_SCRIPTDIR)
  
  install: install-lib install-i18n install-themes install-skins install-scripts install-subprojects
  
  dist: $(I18Npo) clean
- 	@-rm -rf $(TMPDIR)/$(ARCHIVE)
- 	@mkdir $(TMPDIR)/$(ARCHIVE)
- 	@cp -a * $(TMPDIR)/$(ARCHIVE)
- 	@tar czf $(PACKAGE).tgz --exclude .git* --exclude *.o --exclude *.rej --exclude *.orig -C $(TMPDIR) $(ARCHIVE)

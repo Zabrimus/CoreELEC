@@ -42,6 +42,6 @@ post_makeinstall_host() {
 }
 
 post_makeinstall_target() {
-   # chmod +x ${TOOLCHAIN}/bin/cxxtools-config
-   echo "post_makeinstall_target"
+   #chmod +x ${TOOLCHAIN}/bin/cxxtools-config
+   echo
 }

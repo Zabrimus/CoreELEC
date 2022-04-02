@@ -30,7 +30,7 @@ make_target() {
 makeinstall_target() {
   LIB_DIR=${INSTALL}/$(pkg-config --variable=locdir vdr)/../../lib/vdr
   PLGRES_DIR="${INSTALL}/storage/.config/vdropt-sample/plugins/skindesigner"
-  SKINDESIGNER_SCRIPTDIR="${INSTALL}/storage/.config/vdropt-sample/plugins/skindesigner/scripts"
+  SKINDESIGNER_SCRIPTDIR="/storage/.config/vdropt/plugins/skindesigner/scripts"
 
   make DESTDIR="${INSTALL}" LIBDIR="${LIB_DIR}" PLGRESDIR="${PLGRES_DIR}" SKINDESIGNER_SCRIPTDIR="${SKINDESIGNER_SCRIPTDIR}" install
 

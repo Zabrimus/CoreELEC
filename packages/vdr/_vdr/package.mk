@@ -25,7 +25,6 @@ post_unpack() {
   rm -rf ${PKG_BUILD}/PLUGINS/src/skincurses
 }
 
-
 pre_configure_target() {
   export LDFLAGS="$(echo ${LDFLAGS} | sed -e "s|-Wl,--as-needed||") -L${SYSROOT_PREFIX}/usr/local/lib -liconv"
 }
@@ -54,7 +53,7 @@ makeinstall_target() {
 
   make DESTDIR="${INSTALL}" install
 
-  cat ${PKG_DIR}/bin/start_vdr.sh | sed "s#XXCONFDIRXX#${CONFDIR}# ; s#XXBINDIRXX#${PREFIX}/bin#" > ${INSTALL}/${PREFIX}/bin/start_vdr.sh
+  cat ${PKG_DIR}/bin/start_vdr.sh | sed "s#XXCONFDIRXX#${CONFDIR}# ; s#XXBINDIRXX#${PREFIX}/bin# ; s#XXVERSIONXX#${PKG_VERSION}#" > ${INSTALL}/${PREFIX}/bin/start_vdr.sh
   chmod +x ${INSTALL}/${PREFIX}/bin/start_vdr.sh
 
   cat ${PKG_DIR}/bin/extract_sample_config.sh | sed "s#XXVERSIONXX#${PKG_VERSION}#" > ${INSTALL}/${PREFIX}/bin/extract_sample_config.sh

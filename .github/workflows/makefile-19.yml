@@ -34,7 +34,7 @@ jobs:
 
       - name: Install dependencies
         run: |
-          sudo apt-get install build-essential git bc gawk xfonts-utils wget zip zstd libparse-yapp-perl gperf lzop unzip patchutils xsltproc cpio
+          sudo apt-get install build-essential git bc gawk xfonts-utils wget zip zstd libparse-yapp-perl gperf lzop unzip patchutils xsltproc cpio libcxxtools-dev libtntnet-dev 
           sudo apt-get clean
 
       - name: Show installed packages
