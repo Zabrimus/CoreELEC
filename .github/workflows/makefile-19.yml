@@ -21,6 +21,17 @@ jobs:
 
       - uses: actions/checkout@v2
 
+      - name: Cache packages
+        uses: actions/cache@v2
+        env:
+          cache-name: coreelec-package-cache-19
+        with:
+          path: |
+            build.CoreELEC-Amlogic-ng.arm-19
+          key: ${{ runner.os }}-build-${{ env.cache-name }}
+          restore-keys: |
+            ${{ runner.os }}-build-${{ env.cache-name }}
+
       - name: Cache sources
         uses: actions/cache@v2
         env:
@@ -53,6 +64,39 @@ jobs:
         run: |
           df -h
           ls -la
+
+      - name: Delete VDR, Plugins and Dependencies
+        run: |
+          rm -Rf build.CoreELEC-Amlogic-ng.arm-19/build/_vdr*
+          rm -Rf build.CoreELEC-Amlogic-ng.arm-19install_pkg/_vdr*
+          rm -Rf build.CoreELEC-Amlogic-ng.arm-19/build/_cxxtools*
+          rm -Rf build.CoreELEC-Amlogic-ng.arm-19install_pkg/_cxxtools*
+          rm -Rf build.CoreELEC-Amlogic-ng.arm-19/build/_gdk-pixbuf*
+          rm -Rf build.CoreELEC-Amlogic-ng.arm-19install_pkg/_gdk-pixbuf*
+          rm -Rf build.CoreELEC-Amlogic-ng.arm-19/build/_glu*
+          rm -Rf build.CoreELEC-Amlogic-ng.arm-19install_pkg/_glu*
+          rm -Rf build.CoreELEC-Amlogic-ng.arm-19/build/_libglvnd*
+          rm -Rf build.CoreELEC-Amlogic-ng.arm-19install_pkg/_libglvnd*
+          rm -Rf build.CoreELEC-Amlogic-ng.arm-19/build/_libiconv*
+          rm -Rf build.CoreELEC-Amlogic-ng.arm-19install_pkg/_libiconv*
+          rm -Rf build.CoreELEC-Amlogic-ng.arm-19/build/_libXft*
+          rm -Rf build.CoreELEC-Amlogic-ng.arm-19install_pkg/_libXft*
+          rm -Rf build.CoreELEC-Amlogic-ng.arm-19/build/_pango*
+          rm -Rf build.CoreELEC-Amlogic-ng.arm-19install_pkg/_pango*
+          rm -Rf build.CoreELEC-Amlogic-ng.arm-19/build/_rust*
+          rm -Rf build.CoreELEC-Amlogic-ng.arm-19install_pkg/_rust*
+          rm -Rf build.CoreELEC-Amlogic-ng.arm-19/build/_rustup_rs*
+          rm -Rf build.CoreELEC-Amlogic-ng.arm-19install_pkg/_rustup_rs*
+          rm -Rf build.CoreELEC-Amlogic-ng.arm-19/build/_shared-mime-info*
+          rm -Rf build.CoreELEC-Amlogic-ng.arm-19install_pkg/_shared-mime-info*
+          rm -Rf build.CoreELEC-Amlogic-ng.arm-19/build/_tntnet*
+          rm -Rf build.CoreELEC-Amlogic-ng.arm-19install_pkg/_tntnet*
+          rm -Rf build.CoreELEC-Amlogic-ng.arm-19/build/imagemagick*
+          rm -Rf build.CoreELEC-Amlogic-ng.arm-19install_pkg/imagemagick*
+          rm -Rf build.CoreELEC-Amlogic-ng.arm-19/build/jansson*
+          rm -Rf build.CoreELEC-Amlogic-ng.arm-19install_pkg/jansson*
+          rm -Rf build.CoreELEC-Amlogic-ng.arm-19/build/librsvg*
+          rm -Rf build.CoreELEC-Amlogic-ng.arm-19install_pkg/librsvg*
 
       - uses: actions/upload-artifact@v3
         with:
