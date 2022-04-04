@@ -71,7 +71,7 @@
 
 ### KODI SETTINGS ###
 # Mediacenter to use (kodi / no)
-  MEDIACENTER="kodi"
+  MEDIACENTER="no"
 
 # Skins to install (Estuary)
 # Space separated list is supported,
