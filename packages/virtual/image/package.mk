@@ -47,4 +47,7 @@ PKG_LONGDESC="Root package used to build and create complete image"
 # VDR packages
 [ ! "${VDR}" = "no" ] && PKG_DEPENDS_TARGET+=" vdr-all"
 
+# Mediacenter Dependencies
+[ "${MEDIACENTER_DEP}" = "yes" ] && PKG_DEPENDS_TARGET+=" toolchain JsonSchemaBuilder:host TexturePacker:host Python3 zlib systemd lzo pcre swig:host libass curl fontconfig fribidi tinyxml libjpeg-turbo freetype libcdio taglib libxml2 libxslt rapidjson sqlite ffmpeg crossguid libdvdnav libhdhomerun libfmt lirc libfstrcmp flatbuffers:host flatbuffers libudfread spdlog"
+
 true
