@@ -61,6 +61,7 @@ jobs:
           export VDR="no"
           sed -i -e s/MEDIACENTER="kodi"/MEDIACENTER="no"/ distributions/CoreELEC/options
           cat distributions/CoreELEC/options
+          tools/viewplan
           # make
 
       - name: Show free disk space after build
