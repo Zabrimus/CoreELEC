@@ -1,4 +1,4 @@
-name: Build CoreELEC 19, Stage 1, download all
+name: Build CoreELEC 19, Stage 1, disable Kodi, disable VDR
 
 on:
   workflow_dispatch:
@@ -21,6 +21,17 @@ jobs:
 
       - uses: actions/checkout@v2
 
+      - name: Cache packages
+        uses: actions/cache@v2
+        env:
+          cache-name: coreelec-package-cache-19
+        with:
+          path: |
+            build.CoreELEC-Amlogic-ng.arm-19
+          key: ${{ runner.os }}-build-${{ env.cache-name }}
+          restore-keys: |
+            ${{ runner.os }}-build-${{ env.cache-name }}
+
       - name: Cache sources
         uses: actions/cache@v2
         env:
@@ -37,11 +48,23 @@ jobs:
           sudo apt-get install build-essential git bc gawk xfonts-utils wget zip zstd libparse-yapp-perl gperf lzop unzip patchutils xsltproc cpio libcxxtools-dev libtntnet-dev 
           sudo apt-get clean
 
-      - name: Start download
+      - name: Show installed packages
         run: |
-          PROJECT="Amlogic-ce" ARCH="arm" tools/download-tool
+          dpkg -l
 
-      - name: Show free disk space after download
+      - name: Show free disk space before build
+        run: |
+          df -h
+
+      - name: Start build
+        run: |
+          export VDR="no"
+          sed -i -e "s/MEDIACENTER=\"kodi\"/MEDIACENTER=\"no\"/" distributions/CoreELEC/options
+          cat distributions/CoreELEC/options
+          tools/viewplan
+          make
+
+      - name: Show free disk space after build
         run: |
           df -h
           ls -la
