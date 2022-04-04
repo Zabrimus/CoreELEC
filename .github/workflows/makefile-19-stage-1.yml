@@ -39,7 +39,7 @@ jobs:
 
       - name: Start download
         run: |
-          PROJECT="Amlogic-ce" tools/download-tool
+          PROJECT="Amlogic-ce" ARCH="arm" tools/download-tool
 
       - name: Show free disk space after download
         run: |
