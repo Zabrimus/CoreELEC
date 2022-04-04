@@ -58,7 +58,10 @@ jobs:
 
       - name: Start build
         run: |
-          MEDIACENTER="no" VDR="no" MEDIACENTER_DEP="yes" make
+          export VDR="no"
+          export MEDIACENTER_DEP="yes"
+          sed -i -e s/MEDIACENTER="kodi"/MEDIACENTER="no"/ distributions/CoreELEC/options
+          make
 
       - name: Show free disk space after build
         run: |
