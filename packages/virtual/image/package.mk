@@ -45,6 +45,6 @@ PKG_LONGDESC="Root package used to build and create complete image"
 [ "${OEM_SUPPORT}" = "yes" ] && PKG_DEPENDS_TARGET+=" oem"
 
 # VDR packages
-PKG_DEPENDS_TARGET+=" vdr-all"
+[ ! "${VDR}" = "no" ] && PKG_DEPENDS_TARGET+=" vdr-all"
 
 true
