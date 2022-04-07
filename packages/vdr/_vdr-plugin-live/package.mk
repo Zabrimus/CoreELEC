@@ -8,7 +8,7 @@ PKG_SHA256="f74844fad4f0c3fd828816fd3f094ff740d82d31a164b0cd6384aff9fb7e33b8"
 PKG_LICENSE="GPL"
 PKG_SITE="http://live.vdr-developer.org/en/index.php"
 PKG_URL="https://github.com/MarkusEh/vdr-plugin-live/archive/${PKG_VERSION}.tar.gz"
-PKG_DEPENDS_TARGET="toolchain _vdr _tntnet pcre:host pcre"
+PKG_DEPENDS_TARGET="toolchain _vdr _tntnet pcre:host pcre _libiconv"
 PKG_NEED_UNPACK="$(get_pkg_directory _vdr)"
 PKG_LONGDESC="Allows a comfortable operation of VDR and some of its plugins trough a web interface."
 PKG_TOOLCHAIN="manual"
@@ -18,7 +18,7 @@ PKG_BUILD_FLAGS="+pic -parallel"
 # pcre                -> devel/pcre
 
 pre_configure_target() {
-  export LDFLAGS="$(echo ${LDFLAGS} | sed -e "s|-Wl,--as-needed||") -L${SYSROOT_PREFIX}/usr/lib/iconv -L${SYSROOT_PREFIX}/usr/local/lib"
+  export LDFLAGS="$(echo ${LDFLAGS} | sed -e "s|-Wl,--as-needed||") -L${SYSROOT_PREFIX}/opt/vdr/lib"
 }
 
 make_target() {
@@ -46,6 +46,6 @@ post_makeinstall_target() {
   # create config.zip
   VERSION=$(pkg-config --variable=apiversion vdr)
   cd ${INSTALL}
-  mkdir -p ${INSTALL}/usr/local/vdr-${VERSION}/config/
-  zip -qrum9 "${INSTALL}/usr/local/vdr-${VERSION}/config/live-sample-config.zip" storage
+  mkdir -p ${INSTALL}/opt/vdr/config/
+  zip -qrum9 "${INSTALL}/opt/vdr/config/live-sample-config.zip" storage
 }

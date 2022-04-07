@@ -18,27 +18,27 @@ PKG_BUILD_FLAGS="+pic"
 PKG_CONFIGURE_OPTS_HOST="--disable-demos \
                          --with-atomictype=pthread \
                          --disable-unittest \
-                         --prefix=/usr/local"
+                         --prefix=/opt/vdr"
 
 PKG_CONFIGURE_OPTS_TARGET="--disable-static \
                            --enable-shared \
                            --disable-demos \
                            --with-atomictype=pthread \
                            --disable-unittest \
-                           --prefix=/usr/local \
-                           --exec-prefix=/usr/local \
-                           --bindir=/usr/local/bin \
-                           --sbindir=/usr/local/sbin \
+                           --prefix=/opt/vdr/ \
+                           --exec-prefix=/opt/vdr/ \
+                           --bindir=/opt/vdr/bin \
+                           --sbindir=/opt/vdr/sbin \
                            --sysconfdir=/etc \
-                           --libdir=/usr/local/lib \
-                           --libexecdir=/usr/local/lib"
+                           --libdir=/opt/vdr/lib \
+                           --libexecdir=/opt/vdr/lib"
 
 pre_configure_target() {
-  export LDFLAGS="$(echo ${LDFLAGS} | sed -e "s|-Wl,--as-needed||") -L${SYSROOT_PREFIX}/usr/local/lib"
+  export LDFLAGS="$(echo ${LDFLAGS} | sed -e "s|-Wl,--as-needed||") -L${SYSROOT_PREFIX}/opt/vdr/lib"
 }
 
 post_makeinstall_host() {
-   rm -rf ${INSTALL}/usr/local/bin/cxxtools-config
+   rm -rf ${INSTALL}/opt/vdr/bin/cxxtools-config
 }
 
 post_makeinstall_target() {

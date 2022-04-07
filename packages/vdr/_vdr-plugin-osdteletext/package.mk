@@ -15,7 +15,7 @@ PKG_TOOLCHAIN="manual"
 # cairo               -> graphics/cairo
 
 pre_configure_target() {
-  export LDFLAGS="$(echo ${LDFLAGS} | sed -e "s|-Wl,--as-needed||") -L${SYSROOT_PREFIX}/usr/local/lib"
+  export LDFLAGS="$(echo ${LDFLAGS} | sed -e "s|-Wl,--as-needed||") -L${SYSROOT_PREFIX}/opt/vdr/lib"
 }
 
 make_target() {
@@ -31,8 +31,8 @@ makeinstall_target() {
   make DESTDIR="${INSTALL}" LIBDIR="${LIB_DIR}" install
 
   # install font
-  mkdir -p ${INSTALL}/usr/local/share/fonts
-  cp -r *.ttf ${INSTALL}/usr/local/share/fonts
+  mkdir -p ${INSTALL}/opt/vdr/share/fonts
+  cp -r *.ttf ${INSTALL}/opt/vdr/share/fonts
 }
 
 post_makeinstall_target() {
@@ -47,11 +47,11 @@ post_makeinstall_target() {
    # create config.zip
    VERSION=$(pkg-config --variable=apiversion vdr)
    cd ${INSTALL}
-   mkdir -p ${INSTALL}/usr/local/vdr-${VERSION}/config/
-   zip -qrum9 "${INSTALL}/usr/local/vdr-${VERSION}/config/osdteletext-sample-config.zip" storage
+   mkdir -p ${INSTALL}/opt/vdr/config/
+   zip -qrum9 "${INSTALL}/opt/vdr/config/osdteletext-sample-config.zip" storage
 }
 
 post_install() {
-  mkfontdir ${INSTALL}/usr/local/share/fonts
-  mkfontscale ${INSTALL}/usr/local/share/fonts
+  mkfontdir ${INSTALL}/opt/vdr/share/fonts
+  mkfontscale ${INSTALL}/opt/vdr/share/fonts
 }

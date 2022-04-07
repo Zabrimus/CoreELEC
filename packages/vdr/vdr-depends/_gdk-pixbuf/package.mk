@@ -16,15 +16,18 @@ PKG_MESON_OPTS_TARGET="-Ddocs=false \
                        -Dintrospection=disabled \
                        -Dman=false \
                        -Drelocatable=false \
-                       --prefix=/usr/local \
-                       --bindir=/usr/local/bin \
-                       --libdir=/usr/local/lib \
-                       --libexecdir=/usr/local/bin \
-                       --sbindir=/usr/local/sbin \
+                       --prefix=/opt/vdr \
+                       --bindir=/opt/vdr/bin \
+                       --libdir=/opt/vdr/lib \
+                       --libexecdir=/opt/vdr/bin \
+                       --sbindir=/opt/vdr/sbin \
+                       --pkg-config-path=$(get_install_dir _shared-mime-info)/opt/vdr/share/pkgconfig \
                        "
 
 pre_configure_target() {
-  export LDFLAGS="$(echo ${LDFLAGS} | sed -e "s|-Wl,--as-needed||") -L${SYSROOT_PREFIX}/usr/local/lib"
+  export LDFLAGS="$(echo ${LDFLAGS} | sed -e "s|-Wl,--as-needed||") -L${SYSROOT_PREFIX}/opt/vdr/lib"
+  export CPPFLAGS="-I${SYSROOT_PREFIX}/opt/vdr/include"
+  export PKG_CONFIG_PATH="${SYSROOT_PREFIX}/opt/vdr/share/pkgconfig":${PKG_CONFIG_PATH}
 }
 
 post_makeinstall_target() {

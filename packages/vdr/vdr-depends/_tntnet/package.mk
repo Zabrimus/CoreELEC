@@ -15,12 +15,12 @@ PKG_DEPENDS_TARGET="toolchain tntnet:host libtool _cxxtools zlib"
 PKG_LONGDESC="A web application server for C++."
 
 PKG_CONFIGURE_OPTS_HOST="--disable-unittest \
-                         --prefix=/usr/local \
-                         --libdir=/usr/local/lib \
-                         --sbindir=/usr/local/sbin \
-						 --bindir=/usr/local/bin \
-						 --libexecdir=/usr/local/lib \
- 						 --sysconfdir=/usr/local/etc \
+                         --prefix=/opt/vdr \
+                         --libdir=/opt/vdr/lib \
+                         --sbindir=/opt/vdr/sbin \
+						 --bindir=/opt/vdr/bin \
+						 --libexecdir=/opt/vdr/lib \
+ 						 --sysconfdir=/opt/vdr/etc \
                          --with-server=no \
                          --with-sdk=yes \
                          --with-demos=no \
@@ -29,12 +29,12 @@ PKG_CONFIGURE_OPTS_HOST="--disable-unittest \
                          --with-stressjob=no"
 
 PKG_CONFIGURE_OPTS_TARGET="--disable-unittest \
-                           --prefix=/usr/local \
-                           --libdir=/usr/local/lib \
-                           --sbindir=/usr/local/sbin \
-						   --bindir=/usr/local/bin \
-						   --libexecdir=/usr/local/lib \
- 						   --sysconfdir=/usr/local/etc \
+                           --prefix=/opt/vdr \
+                           --libdir=/opt/vdr/lib \
+                           --sbindir=/opt/vdr/sbin \
+						   --bindir=/opt/vdr/bin \
+						   --libexecdir=/opt/vdr/lib \
+ 						   --sysconfdir=/opt/vdr/etc \
                            --with-server=no \
                            --with-sdk=no \
                            --with-demos=no \
@@ -43,7 +43,8 @@ PKG_CONFIGURE_OPTS_TARGET="--disable-unittest \
                            --with-stressjob=no"
 
 pre_configure_target() {
-  export LDFLAGS="$(echo ${LDFLAGS} | sed -e "s|-Wl,--as-needed||") -L${SYSROOT_PREFIX}/usr/local/lib"
+  export LDFLAGS="$(echo ${LDFLAGS} | sed -e "s|-Wl,--as-needed||") -L${SYSROOT_PREFIX}/opt/vdr/lib"
+  export CPPFLAGS="-I${SYSROOT_PREFIX}/opt/vdr/include"
 }
 
 post_makeinstall_target() {

@@ -15,12 +15,12 @@ PKG_BUILD_FLAGS="+pic"
 
 PKG_CONFIGURE_OPTS_TARGET="--host=${TARGET_NAME} \
             --build=${HOST_NAME} \
-            --prefix=/usr/local \
-            --includedir=/usr/local/include/iconv \
-            --libdir=/usr/local/lib \
-		    --sbindir=/usr/local/sbin \
-            --bindir=/usr/local/bin \
-            --sysconfdir=/usr/local/etc \
+            --prefix=/opt/vdr \
+            --includedir=/opt/vdr/include/iconv \
+            --libdir=/opt/vdr/lib \
+		    --sbindir=/opt/vdr/sbin \
+            --bindir=/opt/vdr/bin \
+            --sysconfdir=/opt/vdr/etc \
             --disable-static \
             --enable-shared \
             --disable-nls \
@@ -28,5 +28,5 @@ PKG_CONFIGURE_OPTS_TARGET="--host=${TARGET_NAME} \
             --with-gnu-ld"
 
 pre_configure_target() {
-  export LDFLAGS="$(echo ${LDFLAGS} | sed -e "s|-Wl,--as-needed||") -L${SYSROOT_PREFIX}/usr/local/lib"
+  export LDFLAGS="$(echo ${LDFLAGS} | sed -e "s|-Wl,--as-needed||") -L${SYSROOT_PREFIX}/opt/vdr/lib"
 }

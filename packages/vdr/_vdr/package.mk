@@ -26,11 +26,11 @@ post_unpack() {
 }
 
 pre_configure_target() {
-  export LDFLAGS="$(echo ${LDFLAGS} | sed -e "s|-Wl,--as-needed||") -L${SYSROOT_PREFIX}/usr/local/lib -liconv"
+  export LDFLAGS="$(echo ${LDFLAGS} | sed -e "s|-Wl,--as-needed||") -L${SYSROOT_PREFIX}/opt/vdr/lib -liconv"
 }
 
 pre_make_target() {
-  PREFIX="/usr/local/vdr-${PKG_VERSION}"
+  PREFIX="/opt/vdr"
 
   cat > Make.config <<EOF
   PREFIX = ${PREFIX}
@@ -41,6 +41,14 @@ pre_make_target() {
   LIBS += -liconv
   VDR_USER=root
 EOF
+
+  # Ein ganz übler Hack. Es ist nicht gelungen pkg-config zu überreden, bei --cflags oder --libs (aber nur nur bei bestimmten Libs),
+  # nicht(!) den Wert */sysroot/opt/vdr/opt/vdr zurückzugeben, den es eigentlich nicht geben darf und der beim compile und beim linken
+  # ziemliche Problem macht.
+  mkdir -p ${SYSROOT_PREFIX}/opt/vdr/opt
+  cd ${SYSROOT_PREFIX}/opt/vdr/opt
+  ln -s ../../vdr/ vdr
+  cd $(get_build_dir _vdr)
 }
 
 make_target() {
@@ -48,7 +56,7 @@ make_target() {
 }
 
 makeinstall_target() {
-  PREFIX="/usr/local/vdr-${PKG_VERSION}"
+  PREFIX="/opt/vdr"
   CONFDIR="/storage/.config/vdropt"
 
   make DESTDIR="${INSTALL}" install
@@ -61,7 +69,7 @@ makeinstall_target() {
 }
 
 post_makeinstall_target() {
-  PREFIX="/usr/local/vdr-${PKG_VERSION}"
+  PREFIX="/opt/vdr"
   VDR_DIR=$(get_install_dir _vdr)
 
   # move configuration to another folder to prevent overwriting existing configuration after installation

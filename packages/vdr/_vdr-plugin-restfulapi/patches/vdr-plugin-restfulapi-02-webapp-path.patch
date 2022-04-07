@@ -5,7 +5,7 @@
    SetEpgImageDirectory((string)"/var/cache/vdr/epgimages");
    SetChannelLogoDirectory((string)"/usr/share/vdr/channel-logos");
 -  SetWebappDirectory((string)"/var/lib/vdr/plugins/restfulapi/webapp");
-+  SetWebappDirectory((string)"/storage/.kodi/addons/service.multimedia.vdr-addon/res/plugins/restfulapi");
++  SetWebappDirectory((string)"/opt/vdr/plugins/restfulapi");
    SetHeaders((string)"true");
    webapp_filetypes_filename = "webapp_file_types.conf";
  }
@@ -16,7 +16,7 @@
  
  #ifndef DOCUMENT_ROOT
 -#define DOCUMENT_ROOT "/var/lib/vdr/plugins/restfulapi/"
-+#define DOCUMENT_ROOT "/storage/.kodi/addons/service.multimedia.vdr-addon/res/plugins/restfulapi/"
++#define DOCUMENT_ROOT "/opt/vdr/plugins/restfulapi"
  #endif
  
  class Settings

@@ -17,23 +17,23 @@ unpack() {
 make_target() {
     FONTDIR=$(echo ${PKG_NAME}-${PKG_VERSION} | sed -e s:_::g)
 
-	mkdir -p ${INSTALL}/usr/local/share/fonts/android
-	cp  ${FONTDIR}/fonts-android-4.3/*.ttf ${INSTALL}/usr/local/share/fonts/android/
+	mkdir -p ${INSTALL}/opt/vdr/share/fonts/android
+	cp  ${FONTDIR}/fonts-android-4.3/*.ttf ${INSTALL}/opt/vdr/share/fonts/android/
 
-	mkdir -p ${INSTALL}/usr/local/share/fonts/sourcesanspro
-	cp  ${FONTDIR}/fonts-sourcesanspro/*.ttf ${INSTALL}/usr/local/share/fonts/sourcesanspro/
+	mkdir -p ${INSTALL}/opt/vdr/share/fonts/sourcesanspro
+	cp  ${FONTDIR}/fonts-sourcesanspro/*.ttf ${INSTALL}/opt/vdr/share/fonts/sourcesanspro/
 
-	mkdir -p ${INSTALL}/usr/local/share/fonts/ds-digital
-	cp ${FONTDIR}/fonts-ds-digital/*.ttf ${INSTALL}/usr/local/share/fonts/ds-digital/
+	mkdir -p ${INSTALL}/opt/vdr/share/fonts/ds-digital
+	cp ${FONTDIR}/fonts-ds-digital/*.ttf ${INSTALL}/opt/vdr/share/fonts/ds-digital/
 }
 
 post_install() {
-  mkfontdir ${INSTALL}/usr/local/share/fonts/android
-  mkfontscale ${INSTALL}/usr/local/share/fonts/android
+  mkfontdir ${INSTALL}/opt/vdr/share/fonts/android
+  mkfontscale ${INSTALL}/opt/vdr/share/fonts/android
 
-  mkfontdir ${INSTALL}/usr/local/share/fonts/sourcesanspro
-  mkfontscale ${INSTALL}/usr/local/share/fonts/sourcesanspro
+  mkfontdir ${INSTALL}/opt/vdr/share/fonts/sourcesanspro
+  mkfontscale ${INSTALL}/opt/vdr/share/fonts/sourcesanspro
 
-  mkfontdir ${INSTALL}/usr/local/share/fonts/ds-digital
-  mkfontscale ${INSTALL}/usr/local/share/fonts/ds-digital
+  mkfontdir ${INSTALL}/opt/vdr/share/fonts/ds-digital
+  mkfontscale ${INSTALL}/opt/vdr/share/fonts/ds-digital
 }

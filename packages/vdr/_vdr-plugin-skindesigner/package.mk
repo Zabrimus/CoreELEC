@@ -15,14 +15,14 @@ PKG_TOOLCHAIN="manual"
 # librsvg             -> vdr/vdr-depends/librsvg
 
 pre_configure_target() {
-  export LDFLAGS="$(echo ${LDFLAGS} | sed -e "s|-Wl,--as-needed||") -L${SYSROOT_PREFIX}/usr/local/lib"
+  export LDFLAGS="$(echo ${LDFLAGS} | sed -e "s|-Wl,--as-needed||") -L${SYSROOT_PREFIX}/opt/vdr/lib"
 }
 
 make_target() {
   VDR_DIR=$(get_build_dir _vdr)
-  export PKG_CONFIG_PATH=${VDR_DIR}:"${SYSROOT_PREFIX}/usr/local/lib/pkgconfig":"${SYSROOT_PREFIX}/usr/local/share/pkgconfig":${PKG_CONFIG_PATH}
+  export PKG_CONFIG_PATH=${VDR_DIR}:"${SYSROOT_PREFIX}/opt/vdr/lib/pkgconfig":"${SYSROOT_PREFIX}/opt/vdr/share/pkgconfig":${PKG_CONFIG_PATH}
   export CPLUS_INCLUDE_PATH=${VDR_DIR}/include
-  export PATH="${SYSROOT_PREFIX}/usr/local/bin":$PATH
+  export PATH="${SYSROOT_PREFIX}/opt/vdr/bin":$PATH
   SKINDESIGNER_SCRIPTDIR="/storage/.config/vdropt/plugins/skindesigner/scripts"
 
   make SKINDESIGNER_SCRIPTDIR="${SKINDESIGNER_SCRIPTDIR}"
@@ -36,8 +36,8 @@ makeinstall_target() {
   make DESTDIR="${INSTALL}" LIBDIR="${LIB_DIR}" PLGRESDIR="${PLGRES_DIR}" SKINDESIGNER_SCRIPTDIR="${SKINDESIGNER_SCRIPTDIR}" install
 
   # install font
-  mkdir -p ${INSTALL}/usr/local/share/fonts
-  cp -r fonts/VDROpenSans ${INSTALL}/usr/local/share/fonts
+  mkdir -p ${INSTALL}/opt/vdr/share/fonts
+  cp -r fonts/VDROpenSans ${INSTALL}/opt/vdr/share/fonts
 }
 
 post_makeinstall_target() {
@@ -52,11 +52,11 @@ post_makeinstall_target() {
   # create config.zip
   VERSION=$(pkg-config --variable=apiversion vdr)
   cd ${INSTALL}
-  mkdir -p ${INSTALL}/usr/local/vdr-${VERSION}/config/
-  zip -qrum9 "${INSTALL}/usr/local/vdr-${VERSION}/config/skindesigner-sample-config.zip" storage
+  mkdir -p ${INSTALL}/opt/vdr/config/
+  zip -qrum9 "${INSTALL}/opt/vdr/config/skindesigner-sample-config.zip" storage
 }
 
 post_install() {
-  mkfontdir ${INSTALL}/usr/local/share/fonts
-  mkfontscale ${INSTALL}/usr/local/share/fonts
+  mkfontdir ${INSTALL}/opt/vdr/share/fonts
+  mkfontscale ${INSTALL}/opt/vdr/share/fonts
 }

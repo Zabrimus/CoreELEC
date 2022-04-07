@@ -16,16 +16,16 @@ PKG_BUILD_FLAGS="+pic -sysroot"
 
 PKG_CONFIGURE_OPTS_TARGET="--enable-shared \
                            --disable-static \
-                           --prefix=/usr/local \
-                           --exec-prefix=/usr/local \
-                           --bindir=/usr/local/bin \
-                           --sbindir=/usr/local/sbin \
+                           --prefix=/opt/vdr \
+                           --exec-prefix=/opt/vdr \
+                           --bindir=/opt/vdr/bin \
+                           --sbindir=/opt/vdr/sbin \
                            --sysconfdir=/etc \
-                           --libdir=/usr/local/lib \
-                           --libexecdir=/usr/local/lib"
+                           --libdir=/opt/vdr/lib \
+                           --libexecdir=/opt/vdr/lib"
 
 pre_configure_target() {
-  export LDFLAGS="$(echo ${LDFLAGS} | sed -e "s|-Wl,--as-needed||") -L${SYSROOT_PREFIX}/usr/local/lib"
+  export LDFLAGS="$(echo ${LDFLAGS} | sed -e "s|-Wl,--as-needed||") -L${SYSROOT_PREFIX}/opt/vdr/lib"
 }
 
 post_makeinstall_target() {

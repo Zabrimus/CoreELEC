@@ -23,7 +23,7 @@ pre_configure_target() {
   export PKG_CONFIG_PATH=${VDR_DIR}:${PKG_CONFIG_PATH}
   export CPLUS_INCLUDE_PATH=${VDR_DIR}/include
   export VDRDIR=${VDR_DIR}
-  export LDFLAGS="$(echo ${LDFLAGS} | sed -e "s|-Wl,--as-needed||") -L${SYSROOT_PREFIX}/usr/local/lib"
+  export LDFLAGS="$(echo ${LDFLAGS} | sed -e "s|-Wl,--as-needed||") -L${SYSROOT_PREFIX}/opt/vdr/lib"
 }
 
 make_target() {
@@ -48,6 +48,6 @@ post_makeinstall_target() {
   # create config.zip
   VERSION=$(pkg-config --variable=apiversion vdr)
   cd ${INSTALL}
-  mkdir -p ${INSTALL}/usr/local/vdr-${VERSION}/config/
-  zip -qrum9 "${INSTALL}/usr/local/vdr-${VERSION}/config/robotv-sample-config.zip" storage
+  mkdir -p ${INSTALL}/opt/vdr/config/
+  zip -qrum9 "${INSTALL}/opt/vdr/config/robotv-sample-config.zip" storage
 }

@@ -21,7 +21,12 @@ PKG_CONFIGURE_OPTS_TARGET="ac_cv_lib_z_zlibVersion=yes \
                            --target=arm-unknown-linux-gnueabihf \
                            --host=arm-unknown-linux-gnueabihf \
                            --enable-introspection=no \
-                           --disable-pixbuf-loader
+                           --disable-pixbuf-loader \
+                           --prefix=/opt/vdr \
+						   --bindir=/opt/vdr/bin \
+                           --libdir=/opt/vdr/lib \
+                           --libexecdir=/opt/vdr/bin \
+                           --sbindir=/opt/vdr/sbin \
                            "
 
 PKG_CONFIGURE_OPTS_HOST="-disable-static --enable-shared"
@@ -34,6 +39,10 @@ PKG_CONFIGURE_OPTS_HOST="-disable-static --enable-shared"
 #  export CPPFLAGS="${CPPFLAGS} -I${TOOLCHAIN}/include"
 #}
 
+make_target() {
+	make
+}
+
 pre_configure_target() {
   cd $(get_build_dir librsvg)
   aclocal --install || exit 1
@@ -42,9 +51,10 @@ pre_configure_target() {
   export CPPFLAGS="${CPPFLAGS} -I${SYSROOT_PREFIX}/usr/include"
   . "$(get_build_dir _rust)/cargo/env"
 
-  export PKG_CONFIG_PATH="${SYSROOT_PREFIX}/usr/local/lib/pkgconfig":"${SYSROOT_PREFIX}/usr/local/share/pkgconfig":${PKG_CONFIG_PATH}
-  export PATH="${SYSROOT_PREFIX}/usr/local/bin":$PATH
-  export LDFLAGS="$(echo ${LDFLAGS} | sed -e "s|-Wl,--as-needed||") -L${SYSROOT_PREFIX}/usr/local/lib"
+  export PKG_CONFIG_PATH="${SYSROOT_PREFIX}/opt/vdr/lib/pkgconfig":"${SYSROOT_PREFIX}/opt/vdr/share/pkgconfig":${PKG_CONFIG_PATH}
+  export PATH="${SYSROOT_PREFIX}/opt/vdr/bin":$PATH
+  export LDFLAGS="$(echo ${LDFLAGS} | sed -e "s|-Wl,--as-needed||") -L${SYSROOT_PREFIX}/opt/vdr/lib"
+  export CFLAGS="-I${SYSROOT}/opt/vdr/include/gdk-pixbuf-2.0 -I${SYSROOT}/opt/vdr/include/pango-1.0 -I${SYSROOT}/opt/vdr/include"
 }
 
 #post_makeinstall_target() {

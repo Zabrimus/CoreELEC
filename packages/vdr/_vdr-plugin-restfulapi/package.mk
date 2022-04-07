@@ -9,18 +9,14 @@ PKG_LICENSE="GPL"
 PKG_SITE="https://github.com/yavdr/vdr-plugin-restfulapi"
 PKG_URL="https://github.com/yavdr/vdr-plugin-restfulapi/releases/download/${PKG_VERSION}/vdr-plugin-restfulapi-${PKG_VERSION}.tar.gz"
 PKG_DEPENDS_TARGET="toolchain _vdr _cxxtools _vdr-plugin-wirbelscan"
-PKG_NEED_UNPACK="$(get_pkg_directory _vdr) $(get_pkg_directory vdr-plugin-wirbelscan)"
+PKG_NEED_UNPACK="$(get_pkg_directory _vdr) $(get_pkg_directory _vdr-plugin-wirbelscan)"
 PKG_LONGDESC="Allows to access many internals of the VDR via a restful API."
 PKG_TOOLCHAIN="manual"
 
 # cxxtools            -> addons/addon-depends/cxxtools
 
 pre_configure_target() {
-  export LDFLAGS="$(echo ${LDFLAGS} | sed -e "s|-Wl,--as-needed||") -L${SYSROOT_PREFIX}/usr/local/lib"
-}
-
-pre_build_target() {
-  cp $(get_build_dir _vdr-plugin-wirbelscan)/wirbelscan_services.h ${PKG_BUILD}/wirbelscan/
+  export LDFLAGS="$(echo ${LDFLAGS} | sed -e "s|-Wl,--as-needed||") -L${SYSROOT_PREFIX}/opt/vdr/lib"
 }
 
 make_target() {
@@ -28,7 +24,8 @@ make_target() {
   export PKG_CONFIG_PATH=${VDR_DIR}:${PKG_CONFIG_PATH}
   export CPLUS_INCLUDE_PATH=${VDR_DIR}/include
 
-  make USE_LIBMAGICKPLUSPLUS=0
+  cp $(get_build_dir _vdr-plugin-wirbelscan)/wirbelscan_services.h ${PKG_BUILD}/wirbelscan/
+  make USE_LIBMAGICKPLUSPLUS=0 INCLUDES="-I${SYSROOT_PREFIX}/opt/vdr/include"
 }
 
 makeinstall_target() {
@@ -48,6 +45,6 @@ post_makeinstall_target() {
   # create config.zip
   VERSION=$(pkg-config --variable=apiversion vdr)
   cd ${INSTALL}
-  mkdir -p ${INSTALL}/usr/local/vdr-${VERSION}/config/
-  zip -qrum9 "${INSTALL}/usr/local/vdr-${VERSION}/config/restfulapi-sample-config.zip" storage
+  mkdir -p ${INSTALL}/opt/vdr/config/
+  zip -qrum9 "${INSTALL}/opt/vdr/config/restfulapi-sample-config.zip" storage
 }

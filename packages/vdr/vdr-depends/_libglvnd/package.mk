@@ -15,23 +15,23 @@ PKG_LONGDESC="libglvnd is a vendor-neutral dispatch layer for arbitrating OpenGL
 if [ "${OPENGLES_SUPPORT}" = "no" ]; then
   PKG_MESON_OPTS_TARGET="-Dgles1=false \
                          -Dgles2=false \
-                         --prefix=/usr/local
-						 --bindir=/usr/local/bin \
-                         --libdir=/usr/local/lib \
-                         --libexecdir=/usr/local/bin \
-                         --sbindir=/usr/local/sbin \
+                         --prefix=/opt/vdr
+						 --bindir=/opt/vdr/bin \
+                         --libdir=/opt/vdr/lib \
+                         --libexecdir=/opt/vdr/bin \
+                         --sbindir=/opt/vdr/sbin \
 						 "
 fi
 
 if [ "${OPENGLES_SUPPORT}" = "yes" ]; then
-  PKG_MESON_OPTS_TARGET="--prefix=/usr/local
-						 --bindir=/usr/local/bin \
-                         --libdir=/usr/local/lib \
-                         --libexecdir=/usr/local/bin \
-                         --sbindir=/usr/local/sbin \
+  PKG_MESON_OPTS_TARGET="--prefix=/opt/vdr
+						 --bindir=/opt/vdr/bin \
+                         --libdir=/opt/vdr/lib \
+                         --libexecdir=/opt/vdr/bin \
+                         --sbindir=/opt/vdr/sbin \
 						 "
 fi
 
 pre_configure_target() {
-  export LDFLAGS="$(echo ${LDFLAGS} | sed -e "s|-Wl,--as-needed||") -L${SYSROOT_PREFIX}/usr/local/lib"
+  export LDFLAGS="$(echo ${LDFLAGS} | sed -e "s|-Wl,--as-needed||") -L${SYSROOT_PREFIX}/opt/vdr/lib"
 }

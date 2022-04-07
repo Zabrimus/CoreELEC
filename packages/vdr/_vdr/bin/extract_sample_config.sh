@@ -4,7 +4,7 @@
 rm -Rf /storage/.config/vdropt-sample
 
 cd /
-  for i in `ls /usr/local/vdr-XXVERSIONXX/config/*-sample-config.zip`; do
+  for i in `ls /opt/vdr/config/*-sample-config.zip`; do
      unzip $i
   done
 

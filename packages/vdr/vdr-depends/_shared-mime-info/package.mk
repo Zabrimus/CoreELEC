@@ -12,15 +12,15 @@ PKG_LONGDESC="The shared-mime-info package contains the core database of common 
 PKG_BUILD_FLAGS="-parallel -sysroot"
 
 PKG_MESON_OPTS_TARGET="-Dupdate-mimedb=false \
-                       --prefix=/usr/local \
-                       --bindir=/usr/local/bin \
-                       --libdir=/usr/local/lib \
-                       --libexecdir=/usr/local/bin \
-                       --sbindir=/usr/local/sbin \
+                       --prefix=/opt/vdr \
+                       --bindir=/opt/vdr/bin \
+                       --libdir=/opt/vdr/lib \
+                       --libexecdir=/opt/vdr/bin \
+                       --sbindir=/opt/vdr/sbin \
                        "
 
 pre_configure_target() {
-  export LDFLAGS="$(echo ${LDFLAGS} | sed -e "s|-Wl,--as-needed||") -L${SYSROOT_PREFIX}/usr/local/lib"
+  export LDFLAGS="$(echo ${LDFLAGS} | sed -e "s|-Wl,--as-needed||") -L${SYSROOT_PREFIX}/opt/vdr/lib"
 }
 
 post_makeinstall_target() {

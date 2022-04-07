@@ -16,7 +16,7 @@ PKG_TOOLCHAIN="manual"
 # curl                -> web/curl
 
 pre_configure_target() {
-  export LDFLAGS="$(echo ${LDFLAGS} | sed -e "s|-Wl,--as-needed||") -L${SYSROOT_PREFIX}/usr/local/lib"
+  export LDFLAGS="$(echo ${LDFLAGS} | sed -e "s|-Wl,--as-needed||") -L${SYSROOT_PREFIX}/opt/vdr/lib"
 }
 
 make_target() {
@@ -44,6 +44,6 @@ post_makeinstall_target() {
   # create config.zip
   VERSION=$(pkg-config --variable=apiversion vdr)
   cd ${INSTALL}
-  mkdir -p ${INSTALL}/usr/local/vdr-${VERSION}/config/
-  zip -qrum9 "${INSTALL}/usr/local/vdr-${VERSION}/config/iptv-sample-config.zip" storage
+  mkdir -p ${INSTALL}/opt/vdr/config/
+  zip -qrum9 "${INSTALL}/opt/vdr/config/iptv-sample-config.zip" storage
 }
