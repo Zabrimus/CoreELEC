@@ -1,6 +1,6 @@
 # SPDX-License-Identifier: GPL-2.0-or-later
 
-PKG_NAME="imagemagick"
+PKG_NAME="_imagemagick"
 PKG_VERSION="7.1.0-28"
 PKG_SHA256="771538be92d6b1314345d9deb2533bd187ff8701f0f129c25c9c634f9b91f8dc"
 PKG_LICENSE="ImageMagick License"
