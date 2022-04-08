@@ -13,8 +13,6 @@ PKG_NEED_UNPACK="$(get_pkg_directory _vdr) $(get_pkg_directory _vdr-plugin-wirbe
 PKG_LONGDESC="Allows to access many internals of the VDR via a restful API."
 PKG_TOOLCHAIN="manual"
 
-# cxxtools            -> addons/addon-depends/cxxtools
-
 pre_configure_target() {
   export LDFLAGS="$(echo ${LDFLAGS} | sed -e "s|-Wl,--as-needed||") -L${SYSROOT_PREFIX}/opt/vdr/lib"
 }

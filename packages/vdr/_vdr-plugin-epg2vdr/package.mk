@@ -12,14 +12,6 @@ PKG_NEED_UNPACK="$(get_pkg_directory _vdr) $(get_pkg_directory Python3) $(get_pk
 PKG_LONGDESC="This plugin is used to retrieve EPG data into the VDR. The EPG data was loaded from a mariadb database."
 PKG_TOOLCHAIN="manual"
 
-# Python3             -> lang/Python3
-# util-linux          -> sysutils/util-linux
-# mariadb-connector-c -> databases/mariadb-connector-c
-# tinyxml             -> textproc/tinyxml
-# jansson             -> vdr-depends/jansson
-# tinyxml2            -> textproc/tinyxml2
-# libarchive          -> compress/libarchive
-
 pre_configure_target() {
   export LDFLAGS="$(echo ${LDFLAGS} | sed -e "s|-Wl,--as-needed||") -L${SYSROOT_PREFIX}/opt/vdr/lib"
 }

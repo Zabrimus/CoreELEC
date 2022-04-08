@@ -11,9 +11,6 @@ PKG_NEED_UNPACK="$(get_pkg_directory _vdr)"
 PKG_LONGDESC="A VDR skinning engine that displays XML based Skins"
 PKG_TOOLCHAIN="manual"
 
-# cairo               -> graphics/cairo
-# librsvg             -> vdr/vdr-depends/librsvg
-
 pre_configure_target() {
   export LDFLAGS="$(echo ${LDFLAGS} | sed -e "s|-Wl,--as-needed||") -L${SYSROOT_PREFIX}/opt/vdr/lib"
 }

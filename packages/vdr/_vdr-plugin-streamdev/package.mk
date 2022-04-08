@@ -13,8 +13,6 @@ PKG_NEED_UNPACK="$(get_pkg_directory _vdr)"
 PKG_LONGDESC="This PlugIn is a VDR implementation of Video Transfer and a basic HTTP Streaming Protocol."
 PKG_TOOLCHAIN="manual"
 
-# openssl             -> security/openssl
-
 pre_configure_target() {
   export LDFLAGS="$(echo ${LDFLAGS} | sed -e "s|-Wl,--as-needed||") -L${SYSROOT_PREFIX}/opt/vdr/lib"
 }

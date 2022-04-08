@@ -11,9 +11,6 @@ PKG_NEED_UNPACK="$(get_pkg_directory _vdr) $(get_pkg_directory Python3) $(get_pk
 PKG_LONGDESC="scraper2vdr acts as client and provides scraped metadata for tvshows and movies from epgd to other plugins via its service interface."
 PKG_TOOLCHAIN="manual"
 
-# mariadb-connector-c -> databases/mariadb-connector-c
-# imagemagick         -> vdr/vdr-depends/imagemagick
-
 pre_configure_target() {
   export LDFLAGS="$(echo ${LDFLAGS} | sed -e "s|-Wl,--as-needed||") -L${SYSROOT_PREFIX}/opt/vdr/lib"
 }

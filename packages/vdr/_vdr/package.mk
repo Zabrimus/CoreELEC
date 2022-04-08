@@ -14,13 +14,6 @@ PKG_DEPENDS_TARGET="toolchain bzip2 fontconfig freetype libcap _libiconv libjpeg
 PKG_LONGDESC="A DVB TV server application."
 PKG_TOOLCHAIN="manual"
 
-# bzip2            -> compress/bzip2
-# fontconfig       -> x11/other/fontconfig
-# freetype         -> print/freetype
-# libcap           -> devel/libcap
-# libiconv         -> addons/addon-depends/libiconv
-# libjpeg-turbo    -> graphics/libjpeg-turbo
-
 post_unpack() {
   rm -rf ${PKG_BUILD}/PLUGINS/src/skincurses
 }

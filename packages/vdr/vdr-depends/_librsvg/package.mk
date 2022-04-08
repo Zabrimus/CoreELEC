@@ -31,14 +31,6 @@ PKG_CONFIGURE_OPTS_TARGET="ac_cv_lib_z_zlibVersion=yes \
 
 PKG_CONFIGURE_OPTS_HOST="-disable-static --enable-shared"
 
-#post_unpack() {
-#	rm $(get_build_dir librsvg)/configure
-#}
-
-#pre_configure_host() {
-#  export CPPFLAGS="${CPPFLAGS} -I${TOOLCHAIN}/include"
-#}
-
 make_target() {
 	make
 }
@@ -56,11 +48,3 @@ pre_configure_target() {
   export LDFLAGS="$(echo ${LDFLAGS} | sed -e "s|-Wl,--as-needed||") -L${SYSROOT_PREFIX}/opt/vdr/lib"
   export CFLAGS="-I${SYSROOT}/opt/vdr/include/gdk-pixbuf-2.0 -I${SYSROOT}/opt/vdr/include/pango-1.0 -I${SYSROOT}/opt/vdr/include"
 }
-
-#post_makeinstall_target() {
-#  sed -e "s:\([\"'= ]\)/usr:\\1${SYSROOT_PREFIX}/usr:g" \
-#      -e "s:libs=\"-lpng16\":libs=\"-lpng16 -lz\":g" \
-#      -i ${SYSROOT_PREFIX}/usr/bin/libpng*-config
-#
-#  rm -rf ${INSTALL}/usr/bin
-#}

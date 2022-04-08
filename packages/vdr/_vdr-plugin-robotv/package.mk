@@ -12,8 +12,6 @@ PKG_NEED_UNPACK="$(get_pkg_directory _vdr)"
 PKG_LONGDESC="RoboTV is a Android TV based frontend for VDR."
 PKG_TOOLCHAIN="manual"
 
-# avahi               -> network/avahi
-
 post_unpack() {
   mv ${PKG_BUILD}/CMakeLists.txt ${PKG_BUILD}/Original-CMakeLists.txt
 }

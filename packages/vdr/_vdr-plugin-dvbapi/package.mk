@@ -13,8 +13,6 @@ PKG_NEED_UNPACK="$(get_pkg_directory _vdr)"
 PKG_LONGDESC="VDR dvbapi plugin for use with OSCam"
 PKG_TOOLCHAIN="manual"
 
-# libdvbcsa        -> addons/addon-depends/libdvbcsa
-
 pre_configure_target() {
   export LDFLAGS="$(echo ${LDFLAGS} | sed -e "s|-Wl,--as-needed||") -L${SYSROOT_PREFIX}/opt/vdr/lib"
 }

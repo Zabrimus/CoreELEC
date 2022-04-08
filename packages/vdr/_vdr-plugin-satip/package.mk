@@ -13,9 +13,6 @@ PKG_NEED_UNPACK="$(get_pkg_directory _vdr)"
 PKG_LONGDESC="This is an SAT>IP plugin for the Video Disk Recorder (VDR)."
 PKG_TOOLCHAIN="manual"
 
-# tinyxml             -> textproc/tinyxml
-# curl                -> web/curl
-
 pre_configure_target() {
   export LDFLAGS="$(echo ${LDFLAGS} | sed -e "s|-Wl,--as-needed||") -L${SYSROOT_PREFIX}/opt/vdr/lib"
 }

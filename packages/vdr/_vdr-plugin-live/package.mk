@@ -14,9 +14,6 @@ PKG_LONGDESC="Allows a comfortable operation of VDR and some of its plugins trou
 PKG_TOOLCHAIN="manual"
 PKG_BUILD_FLAGS="+pic -parallel"
 
-# tntnet              -> addons/addon-depends/tntnet
-# pcre                -> devel/pcre
-
 pre_configure_target() {
   export LDFLAGS="$(echo ${LDFLAGS} | sed -e "s|-Wl,--as-needed||") -L${SYSROOT_PREFIX}/opt/vdr/lib"
 }

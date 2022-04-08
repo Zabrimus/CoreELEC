@@ -13,12 +13,6 @@ PKG_NEED_UNPACK="$(get_pkg_directory _vdr)"
 PKG_LONGDESC="VDR Output Device (softhdodroid)"
 PKG_TOOLCHAIN="manual"
 
-# libglvnd            -> graphics/libglvnd
-# opengl-meson        -> Amlogic-ce/devices/Amlogic-ng/packages/opengl-meson
-# glm                 -> graphics/glm
-# ffmpeg              -> multimedia/ffmpeg
-# glu                 -> graphics/glu
-
 pre_configure_target() {
   export LDFLAGS="$(echo ${LDFLAGS} | sed -e "s|-Wl,--as-needed||") -L${SYSROOT_PREFIX}/opt/vdr/lib -L${SYSROOT_PREFIX}/usr/lib"
 }
