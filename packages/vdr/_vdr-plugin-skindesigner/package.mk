@@ -17,7 +17,8 @@ pre_configure_target() {
 
 make_target() {
   VDR_DIR=$(get_build_dir _vdr)
-  export PKG_CONFIG_PATH=${VDR_DIR}:"${SYSROOT_PREFIX}/opt/vdr/lib/pkgconfig":"${SYSROOT_PREFIX}/opt/vdr/share/pkgconfig":${PKG_CONFIG_PATH}
+
+  export PKG_CONFIG_PATH=${VDR_DIR}:"${SYSROOT_PREFIX}/opt/vdr/lib/pkgconfig":"$(get_install_dir shared-mime-info)/usr/share/pkgconfig":"$(get_install_dir pango)/usr/lib/pkgconfig":"$(get_install_dir libXft)/usr/lib/pkgconfig":${PKG_CONFIG_PATH}
   export CPLUS_INCLUDE_PATH=${VDR_DIR}/include
   export PATH="${SYSROOT_PREFIX}/opt/vdr/bin":$PATH
   SKINDESIGNER_SCRIPTDIR="/storage/.config/vdropt/plugins/skindesigner/scripts"

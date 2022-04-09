@@ -10,7 +10,7 @@ PKG_LICENSE="GPL"
 PKG_SITE="http://www.tvdr.de"
 PKG_URL="http://git.tvdr.de/?p=vdr.git;a=snapshot;h=refs/tags/${PKG_VERSION};sf=tbz2"
 PKG_SOURCE_NAME="${PKG_NAME}-${PKG_VERSION}.tar.bz2"
-PKG_DEPENDS_TARGET="toolchain bzip2 fontconfig freetype libcap _libiconv libjpeg-turbo"
+PKG_DEPENDS_TARGET="toolchain bzip2 fontconfig freetype libcap libiconv libjpeg-turbo"
 PKG_LONGDESC="A DVB TV server application."
 PKG_TOOLCHAIN="manual"
 
@@ -19,7 +19,7 @@ post_unpack() {
 }
 
 pre_configure_target() {
-  export LDFLAGS="$(echo ${LDFLAGS} | sed -e "s|-Wl,--as-needed||") -L${SYSROOT_PREFIX}/opt/vdr/lib -liconv"
+  export LDFLAGS="$(echo ${LDFLAGS} | sed -e "s|-Wl,--as-needed||") -L${SYSROOT_PREFIX}/usr/lib/iconv -liconv"
 }
 
 pre_make_target() {
