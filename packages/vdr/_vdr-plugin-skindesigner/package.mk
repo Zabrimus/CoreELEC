@@ -12,15 +12,21 @@ PKG_LONGDESC="A VDR skinning engine that displays XML based Skins"
 PKG_TOOLCHAIN="manual"
 
 pre_configure_target() {
-  export LDFLAGS="$(echo ${LDFLAGS} | sed -e "s|-Wl,--as-needed||") -L${SYSROOT_PREFIX}/opt/vdr/lib"
+  # test if prefix is set
+  if [ "x${VDR_PREFIX}" = "x" ]; then
+      echo "==> VDR_PREFIX is empty, but must be set"
+      exit 1
+  fi
+
+  export LDFLAGS="$(echo ${LDFLAGS} | sed -e "s|-Wl,--as-needed||") -L${SYSROOT_PREFIX}${VDR_PREFIX}/lib"
 }
 
 make_target() {
   VDR_DIR=$(get_build_dir _vdr)
 
-  export PKG_CONFIG_PATH=${VDR_DIR}:"${SYSROOT_PREFIX}/opt/vdr/lib/pkgconfig":"$(get_install_dir shared-mime-info)/usr/share/pkgconfig":"$(get_install_dir pango)/usr/lib/pkgconfig":"$(get_install_dir libXft)/usr/lib/pkgconfig":${PKG_CONFIG_PATH}
+  export PKG_CONFIG_PATH=${VDR_DIR}:"${SYSROOT_PREFIX}${VDR_PREFIX}/lib/pkgconfig":"$(get_install_dir shared-mime-info)/usr/share/pkgconfig":"$(get_install_dir pango)/usr/lib/pkgconfig":"$(get_install_dir libXft)/usr/lib/pkgconfig":${PKG_CONFIG_PATH}
   export CPLUS_INCLUDE_PATH=${VDR_DIR}/include
-  export PATH="${SYSROOT_PREFIX}/opt/vdr/bin":$PATH
+  export PATH="${SYSROOT_PREFIX}${VDR_PREFIX}/bin":$PATH
   SKINDESIGNER_SCRIPTDIR="/storage/.config/vdropt/plugins/skindesigner/scripts"
 
   make SKINDESIGNER_SCRIPTDIR="${SKINDESIGNER_SCRIPTDIR}"
@@ -34,8 +40,8 @@ makeinstall_target() {
   make DESTDIR="${INSTALL}" LIBDIR="${LIB_DIR}" PLGRESDIR="${PLGRES_DIR}" SKINDESIGNER_SCRIPTDIR="${SKINDESIGNER_SCRIPTDIR}" install
 
   # install font
-  mkdir -p ${INSTALL}/opt/vdr/share/fonts
-  cp -r fonts/VDROpenSans ${INSTALL}/opt/vdr/share/fonts
+  mkdir -p ${INSTALL}${VDR_PREFIX}/share/fonts
+  cp -r fonts/VDROpenSans ${INSTALL}${VDR_PREFIX}/share/fonts
 }
 
 post_makeinstall_target() {
@@ -50,11 +56,11 @@ post_makeinstall_target() {
   # create config.zip
   VERSION=$(pkg-config --variable=apiversion vdr)
   cd ${INSTALL}
-  mkdir -p ${INSTALL}/opt/vdr/config/
-  zip -qrum9 "${INSTALL}/opt/vdr/config/skindesigner-sample-config.zip" storage
+  mkdir -p ${INSTALL}${VDR_PREFIX}/config/
+  zip -qrum9 "${INSTALL}${VDR_PREFIX}/config/skindesigner-sample-config.zip" storage
 }
 
 post_install() {
-  mkfontdir ${INSTALL}/opt/vdr/share/fonts
-  mkfontscale ${INSTALL}/opt/vdr/share/fonts
+  mkfontdir ${INSTALL}${VDR_PREFIX}/share/fonts
+  mkfontscale ${INSTALL}${VDR_PREFIX}/share/fonts
 }

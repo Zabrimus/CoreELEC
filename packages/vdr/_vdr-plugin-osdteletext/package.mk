@@ -13,7 +13,13 @@ PKG_LONGDESC="Osd-Teletext displays the teletext directly on the OSD."
 PKG_TOOLCHAIN="manual"
 
 pre_configure_target() {
-  export LDFLAGS="$(echo ${LDFLAGS} | sed -e "s|-Wl,--as-needed||") -L${SYSROOT_PREFIX}/opt/vdr/lib"
+  # test if prefix is set
+  if [ "x${VDR_PREFIX}" = "x" ]; then
+      echo "==> VDR_PREFIX is empty, but must be set"
+      exit 1
+  fi
+
+  export LDFLAGS="$(echo ${LDFLAGS} | sed -e "s|-Wl,--as-needed||") -L${SYSROOT_PREFIX}${VDR_PREFIX}/lib"
 }
 
 make_target() {
@@ -29,8 +35,8 @@ makeinstall_target() {
   make DESTDIR="${INSTALL}" LIBDIR="${LIB_DIR}" install
 
   # install font
-  mkdir -p ${INSTALL}/opt/vdr/share/fonts
-  cp -r *.ttf ${INSTALL}/opt/vdr/share/fonts
+  mkdir -p ${INSTALL}${VDR_PREFIX}/share/fonts
+  cp -r *.ttf ${INSTALL}${VDR_PREFIX}/share/fonts
 }
 
 post_makeinstall_target() {
@@ -45,11 +51,11 @@ post_makeinstall_target() {
    # create config.zip
    VERSION=$(pkg-config --variable=apiversion vdr)
    cd ${INSTALL}
-   mkdir -p ${INSTALL}/opt/vdr/config/
-   zip -qrum9 "${INSTALL}/opt/vdr/config/osdteletext-sample-config.zip" storage
+   mkdir -p ${INSTALL}${VDR_PREFIX}/config/
+   zip -qrum9 "${INSTALL}${VDR_PREFIX}/config/osdteletext-sample-config.zip" storage
 }
 
 post_install() {
-  mkfontdir ${INSTALL}/opt/vdr/share/fonts
-  mkfontscale ${INSTALL}/opt/vdr/share/fonts
+  mkfontdir ${INSTALL}${VDR_PREFIX}/share/fonts
+  mkfontscale ${INSTALL}${VDR_PREFIX}/share/fonts
 }

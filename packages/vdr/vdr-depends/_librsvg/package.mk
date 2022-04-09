@@ -22,11 +22,11 @@ PKG_CONFIGURE_OPTS_TARGET="ac_cv_lib_z_zlibVersion=yes \
                            --host=arm-unknown-linux-gnueabihf \
                            --enable-introspection=no \
                            --disable-pixbuf-loader \
-                           --prefix=/opt/vdr \
-						   --bindir=/opt/vdr/bin \
-                           --libdir=/opt/vdr/lib \
-                           --libexecdir=/opt/vdr/bin \
-                           --sbindir=/opt/vdr/sbin \
+                           --prefix=${VDR_PREFIX} \
+						   --bindir=${VDR_PREFIX}/bin \
+                           --libdir=${VDR_PREFIX}/lib \
+                           --libexecdir=${VDR_PREFIX}/bin \
+                           --sbindir=${VDR_PREFIX}/sbin \
                            "
 
 PKG_CONFIGURE_OPTS_HOST="-disable-static --enable-shared"
@@ -36,6 +36,12 @@ make_target() {
 }
 
 pre_configure_target() {
+  # test if prefix is set
+  if [ "x${VDR_PREFIX}" = "x" ]; then
+      echo "==> VDR_PREFIX is empty, but must be set"
+      exit 1
+  fi
+
   cd $(get_build_dir _librsvg)
   aclocal --install || exit 1
   autoreconf --verbose --force --install || exit 1
@@ -45,8 +51,7 @@ pre_configure_target() {
 
   export PKG_CONFIG_PATH="$(get_install_dir shared-mime-info)/usr/share/pkgconfig":"$(get_install_dir pango)/usr/lib/pkgconfig":"$(get_install_dir libXft)/usr/lib/pkgconfig":${PKG_CONFIG_PATH}
 
-  export PATH="${SYSROOT_PREFIX}/opt/vdr/bin":$PATH
-  export LDFLAGS="$(echo ${LDFLAGS} | sed -e "s|-Wl,--as-needed||") -L${SYSROOT_PREFIX}/opt/vdr/lib"
-  #export CFLAGS="-I${SYSROOT}/opt/vdr/include/gdk-pixbuf-2.0 -I${SYSROOT}/opt/vdr/include/pango-1.0 -I${SYSROOT}/opt/vdr/include"
-  export CFLAGS="-I${SYSROOT}/opt/vdr/include"
+  export PATH="${SYSROOT_PREFIX}${VDR_PREFIX}/bin":$PATH
+  export LDFLAGS="$(echo ${LDFLAGS} | sed -e "s|-Wl,--as-needed||") -L${SYSROOT_PREFIX}${VDR_PREFIX}/lib"
+  export CFLAGS="-I${SYSROOT}${VDR_PREFIX}/include"
 }
