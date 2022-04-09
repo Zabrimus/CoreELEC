@@ -60,10 +60,10 @@ makeinstall_target() {
 
   make DESTDIR="${INSTALL}" install
 
-  cat ${PKG_DIR}/bin/start_vdr.sh | sed "s#XXCONFDIRXX#${CONFDIR}# ; s#XXBINDIRXX#${PREFIX}/bin# ; s#XXVERSIONXX#${PKG_VERSION}#" > ${INSTALL}/${PREFIX}/bin/start_vdr.sh
+  cat ${PKG_DIR}/bin/start_vdr.sh | sed "s#XXCONFDIRXX#${CONFDIR}# ; s#XXBINDIRXX#${PREFIX}/bin# ; s#XXVERSIONXX#${PKG_VERSION}# ; s#XXLIBDIRXX#${PREFIX}/lib#" > ${INSTALL}/${PREFIX}/bin/start_vdr.sh
   chmod +x ${INSTALL}/${PREFIX}/bin/start_vdr.sh
 
-  cat ${PKG_DIR}/bin/extract_sample_config.sh | sed "s#XXVERSIONXX#${PKG_VERSION}#" > ${INSTALL}/${PREFIX}/bin/extract_sample_config.sh
+  cat ${PKG_DIR}/bin/extract_sample_config.sh | sed "s#XXVERSIONXX#${PKG_VERSION}# ; s#XXCONFDIRXX#${PREFIX}/conf#" > ${INSTALL}/${PREFIX}/bin/extract_sample_config.sh
   chmod +x ${INSTALL}/${PREFIX}/bin/extract_sample_config.sh
 }
 
