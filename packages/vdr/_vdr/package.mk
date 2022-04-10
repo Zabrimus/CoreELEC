@@ -63,8 +63,11 @@ makeinstall_target() {
   cat ${PKG_DIR}/bin/start_vdr.sh | sed "s#XXCONFDIRXX#${CONFDIR}# ; s#XXBINDIRXX#${PREFIX}/bin# ; s#XXVERSIONXX#${PKG_VERSION}# ; s#XXLIBDIRXX#${PREFIX}/lib#" > ${INSTALL}/${PREFIX}/bin/start_vdr.sh
   chmod +x ${INSTALL}/${PREFIX}/bin/start_vdr.sh
 
-  cat ${PKG_DIR}/bin/extract_sample_config.sh | sed "s#XXVERSIONXX#${PKG_VERSION}# ; s#XXCONFDIRXX#${PREFIX}/conf#" > ${INSTALL}/${PREFIX}/bin/extract_sample_config.sh
-  chmod +x ${INSTALL}/${PREFIX}/bin/extract_sample_config.sh
+  cat ${PKG_DIR}/bin/install.sh | sed "s#XXVERSIONXX#${PKG_VERSION}# ; s#XXCONFDIRXX#${PREFIX}/conf#" > ${INSTALL}/${PREFIX}/bin/install.sh
+  chmod +x ${INSTALL}/${PREFIX}/bin/install.sh
+
+  cat ${PKG_DIR}/bin/switch_kodi_vdr.sh | sed "s#XXVERSIONXX#${PKG_VERSION}# ; s#XXCONFDIRXX#${PREFIX}/conf#" > ${INSTALL}/${PREFIX}/bin/switch_kodi_vdr.sh
+  chmod +x ${INSTALL}/${PREFIX}/bin/switch_kodi_vdr.sh
 }
 
 post_makeinstall_target() {
@@ -87,15 +90,20 @@ EOF
      rm -Rf ${INSTALL}/storage/.config/vdropt
   fi
 
+  cat ${PKG_DIR}/config/commands.conf | sed "s#XXBINDIRXX#${PREFIX}#" > ${VDR_DIR}/storage/.config/vdropt-sample/commands.conf
+
   # create config.zip
   mkdir -p ${INSTALL}${PREFIX}/config
   cd ${INSTALL}
   zip -qrum9 ${INSTALL}${PREFIX}/config/vdr-sample-config.zip storage
-
-  # copy systemd service
-  mkdir -p ${INSTALL}/usr/lib/systemd/system
-  cp ${PKG_DIR}/system.d/* ${INSTALL}/usr/lib/systemd/system
-
-  # enable the systemd service
-  enable_service extract-vdr-config.service
 }
+
+# TODO:
+#   systemd/* nach /storage/.config/system.d kopieren
+#
+# Automatischer Start von VDR ist möglich durch:
+#      cd /storage/.config/system.d
+#      ln -s vdr.service kodi.service
+# Dies ist allerdings etwas schräg. Aber eine andere Lösung habe ich (noch?) nicht gefunden.
+
+
