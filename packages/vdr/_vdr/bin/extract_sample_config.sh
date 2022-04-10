@@ -14,5 +14,3 @@ if [[ ! -d /storage/.config/vdropt ]]; then
     # copy samples to final directory
     cp -a /storage/.config/vdropt-sample /storage/.config/vdropt
 fi
-
-# /usr/bin/systemctl disable extract-vdr-config.service
