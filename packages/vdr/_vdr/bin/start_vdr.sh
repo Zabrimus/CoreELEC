@@ -25,4 +25,4 @@ for line in $file; do
 done
 
 # really start VDR
-sh -c "LD_PRELOAD=/usr/lib/libMali.so LD_LIBRARY_PATH=$LIBDIR:$LD_LIBRARY_PATH ${BIN_DIR}/$arg"
+sh -c "LD_PRELOAD=/usr/lib/libMali.so LD_LIBRARY_PATH=$LIB_DIR:$LIB_DIR/vdr:$LD_LIBRARY_PATH ${BIN_DIR}/$arg"
