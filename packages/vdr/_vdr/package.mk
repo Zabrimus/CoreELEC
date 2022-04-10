@@ -90,7 +90,7 @@ EOF
      rm -Rf ${INSTALL}/storage/.config/vdropt
   fi
 
-  cat ${PKG_DIR}/config/commands.conf | sed "s#XXBINDIRXX#${PREFIX}#" > ${VDR_DIR}/storage/.config/vdropt-sample/commands.conf
+  cat ${PKG_DIR}/config/commands.conf | sed "s#XXBINDIRXX#${PREFIX}/bin#" > ${VDR_DIR}/storage/.config/vdropt-sample/commands.conf
 
   # create config.zip
   mkdir -p ${INSTALL}${PREFIX}/config
