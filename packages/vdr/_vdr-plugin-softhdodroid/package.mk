@@ -2,8 +2,8 @@
 
 PKG_NAME="_vdr-plugin-softhdodroid"
 
-PKG_VERSION="03f02196f91922b5a41c79717865268f5a4b077d"
-PKG_SHA256="19300dde6b3848c95d4accdacc82cc36bba35fa531fc34276d747051d7789c8f"
+PKG_VERSION="0f9d59ab4126898bf78e41bc34494b2d6a5493e2"
+PKG_SHA256="0fb26d5ded3931b35ba31049c056a58fbd59a5dba4ddbc8156d6d9cc2b9c9191"
 PKG_LICENSE="GPL"
 PKG_SITE="https://github.com/jojo61/vdr-plugin-softhdodroid"
 PKG_URL="https://github.com/jojo61/vdr-plugin-softhdodroid/archive/${PKG_VERSION}.zip"
