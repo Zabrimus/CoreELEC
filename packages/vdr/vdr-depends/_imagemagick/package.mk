@@ -9,8 +9,14 @@ PKG_URL="https://github.com/ImageMagick/ImageMagick6/archive/refs/tags/${PKG_VER
 PKG_DEPENDS_TARGET="toolchain"
 PKG_LONGDESC="Use ImageMagick to create, edit, compose, or convert digital images."
 
-PKG_CONFIGURE_OPTS_TARGET="--disable-openmp"
-
+PKG_CONFIGURE_OPTS_TARGET="--disable-openmp \
+                           --prefix=${VDR_PREFIX} \
+						   --bindir=${VDR_PREFIX}/bin \
+                           --libdir=${VDR_PREFIX}/lib \
+                           --libexecdir=${VDR_PREFIX}/bin \
+                           --sbindir=${VDR_PREFIX}/sbin \
+                            --sysconfdir=${VDR_PREFIX}/etc \
+                           "
 pre_configure_target() {
   # test if prefix is set
   if [ "x${VDR_PREFIX}" = "x" ]; then
