@@ -1,6 +1,10 @@
 # VDR
 VDR and plugins are integrated into the build system of CoreELEC to be able to start and use VDR and to be able to easily switch between VDR and KODI.
 
+It's possible to either create a VDR tar.gz only, which contains VDR, all plugins and all dependant libraries.<br>
+The second possibility is to create a CoreELEC image which contains VDR and plugins.
+
+
 This is still work in progress...
 
 ## Aktueller Status:
@@ -27,59 +31,73 @@ This is still work in progress...
 - vdr-plugin-epg2vdr
 - vdr-plugin-skindesigner
 
-## Build 
+## Standalone VDR with all dependent libraries
+### Build
 ```
     git checkout https://github.com/Zabrimus/CoreELEC.git
-    make oder make image 
+    ./build.sh
+```
+In folder build-artifacts a new archive coreelec-vdr.tar.gz will be created, which contains VDR, Plugins 
+and all dependant libraries. The installation folder is /opt/vdr. 
+
+### Installation
+```
+  cd / && tar -xf coreelec-vdr.tar.gz
 ```
 
-## Installation
+## Images with integrated VDR and plugins
+### Build
+```
+    git checkout https://github.com/Zabrimus/CoreELEC.git
+    VDR_PREFIX="/usr/local" make image
+```
+The installation folder is /usr/local.
+
+### Installation
 ```
      scp target/CoreELEC-Amlogic-ng.arm-19.4-Matrix_devel_*.tar root@<ip der box>:/storage/.update
-     reboot der Box
+     reboot
      
-     oder
+     or
      
-     Eines der Images im Verzeichnis target auf SD Karte kopieren und booten. 
+     Install the desired image in a micro SD as described in the CoreELEC part of this Readme. 
+```
+
+## Install script
+In folder /opt/vdr/bin or /usr/local/bin contains an install script
+```
+  cd /opt/vdr/bin
+  ./install.sh
+  
+  Usage: install.sh [-install-config] [-boot kodi|vdr]
+          -i      : Extracts the default configuration into directory /storage/.config/vdropt-sample and copy the sample folder to /storage/.config/vdropt if it does not exists.
+          -b kodi : Kodi will be started after booting
+          -b vdr  : VDR will be started after booting
 ```
 
 ## Das Verzeichnis-Layout und Dateien
 
 - /usr/local/lib<br>
-  enthält alle Libraries, die speziell für VDR erzeugt wurden
-- /usr/local/vdr-2.6.1 enthält<br>
-  enthält alle VDR Binaries, Plugins und sonstige unveränderliche Dateien
+  contains libraries which are usually not part of CoreELEC
+- /usr/local/vdr enthält<br>
+  contains VDR and all plugins
 - /usr/local/vdr-2.6.1/config
-  enthält die Default Konfiguration der Plugins und VDR, die beim Build erzeugt wurden. Dies können oder werden nach /storage/.config/vdropt-sample extrahiert werden.
+  contains the default configuration files  
 - storage/.config/vdropt<br>
-  enthält die komplette Konfiguration des VDR und aller Plugins. Wird nicht mehr überschrieben.
+  contains the VDR and plugin configuration files. Will never be overwritten by the install process. 
 - storage/.config/vdropt-sample<br>
-  enthält die komplette Beispiel/Default Konfiguration des VDR und aller Plugins. Änderungen können durch das Script
-  /usr/local/vdr-2.6.1/bin/extract-vdr-config.sh überschrieben werden.
+  contains sample configuration files
 
 <br>
 
-- /usr/local/vdr-2.6.1/bin/extract-vdr-config.sh<br>
-  Löscht das Verzeichnis /storage/.config/vdropt-sample und extrahiert die Default-Konfiguration. Falls noch kein Verzeichnis /storage/.config/vdropt existiert, wird /storage/.config/vdropt-sample nach /storage/.config/vdropt kopiert.<br>
-  Das Script soll eigentlich einmalig nach dem Reboot einer Neuinstallation aufgerufen werden, aber da gibt es noch Probleme mit systemd.
 - /usr/local/vdr-2.6.1/bin/start_vdr.sh<br>
-  Das Script bereitet die komplette Parameter-Liste für den Aufruf von VDR vor und startet den VDR.
+  Start script of VDR. Reads all configuration files, creates the parameter list and launches VDR.
 - /storage/.config/vdropt/enabled-plugins<br>
-  Enthält pro Zeile den Namen eines Plugins, daß gestartet werden soll. Hier können neue Plugins hinzugefügt oder auch bestehende gelöscht werden.<br>
-  Der Default ist <br>
+  Each line contains a plugin name which shall be started.
+  The default is <br>
   > softhdodroid<br>
   > satip
 
-
-## Ersteinrichtung
-Solange das Problem mit systemd nicht gelöst wurde, sollte nach Installation des Images/Update-Tar, das Script /usr/local/vdr-2.6.1/bin/extract-vdr-config.sh auf der Shell aufgerufen werden.<br>
-Die Konfiguration des VDR und aller Plugins findet sich an den bekannten Stellen.
-
-## Start des VDR
-```
-systemctl stop kodi
-/usr/local/vdr-2.6.1/bin/start_vdr.sh
-```
 
 # CoreELEC
 
