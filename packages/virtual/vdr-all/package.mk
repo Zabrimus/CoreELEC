@@ -31,3 +31,6 @@ PKG_DEPENDS_TARGET+=" _vdr-plugin-zaphistory"
 PKG_DEPENDS_TARGET+=" _vdr-plugin-epg2vdr"
 PKG_DEPENDS_TARGET+=" _vdr-plugin-skindesigner"
 PKG_DEPENDS_TARGET+=" _vdr-plugin-scraper2vdr"
+
+# error ImageMagick Version 7.0 or higher is required
+# PKG_DEPENDS_TARGET+=" _vdr-plugin-skinelchihd"
