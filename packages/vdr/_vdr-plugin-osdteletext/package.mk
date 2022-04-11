@@ -12,10 +12,14 @@ PKG_NEED_UNPACK="$(get_pkg_directory _vdr)"
 PKG_LONGDESC="Osd-Teletext displays the teletext directly on the OSD."
 PKG_TOOLCHAIN="manual"
 
-# cairo               -> graphics/cairo
-
 pre_configure_target() {
-  export LDFLAGS="$(echo ${LDFLAGS} | sed -e "s|-Wl,--as-needed||") -L${SYSROOT_PREFIX}/usr/local/lib"
+  # test if prefix is set
+  if [ "x${VDR_PREFIX}" = "x" ]; then
+      echo "==> VDR_PREFIX is empty, but must be set"
+      exit 1
+  fi
+
+  export LDFLAGS="$(echo ${LDFLAGS} | sed -e "s|-Wl,--as-needed||") -L${SYSROOT_PREFIX}${VDR_PREFIX}/lib"
 }
 
 make_target() {
@@ -31,8 +35,8 @@ makeinstall_target() {
   make DESTDIR="${INSTALL}" LIBDIR="${LIB_DIR}" install
 
   # install font
-  mkdir -p ${INSTALL}/usr/local/share/fonts
-  cp -r *.ttf ${INSTALL}/usr/local/share/fonts
+  mkdir -p ${INSTALL}${VDR_PREFIX}/share/fonts
+  cp -r *.ttf ${INSTALL}${VDR_PREFIX}/share/fonts
 }
 
 post_makeinstall_target() {
@@ -47,11 +51,11 @@ post_makeinstall_target() {
    # create config.zip
    VERSION=$(pkg-config --variable=apiversion vdr)
    cd ${INSTALL}
-   mkdir -p ${INSTALL}/usr/local/vdr-${VERSION}/config/
-   zip -qrum9 "${INSTALL}/usr/local/vdr-${VERSION}/config/osdteletext-sample-config.zip" storage
+   mkdir -p ${INSTALL}${VDR_PREFIX}/config/
+   zip -qrum9 "${INSTALL}${VDR_PREFIX}/config/osdteletext-sample-config.zip" storage
 }
 
 post_install() {
-  mkfontdir ${INSTALL}/usr/local/share/fonts
-  mkfontscale ${INSTALL}/usr/local/share/fonts
+  mkfontdir ${INSTALL}${VDR_PREFIX}/share/fonts
+  mkfontscale ${INSTALL}${VDR_PREFIX}/share/fonts
 }

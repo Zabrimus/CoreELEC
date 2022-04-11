@@ -2,6 +2,7 @@
 
 CONF_DIR="XXCONFDIRXX"
 BIN_DIR="XXBINDIRXX"
+LIB_DIR="XXLIBDIRXX"
 
 read_plugin_configuration () {
   param=`cat ${CONF_DIR}/conf.d/$1.conf  | sed "s/#.*$//g ; s/^#$//g ; s/ *$//g" | tr '\n' ' ' | sed  "s/\[/-P \\'/ ; s/\]// ; s/ *$/\'/"`
@@ -23,5 +24,8 @@ for line in $file; do
   arg="$arg $pluginarg"
 done
 
+# kill splash image (CoreELEC)
+killall splash-image
+
 # really start VDR
-sh -c "LD_PRELOAD=/usr/lib/libMali.so LD_LIBRARY_PATH=/usr/local/lib:/usr/local/vdr-XXVERSIONXX/lib/vdr:$LD_LIBRARY_PATH ${BIN_DIR}/$arg"
+sh -c "LD_PRELOAD=/usr/lib/libMali.so LD_LIBRARY_PATH=$LIB_DIR:$LIB_DIR/vdr:$LD_LIBRARY_PATH ${BIN_DIR}/$arg"

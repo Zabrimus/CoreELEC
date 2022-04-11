@@ -2,8 +2,8 @@
 
 PKG_NAME="_vdr-plugin-softhdodroid"
 
-PKG_VERSION="03f02196f91922b5a41c79717865268f5a4b077d"
-PKG_SHA256="19300dde6b3848c95d4accdacc82cc36bba35fa531fc34276d747051d7789c8f"
+PKG_VERSION="0f9d59ab4126898bf78e41bc34494b2d6a5493e2"
+PKG_SHA256="0fb26d5ded3931b35ba31049c056a58fbd59a5dba4ddbc8156d6d9cc2b9c9191"
 PKG_LICENSE="GPL"
 PKG_SITE="https://github.com/jojo61/vdr-plugin-softhdodroid"
 PKG_URL="https://github.com/jojo61/vdr-plugin-softhdodroid/archive/${PKG_VERSION}.zip"
@@ -13,14 +13,14 @@ PKG_NEED_UNPACK="$(get_pkg_directory _vdr)"
 PKG_LONGDESC="VDR Output Device (softhdodroid)"
 PKG_TOOLCHAIN="manual"
 
-# libglvnd            -> graphics/libglvnd
-# opengl-meson        -> Amlogic-ce/devices/Amlogic-ng/packages/opengl-meson
-# glm                 -> graphics/glm
-# ffmpeg              -> multimedia/ffmpeg
-# glu                 -> graphics/glu
-
 pre_configure_target() {
-  export LDFLAGS="$(echo ${LDFLAGS} | sed -e "s|-Wl,--as-needed||") -L${SYSROOT_PREFIX}/usr/local/lib -L${SYSROOT_PREFIX}/usr/lib"
+  # test if prefix is set
+  if [ "x${VDR_PREFIX}" = "x" ]; then
+      echo "==> VDR_PREFIX is empty, but must be set"
+      exit 1
+  fi
+
+  export LDFLAGS="$(echo ${LDFLAGS} | sed -e "s|-Wl,--as-needed||") -L${SYSROOT_PREFIX}${VDR_PREFIX}/lib -L${SYSROOT_PREFIX}/usr/lib"
 }
 
 make_target() {
@@ -51,7 +51,8 @@ post_makeinstall_target() {
   # create config.zip
   VERSION=$(pkg-config --variable=apiversion vdr)
   cd ${INSTALL}
-  mkdir -p ${INSTALL}/usr/local/vdr-${VERSION}/config/
-  zip -qrum9 "${INSTALL}/usr/local/vdr-${VERSION}/config/softhdodroid-sample-config.zip" storage
+  mkdir -p ${INSTALL}${VDR_PREFIX}/config/
+  zip -qrum9 "${INSTALL}${VDR_PREFIX}/config/softhdodroid-sample-config.zip" storage
 }
+
 

@@ -1,4 +1,4 @@
-name: Build CoreELEC 19 with VDR
+name: Build CoreELEC/VDR Matrix
 
 on:
   workflow_dispatch:
@@ -6,82 +6,28 @@ on:
 
 jobs:
   build:
-
-    runs-on: [self-hosted, Linux, X64, CoreElec]
+    runs-on: self-hosted
 
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
 
-      - name: Install dependencies
+      - name: Build CoreELEC-VDR
         run: |
-          sudo apt-get -y install build-essential git bc gawk xfonts-utils wget zip zstd libparse-yapp-perl gperf lzop unzip patchutils xsltproc cpio libcxxtools-dev libtntnet-dev 
-          sudo apt-get -y clean
-
-      - name: Start build
-        run: |
-          make image
-
-      - name: Delete VDR, Plugins and Dependencies
-        run: |
-          rm -Rf build.CoreELEC-Amlogic-ng.arm-19/build/_vdr*
-          rm -Rf build.CoreELEC-Amlogic-ng.arm-19install_pkg/_vdr*
-          rm -Rf build.CoreELEC-Amlogic-ng.arm-19/build/_cxxtools*
-          rm -Rf build.CoreELEC-Amlogic-ng.arm-19install_pkg/_cxxtools*
-          rm -Rf build.CoreELEC-Amlogic-ng.arm-19/build/_gdk-pixbuf*
-          rm -Rf build.CoreELEC-Amlogic-ng.arm-19install_pkg/_gdk-pixbuf*
-          rm -Rf build.CoreELEC-Amlogic-ng.arm-19/build/_glu*
-          rm -Rf build.CoreELEC-Amlogic-ng.arm-19install_pkg/_glu*
-          rm -Rf build.CoreELEC-Amlogic-ng.arm-19/build/_libglvnd*
-          rm -Rf build.CoreELEC-Amlogic-ng.arm-19install_pkg/_libglvnd*
-          rm -Rf build.CoreELEC-Amlogic-ng.arm-19/build/_libiconv*
-          rm -Rf build.CoreELEC-Amlogic-ng.arm-19install_pkg/_libiconv*
-          rm -Rf build.CoreELEC-Amlogic-ng.arm-19/build/_libXft*
-          rm -Rf build.CoreELEC-Amlogic-ng.arm-19install_pkg/_libXft*
-          rm -Rf build.CoreELEC-Amlogic-ng.arm-19/build/_pango*
-          rm -Rf build.CoreELEC-Amlogic-ng.arm-19install_pkg/_pango*
-          rm -Rf build.CoreELEC-Amlogic-ng.arm-19/build/_rust*
-          rm -Rf build.CoreELEC-Amlogic-ng.arm-19install_pkg/_rust*
-          rm -Rf build.CoreELEC-Amlogic-ng.arm-19/build/_rustup_rs*
-          rm -Rf build.CoreELEC-Amlogic-ng.arm-19install_pkg/_rustup_rs*
-          rm -Rf build.CoreELEC-Amlogic-ng.arm-19/build/_shared-mime-info*
-          rm -Rf build.CoreELEC-Amlogic-ng.arm-19install_pkg/_shared-mime-info*
-          rm -Rf build.CoreELEC-Amlogic-ng.arm-19/build/_tntnet*
-          rm -Rf build.CoreELEC-Amlogic-ng.arm-19install_pkg/_tntnet*
-          rm -Rf build.CoreELEC-Amlogic-ng.arm-19/build/imagemagick*
-          rm -Rf build.CoreELEC-Amlogic-ng.arm-19install_pkg/imagemagick*
-          rm -Rf build.CoreELEC-Amlogic-ng.arm-19/build/jansson*
-          rm -Rf build.CoreELEC-Amlogic-ng.arm-19install_pkg/jansson*
-          rm -Rf build.CoreELEC-Amlogic-ng.arm-19/build/librsvg*
-          rm -Rf build.CoreELEC-Amlogic-ng.arm-19install_pkg/librsvg*
+          chmod +x build.sh
+          ./build.sh
 
       - uses: actions/upload-artifact@v3
         with:
-          name: CoreELEC-Amlogic-ng.arm-19.4-Matrix*Generic.img.gz
-          path: |
-            target/CoreELEC-Amlogic-ng.arm-19.4-Matrix*Generic.img.gz                 
+          name: coreelec-vdr.tar.gz
+          path: build-artifacts/coreelec-vdr.tar.gz
 
-      - uses: actions/upload-artifact@v3
-        with:
-          name: CoreELEC-Amlogic-ng.arm-19.4-Matrix*Generic.img.gz.sha256
-          path: |
-            target/CoreELEC-Amlogic-ng.arm-19.4-Matrix*Generic.img.gz.sha256
-
-      - uses: actions/upload-artifact@v3
-        with:
-          name: CoreELEC-Amlogic-ng.arm-19.4-Matrix*Odroid_C4.img.gz
-          path: target/CoreELEC-Amlogic-ng.arm-19.4-Matrix*Odroid_C4.img.gz
-
-      - uses: actions/upload-artifact@v3
-        with:
-          name: CoreELEC-Amlogic-ng.arm-19.4-Matrix*Odroid_C4.img.gz.sha256
-          path: target/CoreELEC-Amlogic-ng.arm-19.4-Matrix*Odroid_C4.img.gz.sha256
-
-      - uses: actions/upload-artifact@v3
-        with:
-          name: CoreELEC-Amlogic-ng.arm-19.4-Matrix*.tar
-          path: target/CoreELEC-Amlogic-ng.arm-19.4-Matrix*.tar
-
-      - uses: actions/upload-artifact@v3
-        with:
-          name: CoreELEC-Amlogic-ng.arm-19.4-Matrix*.tar.sha256
-          path: target/CoreELEC-Amlogic-ng.arm-19.4-Matrix*.tar.sha256
+# Not yet
+#      - uses: actions/upload-artifact@v3
+#        with:
+#          name: CoreELEC-Amlogic-ng.arm-19.4-Matrix_VDR_devel.tar
+#          path: CoreELEC/build-artifacts/CoreELEC-Amlogic-ng.arm-19.4-Matrix_VDR_devel.tar
+#
+#      - uses: actions/upload-artifact@v3
+#        with:
+#          name: CoreELEC-Amlogic-ng.arm-19.4-Matrix_VDR_devel-Odroid_C4.img.gz
+#          path: CoreELEC/build-artifacts/CoreELEC-Amlogic-ng.arm-19.4-Matrix_VDR_devel-Odroid_C4.img.gz

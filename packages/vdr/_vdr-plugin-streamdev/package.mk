@@ -13,10 +13,14 @@ PKG_NEED_UNPACK="$(get_pkg_directory _vdr)"
 PKG_LONGDESC="This PlugIn is a VDR implementation of Video Transfer and a basic HTTP Streaming Protocol."
 PKG_TOOLCHAIN="manual"
 
-# openssl             -> security/openssl
-
 pre_configure_target() {
-  export LDFLAGS="$(echo ${LDFLAGS} | sed -e "s|-Wl,--as-needed||") -L${SYSROOT_PREFIX}/usr/local/lib"
+  # test if prefix is set
+  if [ "x${VDR_PREFIX}" = "x" ]; then
+      echo "==> VDR_PREFIX is empty, but must be set"
+      exit 1
+  fi
+
+  export LDFLAGS="$(echo ${LDFLAGS} | sed -e "s|-Wl,--as-needed||") -L${SYSROOT_PREFIX}${VDR_PREFIX}/lib"
 }
 
 make_target() {
@@ -45,6 +49,6 @@ post_makeinstall_target() {
   # create config.zip
   VERSION=$(pkg-config --variable=apiversion vdr)
   cd ${INSTALL}
-  mkdir -p ${INSTALL}/usr/local/vdr-${VERSION}/config/
-  zip -qrum9 "${INSTALL}/usr/local/vdr-${VERSION}/config/streamdev-sample-config.zip" storage
+  mkdir -p ${INSTALL}${VDR_PREFIX}/config/
+  zip -qrum9 "${INSTALL}${VDR_PREFIX}/config/streamdev-sample-config.zip" storage
 }

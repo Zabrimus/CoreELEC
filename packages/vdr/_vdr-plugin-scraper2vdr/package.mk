@@ -6,16 +6,19 @@ PKG_SHA256="5e40763e06d218ee0f1993794a1d4b90da7877003ae749d48ee144753d6d26b7"
 PKG_LICENSE="GPL"
 PKG_SITE="https://github.com/horchi/scraper2vdr"
 PKG_URL="https://github.com/horchi/scraper2vdr/archive/refs/tags/${PKG_VERSION}.tar.gz"
-PKG_DEPENDS_TARGET="toolchain _vdr mariadb-connector-c imagemagick"
+PKG_DEPENDS_TARGET="toolchain _vdr mariadb-connector-c _imagemagick"
 PKG_NEED_UNPACK="$(get_pkg_directory _vdr) $(get_pkg_directory Python3) $(get_pkg_directory mariadb-connector-c)"
 PKG_LONGDESC="scraper2vdr acts as client and provides scraped metadata for tvshows and movies from epgd to other plugins via its service interface."
 PKG_TOOLCHAIN="manual"
 
-# mariadb-connector-c -> databases/mariadb-connector-c
-# imagemagick         -> vdr/vdr-depends/imagemagick
-
 pre_configure_target() {
-  export LDFLAGS="$(echo ${LDFLAGS} | sed -e "s|-Wl,--as-needed||") -L${SYSROOT_PREFIX}/usr/local/lib"
+  # test if prefix is set
+  if [ "x${VDR_PREFIX}" = "x" ]; then
+      echo "==> VDR_PREFIX is empty, but must be set"
+      exit 1
+  fi
+
+  export LDFLAGS="$(echo ${LDFLAGS} | sed -e "s|-Wl,--as-needed||") -L${SYSROOT_PREFIX}${VDR_PREFIX}/lib"
 }
 
 make_target() {
@@ -47,6 +50,6 @@ post_makeinstall_target() {
   # create config.zip
   VERSION=$(pkg-config --variable=apiversion vdr)
   cd ${INSTALL}
-  mkdir -p ${INSTALL}/usr/local/vdr-${VERSION}/config/
-  zip -qrum9 "${INSTALL}/usr/local/vdr-${VERSION}/config/scraper2vdr-sample-config.zip" storage
+  mkdir -p ${INSTALL}${VDR_PREFIX}/config/
+  zip -qrum9 "${INSTALL}${VDR_PREFIX}/config/scraper2vdr-sample-config.zip" storage
 }

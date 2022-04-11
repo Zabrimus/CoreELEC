@@ -12,18 +12,22 @@ PKG_NEED_UNPACK="$(get_pkg_directory _vdr)"
 PKG_LONGDESC="RoboTV is a Android TV based frontend for VDR."
 PKG_TOOLCHAIN="manual"
 
-# avahi               -> network/avahi
-
 post_unpack() {
   mv ${PKG_BUILD}/CMakeLists.txt ${PKG_BUILD}/Original-CMakeLists.txt
 }
 
 pre_configure_target() {
+  # test if prefix is set
+  if [ "x${VDR_PREFIX}" = "x" ]; then
+      echo "==> VDR_PREFIX is empty, but must be set"
+      exit 1
+  fi
+
   VDR_DIR=$(get_build_dir _vdr)
   export PKG_CONFIG_PATH=${VDR_DIR}:${PKG_CONFIG_PATH}
   export CPLUS_INCLUDE_PATH=${VDR_DIR}/include
   export VDRDIR=${VDR_DIR}
-  export LDFLAGS="$(echo ${LDFLAGS} | sed -e "s|-Wl,--as-needed||") -L${SYSROOT_PREFIX}/usr/local/lib"
+  export LDFLAGS="$(echo ${LDFLAGS} | sed -e "s|-Wl,--as-needed||") -L${SYSROOT_PREFIX}${VDR_PREFIX}/lib"
 }
 
 make_target() {
@@ -48,6 +52,6 @@ post_makeinstall_target() {
   # create config.zip
   VERSION=$(pkg-config --variable=apiversion vdr)
   cd ${INSTALL}
-  mkdir -p ${INSTALL}/usr/local/vdr-${VERSION}/config/
-  zip -qrum9 "${INSTALL}/usr/local/vdr-${VERSION}/config/robotv-sample-config.zip" storage
+  mkdir -p ${INSTALL}${VDR_PREFIX}/config/
+  zip -qrum9 "${INSTALL}${VDR_PREFIX}/config/robotv-sample-config.zip" storage
 }

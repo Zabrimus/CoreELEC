@@ -7,21 +7,19 @@ PKG_LICENSE="GPL"
 PKG_SITE="https://projects.vdr-developer.org/git/vdr-plugin-epg2vdr.git"
 PKG_URL="https://projects.vdr-developer.org/git/vdr-plugin-epg2vdr.git/snapshot/vdr-plugin-epg2vdr-${PKG_VERSION}.tar.gz"
 PKG_SOURCE_DIR="vdr-plugin-epg2vdr-${PKG_VERSION}"
-PKG_DEPENDS_TARGET="toolchain _vdr Python3 util-linux mariadb-connector-c jansson tinyxml2 libarchive"
+PKG_DEPENDS_TARGET="toolchain _vdr Python3 util-linux mariadb-connector-c _jansson tinyxml2 libarchive"
 PKG_NEED_UNPACK="$(get_pkg_directory _vdr) $(get_pkg_directory Python3) $(get_pkg_directory mariadb-connector-c)"
 PKG_LONGDESC="This plugin is used to retrieve EPG data into the VDR. The EPG data was loaded from a mariadb database."
 PKG_TOOLCHAIN="manual"
 
-# Python3             -> lang/Python3
-# util-linux          -> sysutils/util-linux
-# mariadb-connector-c -> databases/mariadb-connector-c
-# tinyxml             -> textproc/tinyxml
-# jansson             -> vdr-depends/jansson
-# tinyxml2            -> textproc/tinyxml2
-# libarchive          -> compress/libarchive
-
 pre_configure_target() {
-  export LDFLAGS="$(echo ${LDFLAGS} | sed -e "s|-Wl,--as-needed||") -L${SYSROOT_PREFIX}/usr/local/lib"
+  # test if prefix is set
+  if [ "x${VDR_PREFIX}" = "x" ]; then
+      echo "==> VDR_PREFIX is empty, but must be set"
+      exit 1
+  fi
+
+  export LDFLAGS="$(echo ${LDFLAGS} | sed -e "s|-Wl,--as-needed||") -L${SYSROOT_PREFIX}${VDR_PREFIX}/lib"
 }
 
 make_target() {
@@ -58,6 +56,6 @@ post_makeinstall_target() {
   # create config.zip
   VERSION=$(pkg-config --variable=apiversion vdr)
   cd ${INSTALL}
-  mkdir -p ${INSTALL}/usr/local/vdr-${VERSION}/config/
-  zip -qrum9 "${INSTALL}/usr/local/vdr-${VERSION}/config/epg2vdr-sample-config.zip" storage
+  mkdir -p ${INSTALL}${VDR_PREFIX}/config/
+  zip -qrum9 "${INSTALL}${VDR_PREFIX}/config/epg2vdr-sample-config.zip" storage
 }

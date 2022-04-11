@@ -6,23 +6,27 @@ PKG_SHA256="4ac259c2b2c9dadd140a22a7305be8965a9be6dfd7d9829b832ea95a667f1349"
 PKG_LICENSE="GPL"
 PKG_SITE="https://projects.vdr-developer.org/git/vdr-plugin-skindesigner.git/"
 PKG_URL="https://projects.vdr-developer.org/git/vdr-plugin-skindesigner.git/snapshot/vdr-plugin-skindesigner-${PKG_VERSION}.tar.gz"
-PKG_DEPENDS_TARGET="toolchain _vdr cairo librsvg _fonts"
+PKG_DEPENDS_TARGET="toolchain _vdr cairo _librsvg _fonts"
 PKG_NEED_UNPACK="$(get_pkg_directory _vdr)"
 PKG_LONGDESC="A VDR skinning engine that displays XML based Skins"
 PKG_TOOLCHAIN="manual"
 
-# cairo               -> graphics/cairo
-# librsvg             -> vdr/vdr-depends/librsvg
-
 pre_configure_target() {
-  export LDFLAGS="$(echo ${LDFLAGS} | sed -e "s|-Wl,--as-needed||") -L${SYSROOT_PREFIX}/usr/local/lib"
+  # test if prefix is set
+  if [ "x${VDR_PREFIX}" = "x" ]; then
+      echo "==> VDR_PREFIX is empty, but must be set"
+      exit 1
+  fi
+
+  export LDFLAGS="$(echo ${LDFLAGS} | sed -e "s|-Wl,--as-needed||") -L${SYSROOT_PREFIX}${VDR_PREFIX}/lib"
 }
 
 make_target() {
   VDR_DIR=$(get_build_dir _vdr)
-  export PKG_CONFIG_PATH=${VDR_DIR}:"${SYSROOT_PREFIX}/usr/local/lib/pkgconfig":"${SYSROOT_PREFIX}/usr/local/share/pkgconfig":${PKG_CONFIG_PATH}
+
+  export PKG_CONFIG_PATH=${VDR_DIR}:"$(get_build_dir _vdr-plugin-skindesigner)":"${SYSROOT_PREFIX}${VDR_PREFIX}/lib/pkgconfig":"$(get_install_dir shared-mime-info)/usr/share/pkgconfig":"$(get_install_dir pango)/usr/lib/pkgconfig":"$(get_install_dir libXft)/usr/lib/pkgconfig":${PKG_CONFIG_PATH}
   export CPLUS_INCLUDE_PATH=${VDR_DIR}/include
-  export PATH="${SYSROOT_PREFIX}/usr/local/bin":$PATH
+  export PATH="${SYSROOT_PREFIX}${VDR_PREFIX}/bin":$PATH
   SKINDESIGNER_SCRIPTDIR="/storage/.config/vdropt/plugins/skindesigner/scripts"
 
   make SKINDESIGNER_SCRIPTDIR="${SKINDESIGNER_SCRIPTDIR}"
@@ -36,8 +40,8 @@ makeinstall_target() {
   make DESTDIR="${INSTALL}" LIBDIR="${LIB_DIR}" PLGRESDIR="${PLGRES_DIR}" SKINDESIGNER_SCRIPTDIR="${SKINDESIGNER_SCRIPTDIR}" install
 
   # install font
-  mkdir -p ${INSTALL}/usr/local/share/fonts
-  cp -r fonts/VDROpenSans ${INSTALL}/usr/local/share/fonts
+  mkdir -p ${INSTALL}${VDR_PREFIX}/share/fonts
+  cp -r fonts/VDROpenSans ${INSTALL}${VDR_PREFIX}/share/fonts
 }
 
 post_makeinstall_target() {
@@ -52,11 +56,11 @@ post_makeinstall_target() {
   # create config.zip
   VERSION=$(pkg-config --variable=apiversion vdr)
   cd ${INSTALL}
-  mkdir -p ${INSTALL}/usr/local/vdr-${VERSION}/config/
-  zip -qrum9 "${INSTALL}/usr/local/vdr-${VERSION}/config/skindesigner-sample-config.zip" storage
+  mkdir -p ${INSTALL}${VDR_PREFIX}/config/
+  zip -qrum9 "${INSTALL}${VDR_PREFIX}/config/skindesigner-sample-config.zip" storage
 }
 
 post_install() {
-  mkfontdir ${INSTALL}/usr/local/share/fonts
-  mkfontscale ${INSTALL}/usr/local/share/fonts
+  mkfontdir ${INSTALL}${VDR_PREFIX}/share/fonts
+  mkfontscale ${INSTALL}${VDR_PREFIX}/share/fonts
 }
