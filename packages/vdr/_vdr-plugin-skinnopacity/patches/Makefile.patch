@@ -1,0 +1,70 @@
+Gemeinsame Unterverzeichnisse: a/conf und b/conf.
+Gemeinsame Unterverzeichnisse: a/icons und b/icons.
+Gemeinsame Unterverzeichnisse: a/iconTemplates und b/iconTemplates.
+Gemeinsame Unterverzeichnisse: a/logoconverter und b/logoconverter.
+diff -u8bBw a/Makefile b/Makefile
+--- a/Makefile	2021-12-16 15:44:29.000000000 +0100
++++ b/Makefile	2022-04-12 06:34:55.536036822 +0200
+@@ -1,16 +1,16 @@
+ #
+ # Makefile for a Video Disk Recorder plugin
+ #
+ # $Id$
+ 
+ # External image lib to use: imagemagick, graphicsmagick
+-#IMAGELIB = imagemagick
+-IMAGELIB = graphicsmagick
++IMAGELIB = imagemagick
++#IMAGELIB = graphicsmagick
+ 
+ # The official name of this plugin.
+ # This name will be used in the '-P...' option of VDR to load the plugin.
+ # By default the main source file also carries this name.
+ # IMPORTANT: the presence of this macro is important for the Make.config
+ # file. So it must be defined, even if it is not used here!
+ #
+ PLUGIN = skinnopacity
+@@ -18,17 +18,17 @@
+ ### The version number of this plugin (taken from the main source file):
+ 
+ VERSION = $(shell grep 'static const char \*VERSION *=' $(PLUGIN).c | awk '{ print $$6 }' | sed -e 's/[";]//g')
+ 
+ ### The directory environment:
+ 
+ # Use package data if installed...otherwise assume we're under the VDR source directory:
+ PKGCFG = $(if $(VDRDIR),$(shell pkg-config --variable=$(1) $(VDRDIR)/vdr.pc),$(shell pkg-config --variable=$(1) vdr || pkg-config --variable=$(1) ../../../vdr.pc))
+-LIBDIR = $(call PKGCFG,libdir)
++LIBDIR ?= $(call PKGCFG,libdir)
+ LOCDIR = $(call PKGCFG,locdir)
+ PLGCFG  = $(call PKGCFG,plgcfg)
+ VDRCONFDIR = $(call PKGCFG,configdir)
+ PLGRESDIR = $(call PKGCFG,resdir)/plugins/$(PLUGIN)
+ TMPDIR ?= /tmp
+ 
+ ### The compiler options:
+ export CFLAGS   = $(call PKGCFG,cflags)
+@@ -119,17 +119,17 @@
+ ### Targets:
+ 
+ $(SOFILE): $(OBJS)
+ 	@echo LD $@
+ 	$(Q)$(CXX) $(CXXFLAGS) $(LDFLAGS) -shared $(OBJS) $(LIBS) -o $@
+ 
+ install-lib: $(SOFILE)
+ 	@echo IN $@
+-	$(Q)install -D $^ $(DESTDIR)$(LIBDIR)/$^.$(APIVERSION)
++	$(Q)install -D $^ $(LIBDIR)/$^.$(APIVERSION)
+ 
+ install-themes:
+ 	mkdir -p $(DESTDIR)$(VDRCONFDIR)/themes
+ 	cp themes/* $(DESTDIR)$(VDRCONFDIR)/themes
+ 
+ install-icons:
+ 	mkdir -p $(DESTDIR)$(PLGRESDIR)/icons
+ 	cp -r icons/* $(DESTDIR)$(PLGRESDIR)/icons
+Gemeinsame Unterverzeichnisse: a/patches und b/patches.
+Gemeinsame Unterverzeichnisse: a/po und b/po.
+Gemeinsame Unterverzeichnisse: a/screenResSetup und b/screenResSetup.
+Gemeinsame Unterverzeichnisse: a/services und b/services.
+Gemeinsame Unterverzeichnisse: a/symbols und b/symbols.
+Gemeinsame Unterverzeichnisse: a/themes und b/themes.
