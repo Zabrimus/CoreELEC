@@ -29,7 +29,7 @@ make_target() {
   export PATH="${SYSROOT_PREFIX}${VDR_PREFIX}/bin":$PATH
   SKINDESIGNER_SCRIPTDIR="/storage/.config/vdropt/plugins/skindesigner/scripts"
 
-  make SKINDESIGNER_SCRIPTDIR="${SKINDESIGNER_SCRIPTDIR}"
+  make SKINDESIGNER_SCRIPTDIR="${SKINDESIGNER_SCRIPTDIR}" INCDIR="${VDR_PREFIX}/include"
 }
 
 makeinstall_target() {

@@ -1,6 +1,6 @@
-diff -u8Bbw a/Makefile b/Makefile
+diff -u8bBw a/Makefile b/Makefile
 --- a/Makefile	2021-01-23 11:48:27.000000000 +0100
-+++ b/Makefile	2022-04-12 13:54:38.608167293 +0200
++++ b/Makefile	2022-04-12 18:39:33.496795756 +0200
 @@ -12,22 +12,23 @@
  ### The version number of this plugin (taken from the main source file):
  
@@ -26,3 +26,22 @@ diff -u8Bbw a/Makefile b/Makefile
  
  ### The version number of VDR (taken from VDR's "config.h"):
  
+@@ -79,17 +80,17 @@
+ ### Targets:
+ 
+ #all: libvdr-$(PLUGIN).so
+ 
+ $(SOFILE): $(OBJS)
+ 	$(CXX) $(CXXFLAGS) $(LDFLAGS) -shared $(OBJS) -o $@
+ 
+ install-lib: $(SOFILE)
+-	install -D $^ $(DESTDIR)$(LIBDIR)/$^.$(APIVERSION)
++	install -D $^ $(LIBDIR)/$^.$(APIVERSION)
+ 
+ #install: install-lib install-i18n
+ install: install-lib
+ 
+ #libvdr-$(PLUGIN).so: $(OBJS)
+ #	$(CXX) $(CXXFLAGS) -shared $(OBJS) -o $@
+ ##	@cp $@ $(LIBDIR)/$@.$(VDRVERSION)
+ #	@cp --remove-destination $@ $(LIBDIR)/$@.$(APIVERSION)

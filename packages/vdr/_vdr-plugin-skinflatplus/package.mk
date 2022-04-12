@@ -32,7 +32,7 @@ make_target() {
 
 makeinstall_target() {
   LIB_DIR=${INSTALL}/$(pkg-config --variable=locdir vdr)/../../lib/vdr
-  make DESTDIR="${INSTALL}" LIBDIR="${LIB_DIR}" install
+  make DESTDIR="${INSTALL}" LIBDIR="${LIB_DIR}" SKINFLATPLUS_WIDGETDIR="${INSTALL}/storage/.config/vdropt-sample/plugins/skinflatplus" install
 }
 
 post_makeinstall_target() {

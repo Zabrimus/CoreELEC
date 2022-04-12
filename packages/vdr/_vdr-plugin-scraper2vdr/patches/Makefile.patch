@@ -1,6 +1,6 @@
 diff -ru8bBw a/lib/Makefile b/lib/Makefile
 --- a/lib/Makefile	2022-01-04 06:54:16.000000000 +0100
-+++ b/lib/Makefile	2022-03-26 17:49:29.386838984 +0100
++++ b/lib/Makefile	2022-04-12 18:54:05.742373064 +0200
 @@ -18,17 +18,17 @@
     LIBOBJS += imgtools.o
  endif
@@ -41,7 +41,7 @@ diff -ru8bBw a/lib/Makefile b/lib/Makefile
  lib: $(LIBTARGET).a
 diff -ru8bBw a/Make.config b/Make.config
 --- a/Make.config	2022-01-04 06:54:16.000000000 +0100
-+++ b/Make.config	2022-03-26 17:54:24.139308368 +0100
++++ b/Make.config	2022-04-12 18:54:05.742373064 +0200
 @@ -14,17 +14,17 @@
  # internals
  
@@ -63,7 +63,7 @@ diff -ru8bBw a/Make.config b/Make.config
  
 diff -ru8bBw a/Makefile b/Makefile
 --- a/Makefile	2022-01-04 06:54:16.000000000 +0100
-+++ b/Makefile	2022-03-26 17:48:34.194751304 +0100
++++ b/Makefile	2022-04-12 18:54:34.366424437 +0200
 @@ -47,30 +47,30 @@
  ### The version number of VDR's plugin API:
  
@@ -97,3 +97,22 @@ diff -ru8bBw a/Makefile b/Makefile
     DEFINES += -DGIT_REV='"$(GIT_REV)"'
  endif
  
+@@ -134,17 +134,17 @@
+ install-i18n: $(I18Nmsgs)
+ 
+ ### Targets:
+ 
+ $(SOFILE): hlib $(OBJS)
+ 	$(CXX) $(CXXFLAGS) $(LDFLAGS) -shared $(OBJS) $(LIBS) -o $@
+ 
+ install-lib: $(SOFILE)
+-	install -D -m644 $^ $(DESTDIR)$(LIBDIR)/$^.$(APIVERSION)
++	install -D -m644 $^ $(LIBDIR)/$^.$(APIVERSION)
+ 
+ install: install-lib install-i18n install-config
+ 
+ install-config:
+ 	if ! test -d $(DESTDIR)$(CONFDEST); then \
+ 	   mkdir -p $(DESTDIR)$(CONFDEST); \
+ 	   chmod a+rx $(DESTDIR)$(CONFDEST); \
+ 	fi
