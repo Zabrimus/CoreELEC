@@ -1,0 +1,28 @@
+diff -u8Bbw a/Makefile b/Makefile
+--- a/Makefile	2021-01-23 11:48:27.000000000 +0100
++++ b/Makefile	2022-04-12 13:54:38.608167293 +0200
+@@ -12,22 +12,23 @@
+ ### The version number of this plugin (taken from the main source file):
+ 
+ VERSION = $(shell grep 'static const char \*VERSION *=' $(PLUGIN).c | awk '{ print $$6 }' | sed -e 's/[";]//g')
+ 
+ ### The C++ compiler and options:
+ 
+ CXX      ?= g++
+ CXXFLAGS ?= -O2 -Wall -Woverloaded-virtual -fPIC
++CXXFLAGS += ${CUSTOM_CFLAGS}
+ 
+ ### The directory environment:
+ 
+ DVBDIR = ../../../../DVB
+ VDRDIR = ../../..
+-LIBDIR = ../../lib
++LIBDIR ?= ../../lib
+ TMPDIR = /tmp
+ 
+ ### Allow user defined options to overwrite defaults:
+ 
+ -include $(VDRDIR)/Make.config
+ 
+ ### The version number of VDR (taken from VDR's "config.h"):
+ 
