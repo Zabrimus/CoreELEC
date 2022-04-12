@@ -9,7 +9,7 @@ This is still work in progress...
 
 ## Aktueller Status:
 
-**Build folgender Plugins erfolgreich**
+** Build folgender Plugins erfolgreich**
 - vdr-plugin-softhdodroid
 - vdr-plugin-satip
 - vdr-plugin-ddci2
@@ -30,6 +30,24 @@ This is still work in progress...
 - vdr-plugin-zaphistory
 - vdr-plugin-epg2vdr
 - vdr-plugin-skindesigner
+- vdr-plugin-scraper2vdr
+- vdr-plugin-ac3mode
+- vdr-plugin-chanman
+- vdr-plugin-channellists
+- vdr-plugin-control
+- vdr-plugin-filebrowser
+- vdr-plugin-markad
+- vdr-plugin-osd2web
+- vdr-plugin-skinflat
+- vdr-plugin-skinlcarsng
+- vdr-plugin-skinnopacity
+- vdr-plugin-skinsoppalusikka
+- vdr-plugin-skinflatplus
+
+**Following plugins can't be compiled**
+- vdr-plugin-skinelchihd<br>
+  ``#error ImageMagick Version 7.0 or higher is required``
+
 
 ## Standalone VDR with all dependent libraries
 ### Build
