@@ -39,6 +39,3 @@ diff -u8bBw a/Makefile b/Makefile
  install: install-lib install-i18n install-conf
  
  dist: $(I18Npo) clean
-Gemeinsame Unterverzeichnisse: a/po und b/po.
-Gemeinsame Unterverzeichnisse: a/symbols und b/symbols.
-Gemeinsame Unterverzeichnisse: a/themes und b/themes.

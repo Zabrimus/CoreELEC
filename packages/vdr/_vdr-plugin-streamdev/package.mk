@@ -1,6 +1,4 @@
 # SPDX-License-Identifier: GPL-2.0-or-later
-# Copyright (C) 2009-2016 Stephan Raue (stephan@openelec.tv)
-# Copyright (C) 2016-present Team LibreELEC (https://libreelec.tv)
 
 PKG_NAME="_vdr-plugin-streamdev"
 PKG_VERSION="da74779591827ad7e10493b0eade65a11c525171"

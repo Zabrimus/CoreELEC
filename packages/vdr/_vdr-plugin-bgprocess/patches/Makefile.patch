@@ -20,4 +20,3 @@ diff -u8bBw a/Makefile b/Makefile
  
  ### Test whether VDR has locale support
  VDRLOCALE = $(shell grep 'I18N_DEFAULT_LOCALE' $(VDRDIR)/i18n.h)
-Gemeinsame Unterverzeichnisse: a/po und b/po.

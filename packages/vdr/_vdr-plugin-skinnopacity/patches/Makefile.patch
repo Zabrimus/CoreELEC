@@ -1,7 +1,3 @@
-Gemeinsame Unterverzeichnisse: a/conf und b/conf.
-Gemeinsame Unterverzeichnisse: a/icons und b/icons.
-Gemeinsame Unterverzeichnisse: a/iconTemplates und b/iconTemplates.
-Gemeinsame Unterverzeichnisse: a/logoconverter und b/logoconverter.
 diff -u8bBw a/Makefile b/Makefile
 --- a/Makefile	2021-12-16 15:44:29.000000000 +0100
 +++ b/Makefile	2022-04-12 06:34:55.536036822 +0200
@@ -62,9 +58,3 @@ diff -u8bBw a/Makefile b/Makefile
  install-icons:
  	mkdir -p $(DESTDIR)$(PLGRESDIR)/icons
  	cp -r icons/* $(DESTDIR)$(PLGRESDIR)/icons
-Gemeinsame Unterverzeichnisse: a/patches und b/patches.
-Gemeinsame Unterverzeichnisse: a/po und b/po.
-Gemeinsame Unterverzeichnisse: a/screenResSetup und b/screenResSetup.
-Gemeinsame Unterverzeichnisse: a/services und b/services.
-Gemeinsame Unterverzeichnisse: a/symbols und b/symbols.
-Gemeinsame Unterverzeichnisse: a/themes und b/themes.

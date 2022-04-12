@@ -1,6 +1,4 @@
 # SPDX-License-Identifier: GPL-2.0-or-later
-# Copyright (C) 2009-2016 Stephan Raue (stephan@openelec.tv)
-# Copyright (C) 2016-present Team LibreELEC (https://libreelec.tv)
 
 PKG_NAME="_vdr-plugin-dvbapi"
 PKG_VERSION="197e7524e563923d4b86e74a121f7174373818d9"

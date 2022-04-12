@@ -1,4 +1,3 @@
-Gemeinsame Unterverzeichnisse: a/iptv und b/iptv.
 diff -u8bBw a/Makefile b/Makefile
 --- a/Makefile	2020-01-03 22:36:58.000000000 +0100
 +++ b/Makefile	2022-03-25 17:58:23.661571632 +0100
@@ -47,4 +46,3 @@ diff -u8bBw a/Makefile b/Makefile
  	@mkdir $(TMPDIR)/$(ARCHIVE)
  	@cp -a * $(TMPDIR)/$(ARCHIVE)
  	@tar czf $(PACKAGE).tgz -C $(TMPDIR) $(ARCHIVE)
-Gemeinsame Unterverzeichnisse: a/po und b/po.
