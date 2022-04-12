@@ -1,0 +1,50 @@
+Gemeinsame Unterverzeichnisse: a/configs und b/configs.
+Gemeinsame Unterverzeichnisse: a/contrib und b/contrib.
+Gemeinsame Unterverzeichnisse: a/decors und b/decors.
+Gemeinsame Unterverzeichnisse: a/icons und b/icons.
+diff -u8bBw a/Makefile b/Makefile
+--- a/Makefile	2022-01-17 09:37:28.000000000 +0100
++++ b/Makefile	2022-04-12 06:12:49.238508099 +0200
+@@ -34,17 +34,17 @@
+ ### The version number of this plugin (taken from the main source file):
+ 
+ VERSION = $(shell grep 'static const char \*VERSION *=' $(PLUGIN).c | awk '{ print $$6 }' | sed -e 's/[";]//g')
+ 
+ ### The directory environment:
+ 
+ # Use package data if installed...otherwise assume we're under the VDR source directory:
+ PKGCFG = $(if $(VDRDIR),$(shell pkg-config --variable=$(1) $(VDRDIR)/vdr.pc),$(shell pkg-config --variable=$(1) vdr || pkg-config --variable=$(1) ../../../vdr.pc))
+-LIBDIR = $(call PKGCFG,libdir)
++LIBDIR ?= $(call PKGCFG,libdir)
+ LOCDIR = $(call PKGCFG,locdir)
+ PLGCFG  = $(call PKGCFG,plgcfg)
+ VDRCONFDIR = $(call PKGCFG,configdir)
+ PLGRESDIR = $(call PKGCFG,resdir)/plugins/$(PLUGIN)
+ TMPDIR ?= /tmp
+ SKINFLATPLUS_WIDGETDIR ?= $(LIBDIR)/$(PLUGIN)/widgets
+ 
+ ### The compiler options:
+@@ -137,17 +137,17 @@
+ install-i18n: $(I18Nmsgs)
+ 
+ ### Targets:
+ 
+ $(SOFILE): $(OBJS)
+ 	$(CXX) $(CXXFLAGS) $(LDFLAGS) -shared $(OBJS) $(LIBS) -o $@
+ 
+ install-lib: $(SOFILE)
+-	install -D $^ $(DESTDIR)$(LIBDIR)/$^.$(APIVERSION)
++	install -D $^ $(LIBDIR)/$^.$(APIVERSION)
+ 
+ install-themes:
+ 	mkdir -p $(DESTDIR)$(VDRCONFDIR)/themes
+ 	cp themes/* $(DESTDIR)$(VDRCONFDIR)/themes
+ 
+ install-decors:
+ 	mkdir -p $(DESTDIR)$(PLGRESDIR)/decors
+ 	cp decors/* $(DESTDIR)$(PLGRESDIR)/decors
+Gemeinsame Unterverzeichnisse: a/po und b/po.
+Gemeinsame Unterverzeichnisse: a/preview und b/preview.
+Gemeinsame Unterverzeichnisse: a/services und b/services.
+Gemeinsame Unterverzeichnisse: a/themes und b/themes.
+Gemeinsame Unterverzeichnisse: a/widgets und b/widgets.
