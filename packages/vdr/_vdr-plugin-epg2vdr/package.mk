@@ -26,7 +26,7 @@ make_target() {
   PYTHON_INSTALL_DIR=$(get_install_dir Python3)
   VDR_DIR=$(get_build_dir _vdr)
 
-  export PKG_CONFIG_PATH=${VDR_DIR}:${PYTHON_INSTALL_DIR}/usr/lib/pgkconfig:${PKG_CONFIG_PATH}
+  export PKG_CONFIG_PATH=${VDR_DIR}:${PYTHON_INSTALL_DIR}/usr/lib/pgkconfig:${SYSROOT_PREFIX}/${VDR_PREFIX}/lib/pkgconfig:${PKG_CONFIG_PATH}
   export CPLUS_INCLUDE_PATH=${VDR_DIR}/include
 
   MARIADB_CFLAGS=$(pkg-config --cflags libmariadb)

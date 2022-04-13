@@ -31,7 +31,6 @@ PKG_DEPENDS_TARGET+=" _vdr-plugin-zaphistory"
 PKG_DEPENDS_TARGET+=" _vdr-plugin-epg2vdr"
 PKG_DEPENDS_TARGET+=" _vdr-plugin-skindesigner"
 PKG_DEPENDS_TARGET+=" _vdr-plugin-scraper2vdr"
-
 PKG_DEPENDS_TARGET+=" _vdr-plugin-ac3mode"
 PKG_DEPENDS_TARGET+=" _vdr-plugin-chanman"
 PKG_DEPENDS_TARGET+=" _vdr-plugin-channellists"

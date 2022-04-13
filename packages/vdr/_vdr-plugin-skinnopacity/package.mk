@@ -7,7 +7,7 @@ PKG_LICENSE="GPL"
 PKG_SITE="https://gitlab.com/kamel5/SkinNopacity"
 PKG_URL="https://gitlab.com/kamel5/SkinNopacity/-/archive/${PKG_VERSION}/SkinNopacity-${PKG_VERSION}.zip"
 PKG_SOURCE_DIR="SkinNopacity-${PKG_VERSION}"
-PKG_DEPENDS_TARGET="toolchain _vdr"
+PKG_DEPENDS_TARGET="toolchain _vdr _imagemagick"
 PKG_NEED_UNPACK="$(get_pkg_directory _vdr)"
 PKG_LONGDESC="TODO"
 PKG_TOOLCHAIN="manual"
@@ -24,7 +24,7 @@ pre_configure_target() {
 
 make_target() {
   VDR_DIR=$(get_build_dir _vdr)
-  export PKG_CONFIG_PATH=${VDR_DIR}:${PKG_CONFIG_PATH}
+  export PKG_CONFIG_PATH=${VDR_DIR}:${SYSROOT_PREFIX}/${VDR_PREFIX}/lib/pkgconfig:${PKG_CONFIG_PATH}
   export CPLUS_INCLUDE_PATH=${VDR_DIR}/include
 
   make

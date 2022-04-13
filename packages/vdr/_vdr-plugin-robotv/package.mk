@@ -23,7 +23,7 @@ pre_configure_target() {
   fi
 
   VDR_DIR=$(get_build_dir _vdr)
-  export PKG_CONFIG_PATH=${VDR_DIR}:${PKG_CONFIG_PATH}
+  export PKG_CONFIG_PATH=${VDR_DIR}:${SYSROOT_PREFIX}/${VDR_PREFIX}/lib/pkgconfig:${PKG_CONFIG_PATH}
   export CPLUS_INCLUDE_PATH=${VDR_DIR}/include
   export VDRDIR=${VDR_DIR}
   export LDFLAGS="$(echo ${LDFLAGS} | sed -e "s|-Wl,--as-needed||") -L${SYSROOT_PREFIX}${VDR_PREFIX}/lib"
