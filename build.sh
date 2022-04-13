@@ -15,7 +15,7 @@ save_sources_cache() {
   fi
 }
 
-restore_sourcs_cache() {
+restore_sources_cache() {
   if [ -d ../build-cache/${RUNNER_SOURCES} ]; then
     # delete old sources
     rm -f sources
