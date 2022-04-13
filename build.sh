@@ -1,27 +1,31 @@
 #/bin/bash
 
-BRANCH=exp-vdr-opt
-
 RUNNER_BUILDDIR=build.CoreELEC-Amlogic-ng.arm-19
-RUNNER_CACHE=exp-vdr-opt-build
-RUNNER_SOURCES=exp-vdr-opt-sources
+RUNNER_CACHE=coreelec-19.pass1.build.cache
+RUNNER_SOURCES=coreelec-19.sources.cache
 
-restore_build_cache() {
-  # restore build-cache
-  if [ -d ../build-cache/${RUNNER_CACHE} ]; then
-    rm -f ${RUNNER_BUILDDIR}
-    ln -s ../build-cache/${RUNNER_CACHE} ${RUNNER_BUILDDIR}
+save_sources_cache() {
+  # save sources cache
+  mkdir -p ../build-cache
+
+  if [ ! -d ../build-cache/${RUNNER_SOURCES} ]; then
+     mv sources ../build-cache/${RUNNER_SOURCES}
+  else
+     rm sources
   fi
+}
 
+restore_sourcs_cache() {
   if [ -d ../build-cache/${RUNNER_SOURCES} ]; then
+    # delete old sources
     rm -f sources
+
+    # link cached sources
     ln -s ../build-cache/${RUNNER_SOURCES} sources
   fi
 }
 
 create_vdr_tar() {
-  clean_build_directory
-
   #### 1. Pass: build without VDR
   export VDR="no"
   VDR_PREFIX="/opt/vdr" make
@@ -43,7 +47,7 @@ create_vdr_tar() {
   diff -u8bBw pass1.filelist pass2.filelist | sed -e '/^\+/!d ; /^\+\/usr\/bin/d ; /^\+\/usr\/share/d ; s/^\+//g ; /^\+\+/d' > libs.diff
   cd ..
 
-  # Extract VDR archive
+  # copy VDR data
   mkdir -p vdr-tar
   cp -a target/pass2/opt vdr-tar
 
@@ -76,41 +80,11 @@ create_vdr_tar() {
 }
 
 create_vdr_image() {
-  clean_build_directory
-
   export VDR="yes"
   VDR_PREFIX="/usr/local" make image
 }
 
-clean_build_directory() {
-  # rm VDR and all dependencies in build directory
-  rm -Rf ${RUNNER_BUILDDIR}/build/_*
-  rm -Rf ${RUNNER_BUILDDIR}/install_pkg/_*
-  rm -Rf ${RUNNER_BUILDDIR}/image/system/opt
-  rm -Rf ${RUNNER_BUILDDIR}/image/.stamps/_*
-  rm -Rf ${RUNNER_BUILDDIR}/image/.stamps/vdr-all
-  rm -Rf ${RUNNER_BUILDDIR}/.stamps/_*
-  rm -Rf ${RUNNER_BUILDDIR}/.stamps/vdr-all
-}
-
-save_cache() {
-  # save build cache
-  mkdir -p ../build-cache
-
-  if [ ! -d ../build-cache/${RUNNER_CACHE} ]; then
-     mv ${RUNNER_BUILDDIR} ../build-cache/${RUNNER_CACHE}
-  else
-     rm ${RUNNER_BUILDDIR}
-  fi
-
-  if [ ! -d ../build-cache/${RUNNER_SOURCES} ]; then
-     mv sources ../build-cache/${RUNNER_SOURCES}
-  else
-     rm sources
-  fi
-}
-
-restore_build_cache
+restore_sources_cache
 
 mkdir -p build-artifacts
 rm build-artifacts/*
@@ -118,11 +92,15 @@ rm build-artifacts/*
 rm -f target/*
 create_vdr_tar
 
+# cleanup
+rm -Rf ${RUNNER_BUILDDIR}
+
 # Not yet
 #rm -f target/*
 #create_vdr_image
 #mv target/*.tar build-artifacts/CoreELEC-Amlogic-ng.arm-19.4-Matrix_VDR_devel.tar
 #mv target/CoreELEC-Amlogic-ng.arm-19.4-Matrix_devel*Odroid_C4.img.gz build-artifacts/CoreELEC-Amlogic-ng.arm-19.4-Matrix_VDR_devel-Odroid_C4.img.gz
+# cleanup
+# rm -Rf ${RUNNER_BUILDDIR}
 
-clean_build_directory
-save_cache
+save_sources_cache
