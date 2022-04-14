@@ -16,9 +16,6 @@ EOF
 }
 
 install() {
-  echo "INSTALL CALLED"
-  exit 1
-
   # delete old sample configuration if it exists and extract the new one
   rm -Rf /storage/.config/vdropt-sample
 
