@@ -1,4 +1,4 @@
-name: Build CoreELEC/VDR Matrix
+name: Release CoreELEC/VDR Matrix
 
 on:
   push:
