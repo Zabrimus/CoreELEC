@@ -3,6 +3,7 @@
 PROGNAME=$0
 
 CONF_DIR="XXCONFDIRXX"
+BIN_DIR="XXBINDIRXX"
 
 usage() {
   cat << EOF >&2
@@ -28,6 +29,16 @@ install() {
     # copy samples to final directory
     cp -a /storage/.config/vdropt-sample /storage/.config/vdropt
   fi
+
+  if [[ ! -f /storage/.config/system.d/vdropt.service ]]; then
+    cp -a ${BIN_DIR}/system.d/vdropt.service /storage/.config/system.d/vdropt.service
+  fi
+
+  if [[ ! -f /storage/.config/system.d/vdropt.target ]]; then
+    cp -a ${BIN_DIR}/system.d/vdropt.target /storage/.config/system.d/vdropt.target
+  fi
+
+  systemctl daemon-reload
 }
 
 boot() {

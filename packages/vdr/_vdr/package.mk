@@ -63,11 +63,15 @@ makeinstall_target() {
   cat ${PKG_DIR}/bin/start_vdr.sh | sed "s#XXCONFDIRXX#${CONFDIR}# ; s#XXBINDIRXX#${PREFIX}/bin# ; s#XXVERSIONXX#${PKG_VERSION}# ; s#XXLIBDIRXX#${PREFIX}/lib#" > ${INSTALL}/${PREFIX}/bin/start_vdr.sh
   chmod +x ${INSTALL}/${PREFIX}/bin/start_vdr.sh
 
-  cat ${PKG_DIR}/bin/install.sh | sed "s#XXVERSIONXX#${PKG_VERSION}# ; s#XXCONFDIRXX#${PREFIX}/config#" > ${INSTALL}/${PREFIX}/bin/install.sh
+  cat ${PKG_DIR}/bin/install.sh | sed "s#XXVERSIONXX#${PKG_VERSION}# ; s#XXCONFDIRXX#${PREFIX}/config# ; s#XXBINDIRXX#${PREFIX}/bin#" > ${INSTALL}/${PREFIX}/bin/install.sh
   chmod +x ${INSTALL}/${PREFIX}/bin/install.sh
 
   cat ${PKG_DIR}/bin/switch_kodi_vdr.sh | sed "s#XXVERSIONXX#${PKG_VERSION}# ; s#XXCONFDIRXX#${PREFIX}/conf#" > ${INSTALL}/${PREFIX}/bin/switch_kodi_vdr.sh
   chmod +x ${INSTALL}/${PREFIX}/bin/switch_kodi_vdr.sh
+
+  # copy system.d folder
+  cp -a ${PKG_DIR}/system.d ${INSTALL}/${PREFIX}/bin
+  chmod +x ${INSTALL}/${PREFIX}/bin/system.d/*.service
 }
 
 post_makeinstall_target() {
