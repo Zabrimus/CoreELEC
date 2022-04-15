@@ -101,13 +101,3 @@ EOF
   cd ${INSTALL}
   zip -qrum9 ${INSTALL}${PREFIX}/config/vdr-sample-config.zip storage
 }
-
-# TODO:
-#   systemd/* nach /storage/.config/system.d kopieren
-#
-# Automatischer Start von VDR ist möglich durch:
-#      cd /storage/.config/system.d
-#      ln -s vdr.service kodi.service
-# Dies ist allerdings etwas schräg. Aber eine andere Lösung habe ich (noch?) nicht gefunden.
-
-
