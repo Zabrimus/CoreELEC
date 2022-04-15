@@ -39,6 +39,10 @@ post_makeinstall_target() {
   mkdir -p ${INSTALL}/storage/.config/vdropt-sample/conf.d
   cp -PR ${PKG_DIR}/config/*.conf ${INSTALL}/storage/.config/vdropt-sample/conf.d/
 
+  # copy configuration files
+  mkdir -p ${INSTALL}/storage/.config/vdropt-sample/plugins/streamdev-server
+  cp $(get_build_dir _vdr-plugin-streamdev)/streamdev-server/* ${INSTALL}/storage/.config/vdropt-sample/plugins/streamdev-server
+
   if find ${INSTALL}/storage/.config/vdropt -mindepth 1 -maxdepth 1 2>/dev/null | read; then
     cp -ar ${INSTALL}/storage/.config/vdropt/* ${INSTALL}/storage/.config/vdropt-sample
     rm -Rf ${INSTALL}/storage/.config/vdropt
