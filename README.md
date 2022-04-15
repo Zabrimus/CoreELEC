@@ -93,6 +93,16 @@ In folder /opt/vdr/bin or /usr/local/bin contains an install script
           -b vdr  : VDR will be started after booting
 ```
 
+## Switch OSD languange
+To be able to switch the OSD languange you have to
+This is not a VDR configuration/installation issue. To solve this, you have to
+- install Kodi addon: locale
+- configure Kodi addon locale and choose your desired language
+- create/modify file /storage/.profile with (in my case it's german):<br>
+   export LANG="de_DE.UTF-8"<br>
+   export LC_ALL="de_DE.UTF-8
+- reboot
+
 ## Das Verzeichnis-Layout und Dateien
 
 - /usr/local/lib<br>
