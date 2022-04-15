@@ -95,7 +95,6 @@ In folder /opt/vdr/bin or /usr/local/bin contains an install script
 
 ## Switch OSD languange
 To be able to switch the OSD languange you have to
-This is not a VDR configuration/installation issue. To solve this, you have to
 - install Kodi addon: locale
 - configure Kodi addon locale and choose your desired language
 - create/modify file /storage/.profile with (in my case it's german):<br>
