@@ -27,12 +27,13 @@ make_target() {
   export PKG_CONFIG_PATH=${VDR_DIR}:${SYSROOT_PREFIX}/${VDR_PREFIX}/lib/pkgconfig:${PKG_CONFIG_PATH}
   export CPLUS_INCLUDE_PATH=${VDR_DIR}/include
 
-  CUSTOM_CFLAGS="-Woverloaded-virtual -fPIC" make
+  CUSTOM_CFLAGS="-Woverloaded-virtual -fPIC" VDRDIR="${VDR_DIR}" make SHELL="sh -x"
 }
 
 makeinstall_target() {
+  VDR_DIR=$(get_build_dir _vdr)
   LIB_DIR=${INSTALL}/$(pkg-config --variable=locdir vdr)/../../lib/vdr
-  make DESTDIR="${INSTALL}" LIBDIR="${LIB_DIR}" install
+  make DESTDIR="${INSTALL}" LIBDIR="${LIB_DIR}" VDRDIR="${VDR_DIR}" install
 }
 
 post_makeinstall_target() {
