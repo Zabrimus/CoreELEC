@@ -49,7 +49,9 @@ create_vdr_tar() {
 
   # copy VDR data
   mkdir -p vdr-tar
+  mkdir -p vdr-tar/storage/.fonts
   cp -a target/pass2/opt vdr-tar
+  cp -a target/pass2/storage/.fonts/* vdr-tar/storage/.fonts/
 
   # copy extra libs from pass1 to vdr-tar
   while read -r line; do
