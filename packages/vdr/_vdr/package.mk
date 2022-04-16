@@ -82,7 +82,7 @@ post_makeinstall_target() {
   mv ${VDR_DIR}/storage/.config/vdropt ${VDR_DIR}/storage/.config/vdropt-sample
 
   mkdir -p ${VDR_DIR}/storage/.config/vdropt-sample/conf.d
-  cp -PR ${PKG_DIR}/config/*.conf ${VDR_DIR}/storage/.config/vdropt-sample/conf.d/
+  cp -PR ${PKG_DIR}/conf.d/*.conf ${VDR_DIR}/storage/.config/vdropt-sample/conf.d/
 
   cat >> ${VDR_DIR}/storage/.config/vdropt-sample/enabled_plugins <<EOF
 softhdodroid

@@ -74,6 +74,5 @@ while getopts b:i o; do
   esac
 done
 
-
-
-
+# create default directories
+mkdir -p /opt/vdr/cache/markad
