@@ -26,6 +26,7 @@ pre_configure_target() {
   fi
 
   export LDFLAGS="$(echo ${LDFLAGS} | sed -e "s|-Wl,--as-needed||") -L${SYSROOT_PREFIX}/usr/lib/iconv -liconv"
+
 }
 
 pre_make_target() {
@@ -63,6 +64,12 @@ makeinstall_target() {
   cat ${PKG_DIR}/bin/start_vdr.sh | sed "s#XXCONFDIRXX#${CONFDIR}# ; s#XXBINDIRXX#${PREFIX}/bin# ; s#XXVERSIONXX#${PKG_VERSION}# ; s#XXLIBDIRXX#${PREFIX}/lib#" > ${INSTALL}/${PREFIX}/bin/start_vdr.sh
   chmod +x ${INSTALL}/${PREFIX}/bin/start_vdr.sh
 
+  cat ${PKG_DIR}/bin/start_vdr_easy.sh | sed "s#XXCONFDIRXX#${CONFDIR}# ; s#XXBINDIRXX#${PREFIX}/bin# ; s#XXVERSIONXX#${PKG_VERSION}# ; s#XXLIBDIRXX#${PREFIX}/lib#" > ${INSTALL}/${PREFIX}/bin/start_vdr_easy.sh
+  chmod +x ${INSTALL}/${PREFIX}/bin/start_vdr_easy.sh
+
+  cat ${PKG_DIR}/bin/easyvdrctl.sh | sed "s#XXCONFDIRXX#${CONFDIR}# ; s#XXBINDIRXX#${PREFIX}/bin# ; s#XXVERSIONXX#${PKG_VERSION}# ; s#XXLIBDIRXX#${PREFIX}/lib#" > ${INSTALL}/${PREFIX}/bin/easyvdrctl.sh
+  chmod +x ${INSTALL}/${PREFIX}/bin/easyvdrctl.sh
+
   cat ${PKG_DIR}/bin/install.sh | sed "s#XXVERSIONXX#${PKG_VERSION}# ; s#XXCONFDIRXX#${PREFIX}/config# ; s#XXBINDIRXX#${PREFIX}/bin#" > ${INSTALL}/${PREFIX}/bin/install.sh
   chmod +x ${INSTALL}/${PREFIX}/bin/install.sh
 
@@ -82,7 +89,7 @@ post_makeinstall_target() {
   mv ${VDR_DIR}/storage/.config/vdropt ${VDR_DIR}/storage/.config/vdropt-sample
 
   mkdir -p ${VDR_DIR}/storage/.config/vdropt-sample/conf.d
-  cp -PR ${PKG_DIR}/conf.d/*.conf ${VDR_DIR}/storage/.config/vdropt-sample/conf.d/
+  cp -PR ${PKG_DIR}/conf.d/* ${VDR_DIR}/storage/.config/vdropt-sample/conf.d/
 
   cat >> ${VDR_DIR}/storage/.config/vdropt-sample/enabled_plugins <<EOF
 softhdodroid

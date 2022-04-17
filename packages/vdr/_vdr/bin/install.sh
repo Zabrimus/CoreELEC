@@ -10,6 +10,7 @@ usage() {
 Usage: $PROGNAME [-install-config] [-boot kodi|vdr]
 
 -i      : Extracts the default configuration into directory /storage/.config/vdropt-sample and copy the sample folder to /storage/.config/vdropt if it does not exists.
+-C      : Use with care! All configuration entries of vdropt will be copied to vdropt-sample. And then all entries of vdropt-sample will be copied to vdropt.
 -b kodi : Kodi will be started after booting
 -b vdr  : VDR will be started after booting
 EOF
@@ -41,6 +42,14 @@ install() {
   systemctl daemon-reload
 }
 
+install_copy() {
+  install
+
+  cp -a /storage/.config/vdropt/* /storage/.config/vdropt-sample/
+  cp -a /storage/.config/vdropt-sample/* /storage/.config/vdropt/
+}
+
+
 boot() {
   if [ "$1" = "kodi" ]; then
       echo "Boot Kodi"
@@ -66,9 +75,10 @@ if [ "$#" = "0" ]; then
     usage
 fi
 
-while getopts b:i o; do
+while getopts b:iC o; do
   case $o in
     (i) install;;
+    (C) install_copy;;
     (b) boot "$OPTARG";;
     (*) usage
   esac

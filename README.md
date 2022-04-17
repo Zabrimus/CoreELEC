@@ -43,6 +43,7 @@ This is still work in progress...
 - vdr-plugin-skinnopacity
 - vdr-plugin-skinsoppalusikka
 - vdr-plugin-skinflatplus
+- vdr-plugin-easyvdr
 
 **Following plugins can't be compiled**
 - vdr-plugin-skinelchihd<br>
@@ -89,6 +90,7 @@ In folder /opt/vdr/bin or /usr/local/bin contains an install script
   
   Usage: install.sh [-install-config] [-boot kodi|vdr]
           -i      : Extracts the default configuration into directory /storage/.config/vdropt-sample and copy the sample folder to /storage/.config/vdropt if it does not exists.
+          -C      : Use with care! All configuration entries of vdropt will be copied to vdropt-sample. And then all entries of vdropt-sample will be copied to vdropt.
           -b kodi : Kodi will be started after booting
           -b vdr  : VDR will be started after booting
 ```
@@ -104,27 +106,26 @@ To be able to switch the OSD languange you have to
 
 ## Das Verzeichnis-Layout und Dateien
 
-- /usr/local/lib<br>
+- ```/usr/local/lib``` or ```/opt/vdr/lib```<br>
   contains libraries which are usually not part of CoreELEC
-- /usr/local/vdr enthält<br>
+- ```/usr/local/vdr``` or ```/opt/vdr/```<br>
   contains VDR and all plugins
-- /usr/local/vdr-2.6.1/config
+- ```/usr/local/vdr-2.6.1/config``` or ```/storage/.config/vdropt/```<br>
   contains the default configuration files  
-- storage/.config/vdropt<br>
+- ```storage/.config/vdropt```<br>
   contains the VDR and plugin configuration files. Will never be overwritten by the install process. 
-- storage/.config/vdropt-sample<br>
+- ```storage/.config/vdropt-sample```<br>
   contains sample configuration files
 
-<br>
-
-- /usr/local/vdr-2.6.1/bin/start_vdr.sh<br>
-  Start script of VDR. Reads all configuration files, creates the parameter list and launches VDR.
-- /storage/.config/vdropt/enabled-plugins<br>
-  Each line contains a plugin name which shall be started.
-  The default is <br>
-  > softhdodroid<br>
-  > satip
-
+## Start VDR
+### \<bindir\>/start_vdr.sh 
+Reads the file ```/storage/.config/vdropt/enabled-plugins``` which contains a plugin name on each line and starts VDR 
+with all enabled plugins. The plugin configuration are read from ```/storage/.config/vdropt/*.conf```.
+### \<bindir\>/start_vdr_easy.sh
+Uses the plugin vdr-plugin-easyvdr (see https://www.gen2vdr.de/wirbel/easyvdr/index2.html) to start VDR. 
+The configuration entries can be found in the ```/storage/.config/vdropt/*_settings.ini```.
+Plugins can be started/stopped at runtime via the OSD.
+Additionally the command line tool easyvdrctl.sh (which uses easyvdrctl) can be found in the &lt;bindir&gt;.
 
 # CoreELEC
 

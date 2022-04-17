@@ -37,7 +37,7 @@ makeinstall_target() {
 
 post_makeinstall_target() {
   mkdir -p ${INSTALL}/storage/.config/vdropt-sample/conf.d
-  cp -PR ${PKG_DIR}/config/*.conf ${INSTALL}/storage/.config/vdropt-sample/conf.d/
+  cp -PR ${PKG_DIR}/conf.d/* ${INSTALL}/storage/.config/vdropt-sample/conf.d/
 
   # copy configuration files
   mkdir -p ${INSTALL}/storage/.config/vdropt-sample/plugins/streamdev-server

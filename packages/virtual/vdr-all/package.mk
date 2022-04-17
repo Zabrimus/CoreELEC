@@ -43,6 +43,7 @@ PKG_DEPENDS_TARGET+=" _vdr-plugin-skinlcarsng"
 PKG_DEPENDS_TARGET+=" _vdr-plugin-skinnopacity"
 PKG_DEPENDS_TARGET+=" _vdr-plugin-skinsoppalusikka"
 PKG_DEPENDS_TARGET+=" _vdr-plugin-skinflatplus"
+PKG_DEPENDS_TARGET+=" _vdr-plugin-easyvdr"
 
 # Makfile muss angepasst werden
 # PKG_DEPENDS_TARGET+=" _vdr-plugin-bgprocess"
