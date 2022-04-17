@@ -23,20 +23,14 @@ pre_configure_target() {
 }
 
 make_target() {
-  PYTHON_INSTALL_DIR=$(get_install_dir Python3)
   VDR_DIR=$(get_build_dir _vdr)
+  PYTHON_DIR=(get_install_dir Python3)
+  MARIADB_DIR=(get_install_dir _mariadb-connector-c)
 
-  export PKG_CONFIG_PATH=${VDR_DIR}:${PYTHON_INSTALL_DIR}/usr/lib/pgkconfig:${SYSROOT_PREFIX}/${VDR_PREFIX}/lib/pkgconfig:${PKG_CONFIG_PATH}
+  export PKG_CONFIG_PATH=${VDR_DIR}:${SYSROOT_PREFIX}/${VDR_PREFIX}/lib/pkgconfig:${PYTHON_DIR}/usr/lib/pkgconfig:${MARIADB_DIR}/usr/lib/pkgconfig:${PKG_CONFIG_PATH}
   export CPLUS_INCLUDE_PATH=${VDR_DIR}/include
 
-  MARIADB_CFLAGS=$(pkg-config --cflags libmariadb)
-  MARIADB_LIBS=$(pkg-config --libs libmariadb)
-
-  PYTHON3_CFLAGS=$(pkg-config --cflags python3)
-  PYTHON3_LIBS=$(pkg-config --libs python3)
-  PYTHON3_LIBS_EMBED=$(pkg-config --libs python3-embed)
-
-  make PYTHON3_CFLAGS="${PYTHON3_CFLAGS}" PYTHON3_LIBS="${PYTHON3_LIBS}" PYTHON3_LIBS_EMBED="${PYTHON3_LIBS_EMBED}" MARIADB_CFLAGS="${MARIADB_CFLAGS}" MARIADB_LIBS="${MARIADB_LIBS}"
+  make
 }
 
 makeinstall_target() {
