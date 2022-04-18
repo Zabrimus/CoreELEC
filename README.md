@@ -7,45 +7,61 @@ The second possibility is to create a CoreELEC image which contains VDR and plug
 
 This is still work in progress...
 
-## Aktueller Status:
+## Current status:
 
-** Build folgender Plugins erfolgreich**
-- vdr-plugin-softhdodroid
-- vdr-plugin-satip
-- vdr-plugin-ddci2
-- vdr-plugin-dummydevice
-- vdr-plugin-dvbapi
-- vdr-plugin-eepg
-- vdr-plugin-epgfixer
-- vdr-plugin-epgsearch
-- vdr-plugin-iptv
-- vdr-plugin-live
-- vdr-plugin-restfulapi
-- vdr-plugin-robotv
-- vdr-plugin-streamdev
-- vdr-plugin-vnsiserver
-- vdr-plugin-wirbelscan
-- vdr-plugin-wirbelscancontrol
-- vdr-plugin-osdteletext
-- vdr-plugin-zaphistory
-- vdr-plugin-epg2vdr
-- vdr-plugin-skindesigner
-- vdr-plugin-scraper2vdr
-- vdr-plugin-ac3mode
-- vdr-plugin-chanman
-- vdr-plugin-channellists
-- vdr-plugin-control
-- vdr-plugin-filebrowser
-- vdr-plugin-markad
-- vdr-plugin-osd2web
-- vdr-plugin-skinflat
-- vdr-plugin-skinlcarsng
-- vdr-plugin-skinnopacity
-- vdr-plugin-skinsoppalusikka
-- vdr-plugin-skinflatplus
-- vdr-plugin-easyvdr
+**Following plugins are successfully build and part of the vdr tar**
+```
+CoreELEC:~/.opt/vdr/bin # ./easyvdrctl.sh --all-status
+Plugin             | install | ini     | AutoRun | Stop | Arguments
+--------------------------------------------------------------------------------
+ac3mode            | yes     | valid   | no      | yes  |
+chanman            | yes     | valid   | no      | yes  |
+channellists       | yes     | valid   | no      | yes  |
+conflictcheckonly  | yes     | valid   | no      | yes  |
+control            | yes     | valid   | yes     | yes  |
+ddci2              | yes     | valid   | no      | yes  |
+dummydevice        | yes     | valid   | no      | yes  |
+dvbapi             | yes     | valid   | no      | yes  |
+eepg               | yes     | valid   | no      | yes  |
+epg2vdr            | yes     | valid   | no      | yes  |
+epgfixer           | yes     | valid   | no      | yes  |
+epgsearch          | yes     | valid   | no      | yes  |
+epgsearchonly      | yes     | valid   | no      | yes  |
+epgtableid0        | yes     | valid   | no      | yes  |
+filebrowser        | yes     | valid   | no      | yes  |
+hello              | yes     | valid   | no      | yes  |
+iptv               | yes     | valid   | no      | yes  |
+live               | yes     | valid   | no      | yes  |
+markad             | yes     | valid   | no      | yes  |
+osd2web            | yes     | valid   | no      | yes  |
+osddemo            | yes     | valid   | no      | yes  |
+osdteletext        | yes     | valid   | no      | yes  |
+pictures           | yes     | valid   | no      | yes  |
+quickepgsearch     | yes     | valid   | no      | yes  |
+restfulapi         | yes     | valid   | no      | yes  |
+robotv             | yes     | valid   | no      | yes  |
+satip              | yes     | valid   | yes     | yes  |
+scraper2vdr        | yes     | valid   | no      | yes  |
+skindesigner       | yes     | valid   | no      | yes  |
+skinflat           | yes     | valid   | no      | yes  |
+skinflatplus       | yes     | valid   | no      | yes  |
+skinlcarsng        | yes     | valid   | no      | yes  |
+skinnopacity       | yes     | valid   | no      | yes  |
+skinsoppalusikka   | yes     | valid   | no      | yes  |
+softhdodroid       | yes     | valid   | yes     | yes  | -a hw:CARD=AMLAUGESOUND,DEV=0
+status             | yes     | valid   | no      | yes  |
+streamdev-client   | yes     | valid   | no      | yes  |
+streamdev-server   | yes     | valid   | no      | yes  |
+svccli             | yes     | valid   | no      | yes  |
+svcsvr             | yes     | valid   | no      | yes  |
+svdrpdemo          | yes     | valid   | no      | yes  |
+vnsiserver         | yes     | valid   | no      | yes  |
+wirbelscan         | yes     | valid   | no      | yes  |
+wirbelscancontrol  | yes     | valid   | no      | yes  |
+zaphistory         | yes     | valid   | no      | yes  |
+```
 
-**Following plugins can't be compiled**
+**Following plugins can't currently be compiled**
 - vdr-plugin-skinelchihd<br>
   ``#error ImageMagick Version 7.0 or higher is required``
 
