@@ -1,7 +1,7 @@
 #!/bin/sh
 
-CONF_DIR="XXCONFDIRXX"
+CONF_DIR="XXCONFDIRXX/conf.d"
 BIN_DIR="XXBINDIRXX"
-LIB_DIR="XXLIBDIRXX"
+LIB_DIR="XXLIBDIRXX/vdr"
 
-$(BIN_DIR)/easyvdrctl --plugindir "${LIB_DIR}" --inidir "${CONF_DIR}" $@
+${BIN_DIR}/easyvdrctl --plugindir "${LIB_DIR}" --inidir "${CONF_DIR}" $@
