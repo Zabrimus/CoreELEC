@@ -36,5 +36,4 @@ make_target() {
 
 	mkdir -p ${INSTALL}/storage/.fonts/teletext
     cp ${FONTDIR}/fonts-teletext/{*.ttf,fonts.dir,fonts.scale} ${INSTALL}/storage/.fonts/teletext/
-
 }

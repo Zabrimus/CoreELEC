@@ -38,10 +38,6 @@ makeinstall_target() {
   SKINDESIGNER_SCRIPTDIR="/storage/.config/vdropt/plugins/skindesigner/scripts"
 
   make DESTDIR="${INSTALL}" LIBDIR="${LIB_DIR}" PLGRESDIR="${PLGRES_DIR}" SKINDESIGNER_SCRIPTDIR="${SKINDESIGNER_SCRIPTDIR}" install
-
-  # install font
-  mkdir -p ${INSTALL}${VDR_PREFIX}/share/fonts
-  cp -r fonts/VDROpenSans ${INSTALL}${VDR_PREFIX}/share/fonts
 }
 
 post_makeinstall_target() {
@@ -58,9 +54,4 @@ post_makeinstall_target() {
   cd ${INSTALL}
   mkdir -p ${INSTALL}${VDR_PREFIX}/config/
   zip -qrum9 "${INSTALL}${VDR_PREFIX}/config/skindesigner-sample-config.zip" storage
-}
-
-post_install() {
-  mkfontdir ${INSTALL}${VDR_PREFIX}/share/fonts
-  mkfontscale ${INSTALL}${VDR_PREFIX}/share/fonts
 }

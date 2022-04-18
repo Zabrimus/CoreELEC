@@ -33,10 +33,6 @@ make_target() {
 makeinstall_target() {
   LIB_DIR=${INSTALL}/$(pkg-config --variable=locdir vdr)/../../lib/vdr
   make DESTDIR="${INSTALL}" LIBDIR="${LIB_DIR}" install
-
-  # install font
-  mkdir -p ${INSTALL}${VDR_PREFIX}/share/fonts
-  cp -r *.ttf ${INSTALL}${VDR_PREFIX}/share/fonts
 }
 
 post_makeinstall_target() {
@@ -48,14 +44,9 @@ post_makeinstall_target() {
     rm -Rf ${INSTALL}/storage/.config/vdropt
   fi
 
-   # create config.zip
-   VERSION=$(pkg-config --variable=apiversion vdr)
-   cd ${INSTALL}
-   mkdir -p ${INSTALL}${VDR_PREFIX}/config/
-   zip -qrum9 "${INSTALL}${VDR_PREFIX}/config/osdteletext-sample-config.zip" storage
-}
-
-post_install() {
-  mkfontdir ${INSTALL}${VDR_PREFIX}/share/fonts
-  mkfontscale ${INSTALL}${VDR_PREFIX}/share/fonts
+  # create config.zip
+  VERSION=$(pkg-config --variable=apiversion vdr)
+  cd ${INSTALL}
+  mkdir -p ${INSTALL}${VDR_PREFIX}/config/
+  zip -qrum9 "${INSTALL}${VDR_PREFIX}/config/osdteletext-sample-config.zip" storage
 }

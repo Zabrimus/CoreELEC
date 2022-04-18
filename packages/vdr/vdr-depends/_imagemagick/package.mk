@@ -27,3 +27,7 @@ pre_configure_target() {
   export LDFLAGS="$(echo ${LDFLAGS} | sed -e "s|-Wl,--as-needed||") -L${SYSROOT_PREFIX}${VDR_PREFIX}/lib"
 }
 
+post_makeinstall_target() {
+  # drop all unneeded
+  rm -rf ${INSTALL}/${VDR_PREFIX}/{bin,share,etc}
+}
