@@ -19,7 +19,7 @@ jobs:
       - uses: actions/upload-artifact@v3
         with:
           name: coreelec-vdr.tar.gz
-          path: build-artifacts/coreelec-vdr.tar.gz
+          path: build-artifacts/coreelec-19-vdr.tar.gz
 
 # Not yet
 #      - uses: actions/upload-artifact@v3

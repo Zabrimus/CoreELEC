@@ -73,7 +73,7 @@ create_vdr_tar() {
   find vdr-tar -type d -empty -delete
 
   # build final archive
-  tar -czhf build-artifacts/coreelec-vdr.tar.gz -C vdr-tar .
+  tar -czhf build-artifacts/coreelec-19-vdr.tar.gz -C vdr-tar .
   rm -Rf vdr-tar
 
   # umount everything

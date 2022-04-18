@@ -54,10 +54,18 @@ This is still work in progress...
 ### Build
 ```
     git checkout https://github.com/Zabrimus/CoreELEC.git
-    ./build.sh
+    ./build-local.sh
 ```
-In folder build-artifacts a new archive coreelec-vdr.tar.gz will be created, which contains VDR, Plugins 
-and all dependant libraries. The installation folder is /opt/vdr. 
+In folder build-artifacts a new archive coreelec-19-vdr.tar.gz will be created, which contains VDR, Plugins 
+and all dependant libraries. The installation folder is /opt/vdr.
+
+If you want all images including VDR
+```    
+    VDR_PREFIX=/usr/local make images       
+```
+In folder ```target``` you can find all created CoreELEC images which includes VDR.
+
+The ```build.sh``` is used by Github Workflow and caches at least the ```sources``` folder.<br>
 
 ### Installation
 ```
@@ -126,6 +134,16 @@ Uses the plugin vdr-plugin-easyvdr (see https://www.gen2vdr.de/wirbel/easyvdr/in
 The configuration entries can be found in the ```/storage/.config/vdropt/*_settings.ini```.
 Plugins can be started/stopped at runtime via the OSD.
 Additionally the command line tool easyvdrctl.sh (which uses easyvdrctl) can be found in the &lt;bindir&gt;.
+
+## Löschen
+Wer sich dazu entscheidet, nach einer Installation alles wieder löschen zu wollen, muss nur die Vezeichnisse
+```
+/opt/vdr/
+/storage/.conf/vdropt
+/storage/.conf/vdropt-sampe
+/storage/.fonts
+```
+entfernen und das System ist wieder im Urpsrungszustand.
 
 # CoreELEC
 

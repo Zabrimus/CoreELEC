@@ -23,7 +23,7 @@ jobs:
         with:
           prerelease: true
           files: |
-            build-artifacts/coreelec-vdr.tar.gz
+            build-artifacts/coreelec-19-vdr.tar.gz
 
 # Not yet
 #      - uses: actions/upload-artifact@v3
