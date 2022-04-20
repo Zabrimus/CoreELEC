@@ -6,4 +6,4 @@ Conflicts=rescue.target
 AllowIsolate=yes
 
 [Install]
-Alias=default.target
+Alias=vdropt.target
