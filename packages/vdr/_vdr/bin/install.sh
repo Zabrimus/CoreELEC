@@ -31,15 +31,26 @@ install() {
     cp -a /storage/.config/vdropt-sample /storage/.config/vdropt
   fi
 
-  if [[ ! -f /storage/.config/system.d/vdropt.service ]]; then
-    cp -a ${BIN_DIR}/system.d/vdropt.service /storage/.config/system.d/vdropt.service
-  fi
-
-  if [[ ! -f /storage/.config/system.d/vdropt.target ]]; then
-    cp -a ${BIN_DIR}/system.d/vdropt.target /storage/.config/system.d/vdropt.target
-  fi
-
+  cp -a ${BIN_DIR}/system.d/* /storage/.config/system.d
   systemctl daemon-reload
+
+  # disable everything. This is important and shall not be changed!
+  for i in `ls ${BIN_DIR}/system.d/*`; do
+     systemctl disable $(basename $i)
+  done
+
+  # create autostart.sh if it does not exists
+  if [ ! -f /storage/.config/autostart.sh ]; then
+cat > /storage/.config/autostart.sh<< EOF
+#!/bin/sh
+/storage/.opt/vdr/bin/autostart.sh
+EOF
+
+  chmod +x /storage/.config/autostart.sh
+  else
+      echo "/storage/.config/autostart.sh already exists."
+      echo "Please insert '/storage/.opt/vdr/bin/autostart.sh' manually into this file (without quotes)."
+  fi
 }
 
 install_copy() {
@@ -54,17 +65,13 @@ boot() {
   if [ "$1" = "kodi" ]; then
       echo "Boot Kodi"
 
-      cd /storage/.config/system.d
-      rm -f kodi.service kodi_o.service
-      ln -s /usr/lib/systemd/system/kodi.service kodi.service
-      ln -s /usr/lib/systemd/system/kodi.service kodi_o.service
+      sed -i -e "/^START_PRG.*$/d" /storage/.profile
+      echo "START_PRG=kodi" >> /storage/.profile
   elif [ "$1" = "vdr" ]; then
       echo "Boot VDR"
 
-      cd /storage/.config/system.d
-      rm -f kodi.service kodi_o.service
-      ln -s vdropt.service kodi.service
-      ln -s /usr/lib/systemd/system/kodi.service kodi_o.service
+      sed -i -e "/^START_PRG.*$/d" /storage/.profile
+      echo "START_PRG=vdr" >> /storage/.profile
   else
       echo "Unknown Boot parameter"
       exit 1
