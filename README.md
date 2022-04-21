@@ -128,6 +128,33 @@ To be able to switch the OSD languange you have to
    export LC_ALL="de_DE.UTF-8
 - reboot
 
+## Switch Kodi <-> VDR
+The install script (parameter -i) tries to modify/create as many default configuration as possible. 
+If some configuration files already exists, they will not be overwritten, but the changes needs to be done manually.
+
+### /storage/.config/autostart.sh
+The default file will be copied from installation directory, but if the file already exists, a warning will be displayed.
+One additional line is necessary
+```/storage/.opt/vdr/bin/autostart.sh```
+This script prepares some systemd units and paths.
+
+### /storage/.kodi/addons/skin.estuary/xml/DialogButtonMenu.xml
+In Kodis default theme estuary, one additional entry will be added to the power menu to switch to VDR. 
+If another skin is used, the entry needs to be done manually.
+```
+<item>
+    <label>VDR</label>
+    <onclick>System.Exec("/opt/vdr/bin/switch_to_vdr.sh")</onclick>
+</item>
+```
+A whole sample can be found in ```<vdrdir>/config/DialogButtonMenu.xml```
+
+### /storage/.config/vdropt/commands.conf
+A new entry is needed, like e.g.
+```
+Start Kodi       : echo "START_PRG=kodi" > /opt/tmp/switch_kodi_vdr
+```
+
 ## Das Verzeichnis-Layout und Dateien
 
 - ```/usr/local/lib``` or ```/opt/vdr/lib```<br>

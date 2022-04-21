@@ -1,8 +1,8 @@
 #!/bin/sh
 
-CONF_DIR="XXCONFDIRXX"
-BIN_DIR="XXBINDIRXX"
-LIB_DIR="XXLIBDIRXX"
+CONF_DIR="/storage/.config/vdropt"
+BIN_DIR="/opt/vdr/bin"
+LIB_DIR="/opt/vdr/lib"
 
 read_vdr_configuration () {
   param=`cat ${CONF_DIR}/conf.d/vdr.conf | sed "s/#.*$//g ; s/^#$//g ; s/ *$//g" | tr '\n' ' ' | sed 's/\[vdr\]//'`
@@ -14,5 +14,10 @@ arg="vdr $(read_vdr_configuration) -P \"easyvdr -c /storage/.config/vdropt/conf.
 # kill splash image (CoreELEC)
 killall splash-image
 
+# needed for locale / OSD language
+. /storage/.profile
+export LOCPATH=/storage/.kodi/addons/service.locale/locpath
+
 # really start VDR
+echo "LD_PRELOAD=/usr/lib/libMali.so LD_LIBRARY_PATH=$LIB_DIR:$LIB_DIR/vdr:$LD_LIBRARY_PATH ${BIN_DIR}/$arg"
 sh -c "LD_PRELOAD=/usr/lib/libMali.so LD_LIBRARY_PATH=$LIB_DIR:$LIB_DIR/vdr:$LD_LIBRARY_PATH ${BIN_DIR}/$arg"

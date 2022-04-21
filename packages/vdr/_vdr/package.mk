@@ -70,15 +70,19 @@ makeinstall_target() {
   cat ${PKG_DIR}/bin/easyvdrctl.sh | sed "s#XXCONFDIRXX#${CONFDIR}# ; s#XXBINDIRXX#${PREFIX}/bin# ; s#XXVERSIONXX#${PKG_VERSION}# ; s#XXLIBDIRXX#${PREFIX}/lib#" > ${INSTALL}/${PREFIX}/bin/easyvdrctl.sh
   chmod +x ${INSTALL}/${PREFIX}/bin/easyvdrctl.sh
 
-  cat ${PKG_DIR}/bin/install.sh | sed "s#XXVERSIONXX#${PKG_VERSION}# ; s#XXCONFDIRXX#${PREFIX}/config# ; s#XXBINDIRXX#${PREFIX}/bin#" > ${INSTALL}/${PREFIX}/bin/install.sh
+  cat ${PKG_DIR}/bin/install.sh | sed "s#XXVERSIONXX#${PKG_VERSION}# ; s#XXCONFDIRXX#${PREFIX}/config# ; s#XXBINDIRXX#${PREFIX}/bin# ; s#XXPREFIXXX#${PREFIX}#" > ${INSTALL}/${PREFIX}/bin/install.sh
   chmod +x ${INSTALL}/${PREFIX}/bin/install.sh
 
   cat ${PKG_DIR}/bin/switch_kodi_vdr.sh | sed "s#XXVERSIONXX#${PKG_VERSION}# ; s#XXCONFDIRXX#${PREFIX}/conf#" > ${INSTALL}/${PREFIX}/bin/switch_kodi_vdr.sh
   chmod +x ${INSTALL}/${PREFIX}/bin/switch_kodi_vdr.sh
 
+  cp ${PKG_DIR}/bin/switch_to_vdr.sh ${INSTALL}/${PREFIX}/bin/switch_to_vdr.sh
+  chmod +x ${INSTALL}/${PREFIX}/bin/switch_to_vdr.sh
+
   # copy system.d folder
-  cp -a ${PKG_DIR}/system.d ${INSTALL}/${PREFIX}/bin
-  chmod +x ${INSTALL}/${PREFIX}/bin/system.d/*.service
+  mkdir -p ${INSTALL}/${PREFIX}/system.d
+  cp -a ${PKG_DIR}/system.d/* ${INSTALL}/${PREFIX}/system.d
+  chmod +x ${INSTALL}/${PREFIX}/system.d/*.service
 }
 
 post_makeinstall_target() {
@@ -107,4 +111,7 @@ EOF
   mkdir -p ${INSTALL}${PREFIX}/config
   cd ${INSTALL}
   zip -qrum9 ${INSTALL}${PREFIX}/config/vdr-sample-config.zip storage
+
+  # copy sample XML (PowerMenu for Kodi which includes a Button to switch to VDR)
+  cp ${PKG_DIR}/config/DialogButtonMenu.xml ${INSTALL}/${PREFIX}/config
 }
