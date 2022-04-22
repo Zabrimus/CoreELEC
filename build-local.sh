@@ -1,5 +1,7 @@
 #/bin/bash
 
+set -e
+
 create_vdr_tar() {
   #### 1. Pass: build without VDR
   export VDR="no"
@@ -38,8 +40,8 @@ create_vdr_tar() {
   done <target/libs.diff
 
   # Cleanup
-  rm vdr-tar/opt/.opt
-  rm vdr-tar/opt/vdr/bin/{createcats,cxxtools-config,gdk-*,iconv,pango*,rsvg-convert,tntnet-config,update-mime-database}
+  rm -f vdr-tar/opt/.opt
+  rm -f vdr-tar/opt/vdr/bin/{createcats,cxxtools-config,gdk-*,iconv,pango*,rsvg-convert,tntnet-config,update-mime-database}
   rm -Rf vdr-tar/opt/vdr/include
   rm -Rf vdr-tar/opt/vdr/lib/pkgconfig
   rm -Rf vdr-tar/opt/vdr/share/{doc,mime,pkgconfig,tntnet}
@@ -62,9 +64,12 @@ create_vdr_image() {
 }
 
 mkdir -p build-artifacts
-rm build-artifacts/*
+rm -f build-artifacts/*
 
-rm -f target/*
+# umount if still mounted
+umount -q target/pass1 || echo "target/pass1 not mounted"
+umount -q target/pass2 || echo "target/pass2 not mounted"
+rm -rf target/*
 create_vdr_tar
 
 # Not yet
