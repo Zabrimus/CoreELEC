@@ -66,20 +66,30 @@ zaphistory         | yes     | valid   | no      | yes  |
   ``#error ImageMagick Version 7.0 or higher is required``
 
 
-## Standalone VDR with all dependent libraries
+## Standalone VDR with all dependent libraries (tested with Ubuntu Focal and Debian 11)
+### Install all dependencies
+```
+apt-get install build-essential coreutils squashfuse git curl xfonts-utils xsltproc default-jre \
+                libxml-parser-perl libjson-perl libncurses5-dev bc gawk wget zip zstd libparse-yapp-perl \
+                gperf lzop unzip patchutils cpio
+```
 ### Build
 ```
     git checkout https://github.com/Zabrimus/CoreELEC.git
+    cd CoreELEC
+    git checkout 19.4-Matrix-VDR
     ./build-local.sh
 ```
 In folder build-artifacts a new archive coreelec-19-vdr.tar.gz will be created, which contains VDR, Plugins 
 and all dependant libraries. The installation folder is /opt/vdr.
 
+<!-- Later. Needs some work
 If you want all images including VDR
 ```    
     VDR_PREFIX=/usr/local make images       
 ```
 In folder ```target``` you can find all created CoreELEC images which includes VDR.
+-->
 
 The ```build.sh``` is used by Github Workflow and caches at least the ```sources``` folder.<br>
 
@@ -88,6 +98,7 @@ The ```build.sh``` is used by Github Workflow and caches at least the ```sources
   cd / && tar -xf coreelec-vdr.tar.gz
 ```
 
+<!-- Later. Needs some work
 ## Images with integrated VDR and plugins
 ### Build
 ```
@@ -105,6 +116,7 @@ The installation folder is /usr/local.
      
      Install the desired image in a micro SD as described in the CoreELEC part of this Readme. 
 ```
+-->
 
 ## Install script
 In folder /opt/vdr/bin or /usr/local/bin contains an install script
