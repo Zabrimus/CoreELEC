@@ -79,6 +79,9 @@ makeinstall_target() {
   cp ${PKG_DIR}/bin/switch_to_vdr.sh ${INSTALL}/${PREFIX}/bin/switch_to_vdr.sh
   chmod +x ${INSTALL}/${PREFIX}/bin/switch_to_vdr.sh
 
+  cp ${PKG_DIR}/bin/autostart.sh ${INSTALL}/${PREFIX}/bin/autostart.sh
+  chmod +x ${INSTALL}/${PREFIX}/bin/autostart.sh
+
   # copy system.d folder
   mkdir -p ${INSTALL}/${PREFIX}/system.d
   cp -a ${PKG_DIR}/system.d/* ${INSTALL}/${PREFIX}/system.d
