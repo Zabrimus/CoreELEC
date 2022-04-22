@@ -78,18 +78,10 @@ apt-get install build-essential coreutils squashfuse git curl xfonts-utils xsltp
     git checkout https://github.com/Zabrimus/CoreELEC.git
     cd CoreELEC
     git checkout 19.4-Matrix-VDR
-    ./build-local.sh
+    ./build-local.sh -t
 ```
 In folder build-artifacts a new archive coreelec-19-vdr.tar.gz will be created, which contains VDR, Plugins 
 and all dependant libraries. The installation folder is /opt/vdr.
-
-<!-- Later. Needs some work
-If you want all images including VDR
-```    
-    VDR_PREFIX=/usr/local make images       
-```
-In folder ```target``` you can find all created CoreELEC images which includes VDR.
--->
 
 The ```build.sh``` is used by Github Workflow and caches at least the ```sources``` folder.<br>
 
@@ -98,13 +90,24 @@ The ```build.sh``` is used by Github Workflow and caches at least the ```sources
   cd / && tar -xf coreelec-vdr.tar.gz
 ```
 
-<!-- Later. Needs some work
 ## Images with integrated VDR and plugins
+### Install all dependencies
+```
+apt-get install build-essential coreutils squashfuse git curl xfonts-utils xsltproc default-jre \
+                libxml-parser-perl libjson-perl libncurses5-dev bc gawk wget zip zstd libparse-yapp-perl \
+                gperf lzop unzip patchutils cpio
+```
+
 ### Build
+If you want all images including VDR
 ```
     git checkout https://github.com/Zabrimus/CoreELEC.git
-    VDR_PREFIX="/usr/local" make image
+    cd CoreELEC
+    git checkout 19.4-Matrix-VDR
+    ./build-local.sh -i
 ```
+In folder ```target``` you can find all created CoreELEC images which includes VDR.
+
 The installation folder is /usr/local.
 
 ### Installation
@@ -116,7 +119,6 @@ The installation folder is /usr/local.
      
      Install the desired image in a micro SD as described in the CoreELEC part of this Readme. 
 ```
--->
 
 ## Install script
 In folder /opt/vdr/bin or /usr/local/bin contains an install script
