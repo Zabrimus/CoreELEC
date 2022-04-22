@@ -5,7 +5,7 @@ After=network-online.target graphical.target
 Conflicts=kodi.service
 
 [Service]
-ExecStart=/opt/vdr/bin/start_vdr.sh
+ExecStart=XXBINDIRXX/start_vdr.sh
 Restart=always
 RestartSec=2
 StartLimitInterval=0

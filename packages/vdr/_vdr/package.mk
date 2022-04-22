@@ -61,19 +61,21 @@ makeinstall_target() {
 
   make DESTDIR="${INSTALL}" install
 
-  cat ${PKG_DIR}/bin/start_vdr.sh | sed "s#XXCONFDIRXX#${CONFDIR}# ; s#XXBINDIRXX#${PREFIX}/bin# ; s#XXVERSIONXX#${PKG_VERSION}# ; s#XXLIBDIRXX#${PREFIX}/lib#" > ${INSTALL}/${PREFIX}/bin/start_vdr.sh
+  SED_SCRIPT="s#XXCONFDIRXX#${CONFDIR}# ; s#XXBINDIRXX#${PREFIX}/bin# ; s#XXVERSIONXX#${PKG_VERSION}# ; s#XXLIBDIRXX#${PREFIX}/lib# ; s#XXPREFIXXX#${PREFIX}# ; s#XXPREFIXCONFXX#${PREFIX}/config#"
+
+  cat ${PKG_DIR}/bin/start_vdr.sh | sed "${SED_SCRIPT}" > ${INSTALL}/${PREFIX}/bin/start_vdr.sh
   chmod +x ${INSTALL}/${PREFIX}/bin/start_vdr.sh
 
-  cat ${PKG_DIR}/bin/start_vdr_easy.sh | sed "s#XXCONFDIRXX#${CONFDIR}# ; s#XXBINDIRXX#${PREFIX}/bin# ; s#XXVERSIONXX#${PKG_VERSION}# ; s#XXLIBDIRXX#${PREFIX}/lib#" > ${INSTALL}/${PREFIX}/bin/start_vdr_easy.sh
+  cat ${PKG_DIR}/bin/start_vdr_easy.sh | sed "${SED_SCRIPT}" > ${INSTALL}/${PREFIX}/bin/start_vdr_easy.sh
   chmod +x ${INSTALL}/${PREFIX}/bin/start_vdr_easy.sh
 
-  cat ${PKG_DIR}/bin/easyvdrctl.sh | sed "s#XXCONFDIRXX#${CONFDIR}# ; s#XXBINDIRXX#${PREFIX}/bin# ; s#XXVERSIONXX#${PKG_VERSION}# ; s#XXLIBDIRXX#${PREFIX}/lib#" > ${INSTALL}/${PREFIX}/bin/easyvdrctl.sh
+  cat ${PKG_DIR}/bin/easyvdrctl.sh | sed "${SED_SCRIPT}" > ${INSTALL}/${PREFIX}/bin/easyvdrctl.sh
   chmod +x ${INSTALL}/${PREFIX}/bin/easyvdrctl.sh
 
-  cat ${PKG_DIR}/bin/install.sh | sed "s#XXVERSIONXX#${PKG_VERSION}# ; s#XXCONFDIRXX#${PREFIX}/config# ; s#XXBINDIRXX#${PREFIX}/bin# ; s#XXPREFIXXX#${PREFIX}#" > ${INSTALL}/${PREFIX}/bin/install.sh
+  cat ${PKG_DIR}/bin/install.sh | sed "${SED_SCRIPT}" > ${INSTALL}/${PREFIX}/bin/install.sh
   chmod +x ${INSTALL}/${PREFIX}/bin/install.sh
 
-  cat ${PKG_DIR}/bin/switch_kodi_vdr.sh | sed "s#XXVERSIONXX#${PKG_VERSION}# ; s#XXCONFDIRXX#${PREFIX}/conf#" > ${INSTALL}/${PREFIX}/bin/switch_kodi_vdr.sh
+  cat ${PKG_DIR}/bin/switch_kodi_vdr.sh | sed "${SED_SCRIPT}" > ${INSTALL}/${PREFIX}/bin/switch_kodi_vdr.sh
   chmod +x ${INSTALL}/${PREFIX}/bin/switch_kodi_vdr.sh
 
   cp ${PKG_DIR}/bin/switch_to_vdr.sh ${INSTALL}/${PREFIX}/bin/switch_to_vdr.sh
@@ -84,8 +86,13 @@ makeinstall_target() {
 
   # copy system.d folder
   mkdir -p ${INSTALL}/${PREFIX}/system.d
-  cp -a ${PKG_DIR}/system.d/* ${INSTALL}/${PREFIX}/system.d
-  chmod +x ${INSTALL}/${PREFIX}/system.d/*.service
+  for i in $(ls ${PKG_DIR}/system.d/*); do
+     cat ${i} | sed "${SED_SCRIPT}" > ${INSTALL}/${PREFIX}/system.d/$(basename $i)
+     chmod +x ${INSTALL}/${PREFIX}/system.d/*.service || echo ""
+  done
+
+  # cp -a ${PKG_DIR}/system.d/* ${INSTALL}/${PREFIX}/system.d
+  # chmod +x ${INSTALL}/${PREFIX}/system.d/*.service
 }
 
 post_makeinstall_target() {
@@ -116,5 +123,5 @@ EOF
   zip -qrum9 ${INSTALL}${PREFIX}/config/vdr-sample-config.zip storage
 
   # copy sample XML (PowerMenu for Kodi which includes a Button to switch to VDR)
-  cp ${PKG_DIR}/config/DialogButtonMenu.xml ${INSTALL}/${PREFIX}/config
+  cat ${PKG_DIR}/config/DialogButtonMenu.xml | sed "s#XXBINDIRXX#${PREFIX}/bin#" > ${INSTALL}/${PREFIX}/config/DialogButtonMenu.xml
 }

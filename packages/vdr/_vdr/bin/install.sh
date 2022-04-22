@@ -3,7 +3,7 @@
 PROGNAME=$0
 
 PREFIX="XXPREFIXXX"
-CONF_DIR="XXCONFDIRXX"
+CONF_DIR="XXPREFIXCONFXX"
 BIN_DIR="XXBINDIRXX"
 
 usage() {
@@ -44,7 +44,7 @@ install() {
   if [ ! -f /storage/.config/autostart.sh ]; then
 cat > /storage/.config/autostart.sh<< EOF
 #!/bin/sh
-/storage/.opt/vdr/bin/autostart.sh
+XXBINDIRXX/autostart.sh
 EOF
 
   chmod +x /storage/.config/autostart.sh

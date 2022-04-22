@@ -1,8 +1,8 @@
 #!/bin/sh
 
 CONF_DIR="/storage/.config/vdropt"
-BIN_DIR="/opt/vdr/bin"
-LIB_DIR="/opt/vdr/lib"
+BIN_DIR="XXBINDIRXX"
+LIB_DIR="XXLIBDIRXX"
 
 read_vdr_configuration () {
   param=`cat ${CONF_DIR}/conf.d/vdr.conf | sed "s/#.*$//g ; s/^#$//g ; s/ *$//g" | tr '\n' ' ' | sed 's/\[vdr\]//'`
