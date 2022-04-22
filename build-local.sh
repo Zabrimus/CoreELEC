@@ -2,6 +2,15 @@
 
 set -e
 
+usage() {
+  cat << EOF >&2
+Usage: $PROGNAME [-t] [-i]
+-t  : Build tar. Version containing only VDR and is installable in an existing Kodi installation
+-i  : Build images. Images will be created which can be written to an SD card. Contains VDR in /usr/local
+EOF
+  exit 1
+}
+
 create_vdr_tar() {
   #### 1. Pass: build without VDR
   export VDR="no"
@@ -54,23 +63,39 @@ create_vdr_tar() {
   rm -Rf vdr-tar
 
   # umount everything
-  umount target/pass1
-  umount target/pass2
+  umount target/pass1 || echo "umount pass1 failed"
+  umount target/pass2 || echo "umount pass2 failed"
 }
 
 create_vdr_image() {
   export VDR="yes"
-  VDR_PREFIX="/usr/local" make image
+  VDR_PREFIX="/usr/local" BUILD_SUFFIX="Images" make image
 }
 
-mkdir -p build-artifacts
-rm -f build-artifacts/*
+cleanup() {
+  mkdir -p build-artifacts
+  rm -f build-artifacts/*
 
-# umount if still mounted
-umount -q target/pass1 || echo "target/pass1 not mounted"
-umount -q target/pass2 || echo "target/pass2 not mounted"
-rm -rf target/*
-create_vdr_tar
+  # umount if still mounted
+  umount -q target/pass1 || echo "target/pass1 not mounted"
+  umount -q target/pass2 || echo "target/pass2 not mounted"
+  rm -rf target/*
+}
+
+if [ "$#" = "0" ]; then
+    usage
+fi
+
+cleanup
+
+while getopts ti o; do
+  case $o in
+    (t) create_vdr_tar;;
+    (i) create_vdr_image;;
+    (*) usage
+  esac
+done
+
 
 # Not yet
 #rm -f target/*
