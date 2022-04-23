@@ -4,14 +4,19 @@ set -e
 
 usage() {
   cat << EOF >&2
-Usage: $PROGNAME [-t] [-i]
--t  : Build tar. Version containing only VDR and is installable in an existing Kodi installation
--i  : Build images. Images will be created which can be written to an SD card. Contains VDR in /usr/local
+Usage: $PROGNAME [-t] [-i] [-9] [-0]
+-t  : Build tar (Matrix). Version containing only VDR and is installable in an existing Kodi installation
+-i  : Build images (Matrix). Images will be created which can be written to an SD card. Contains VDR in /usr/local
+-9  : Build images (corelec-19). Images will be created which can be written to an SD card. Contains VDR in /usr/local
+-0  : Build images (corelec-20). Images will be created which can be written to an SD card. Contains VDR in /usr/local
 EOF
   exit 1
 }
 
 create_vdr_tar() {
+  #### Checkout the correct branch. Only 19.4-Matrix-VDR is supported
+  git checkout 19.4-Matrix-VDR
+
   #### 1. Pass: build without VDR
   export VDR="no"
   VDR_PREFIX="/opt/vdr" make
@@ -68,8 +73,22 @@ create_vdr_tar() {
 }
 
 create_vdr_image() {
+  if [ "$1" = "Matrix" ]; then
+     git checkout 19.4-Matrix-VDR
+     SUFFIX="image-Matrix-VDR"
+  elif [ "$1" = "19" ]; then
+     git checkout coreelec-19-VDR
+     SUFFIX="image-19-VDR"
+  elif [ "$1" = "20" ]; then
+     git checkout coreelec-20-VDR
+     SUFFIX="image-20-VDR"
+  else
+     echo "Unknown image \"$1\". Abort build."
+     exit 1
+  fi
+
   export VDR="yes"
-  VDR_PREFIX="/usr/local" BUILD_SUFFIX="Images" make image
+  VDR_PREFIX="/usr/local" BUILD_SUFFIX="${SUFFIX}" make image
 }
 
 cleanup() {
@@ -88,20 +107,12 @@ fi
 
 cleanup
 
-while getopts ti o; do
+while getopts ti90 o; do
   case $o in
     (t) create_vdr_tar;;
-    (i) create_vdr_image;;
+    (i) create_vdr_image "Matrix";;
+    (9) create_vdr_image "19";;
+    (0) create_vdr_image "20";;
     (*) usage
   esac
 done
-
-
-# Not yet
-#rm -f target/*
-#create_vdr_image
-#mv target/*.tar build-artifacts/CoreELEC-Amlogic-ng.arm-19.4-Matrix_VDR_devel.tar
-#mv target/CoreELEC-Amlogic-ng.arm-19.4-Matrix_devel*Odroid_C4.img.gz build-artifacts/CoreELEC-Amlogic-ng.arm-19.4-Matrix_VDR_devel-Odroid_C4.img.gz
-# cleanup
-# rm -Rf ${RUNNER_BUILDDIR}
-
