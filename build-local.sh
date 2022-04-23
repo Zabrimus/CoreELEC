@@ -4,7 +4,7 @@ set -e
 
 usage() {
   cat << EOF >&2
-Usage: $PROGNAME [-t] [-i]
+Usage: $PROGNAME [-t] [-i] [-9] [-0]
 -t  : Build tar (Matrix). Version containing only VDR and is installable in an existing Kodi installation
 -i  : Build images (Matrix). Images will be created which can be written to an SD card. Contains VDR in /usr/local
 -9  : Build images (corelec-19). Images will be created which can be written to an SD card. Contains VDR in /usr/local
