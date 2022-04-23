@@ -50,3 +50,23 @@ PKG_DEPENDS_TARGET+=" _vdr-plugin-easyvdr"
 
 # error ImageMagick Version 7.0 or higher is required
 # PKG_DEPENDS_TARGET+=" _vdr-plugin-skinelchihd"
+
+post_install() {
+  # Fix some links
+  cd ${INSTALL}/usr/lib/
+
+  if [ -f libEGL.so.1.1.0 ]; then
+     rm libEGL.so.1.1.0
+     ln -s /usr/lib/libMali.so libEGL.so.1.1.0
+  fi
+
+  if [ -f libGLESv2.so.2.1.0 ]; then
+     rm libGLESv2.so.2.1.0
+     ln -s /usr/lib/libMali.so libGLESv2.so.2.1.0
+  fi
+
+  if [ -f libGLESv1_CM.so.1.2.0 ]; then
+     rm libGLESv1_CM.so.1.2.0
+     ln -s /usr/lib/libMali.so libGLESv1_CM.so.1.2.0
+  fi
+}

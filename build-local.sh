@@ -4,18 +4,22 @@ set -e
 
 usage() {
   cat << EOF >&2
-Usage: $PROGNAME [-t] [-i] [-9] [-0]
+Usage: $PROGNAME [-t] [-i] [-9] [-0] [-x] [-y]
 -t  : Build tar (Matrix). Version containing only VDR and is installable in an existing Kodi installation
 -i  : Build images (Matrix). Images will be created which can be written to an SD card. Contains VDR in /usr/local
 -9  : Build images (corelec-19). Images will be created which can be written to an SD card. Contains VDR in /usr/local
 -0  : Build images (corelec-20). Images will be created which can be written to an SD card. Contains VDR in /usr/local
+-x : Development only: Build images but don't switch the branch.
+-y : Development only: Build tar but don't switch the branch.
 EOF
   exit 1
 }
 
 create_vdr_tar() {
-  #### Checkout the correct branch. Only 19.4-Matrix-VDR is supported
-  git checkout 19.4-Matrix-VDR
+  if [ ! "$1" = "x" ]; then
+     #### Checkout the correct branch. Only 19.4-Matrix-VDR is supported
+     git checkout 19.4-Matrix-VDR
+  fi
 
   #### 1. Pass: build without VDR
   export VDR="no"
@@ -82,6 +86,8 @@ create_vdr_image() {
   elif [ "$1" = "20" ]; then
      git checkout coreelec-20-VDR
      SUFFIX="image-20-VDR"
+  elif [ "$1" = "x" ]; then
+    SUFFIX="development"
   else
      echo "Unknown image \"$1\". Abort build."
      exit 1
@@ -107,12 +113,14 @@ fi
 
 cleanup
 
-while getopts ti90 o; do
+while getopts ti90xy o; do
   case $o in
     (t) create_vdr_tar;;
     (i) create_vdr_image "Matrix";;
     (9) create_vdr_image "19";;
     (0) create_vdr_image "20";;
+    (x) create_vdr_image "x";;
+    (y) create_vdr_tar "x";;
     (*) usage
   esac
 done
