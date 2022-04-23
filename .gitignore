@@ -40,3 +40,11 @@ tools/mkpkg/*.git
 
 # ignore old linux configs
 projects/**/*.old
+
+# ignore build
+build.CoreELEC-Amlogic-ng.arm-19
+build.CoreELEC-Amlogic-ng.arm-20
+sources
+
+#
+.idea
