@@ -5,11 +5,11 @@
 # copy of graphics/glu
 
 PKG_NAME="_glu"
-PKG_VERSION="9.0.1"
-PKG_SHA256="d02703066406cdcb54b99119b71f869cb1af2bbd403b928f3191daccca874377"
+PKG_VERSION="9.0.2"
+PKG_SHA256="6e7280ff585c6a1d9dfcdf2fca489251634b3377bfc33c29e4002466a38d02d4"
 PKG_LICENSE="OSS"
-PKG_SITE="http://gitlab.freedesktop.org/mesa/glu/"
-PKG_URL="https://gitlab.freedesktop.org/mesa/glu/-/archive/glu-${PKG_VERSION}/glu-glu-${PKG_VERSION}.tar.gz"
+PKG_SITE="https://gitlab.freedesktop.org/mesa/glu/"
+PKG_URL="https://mesa.freedesktop.org/archive/glu/glu-${PKG_VERSION}.tar.xz"
 PKG_DEPENDS_TARGET="toolchain libglvnd opengl-meson"
 PKG_NEED_UNPACK="$(get_pkg_directory libglvnd)"
 PKG_LONGDESC="libglu is the The OpenGL utility library"
@@ -24,16 +24,5 @@ PKG_CONFIGURE_OPTS_TARGET="--disable-silent-rules \
                            --libdir=${VDR_PREFIX}/lib \
                            --libexecdir=${VDR_PREFIX}/bin \
                            --sbindir=${VDR_PREFIX}/sbin \
+                           --enable-libglvnd \
                            "
-
-pre_configure_target() {
-  # test if prefix is set
-  if [ "x${VDR_PREFIX}" = "x" ]; then
-      echo "==> VDR_PREFIX is empty, but must be set"
-      exit 1
-  fi
-
-  export LDFLAGS="$(echo ${LDFLAGS} | sed -e "s|-Wl,--as-needed||") -L${SYSROOT_PREFIX}${VDR_PREFIX}/lib"
-  export CPPFLAGS="-I${SYSROOT_PREFIX}${VDR_PREFIX}/include"
-}
-
