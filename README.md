@@ -66,7 +66,7 @@ zaphistory         | yes     | valid   | no      | yes  |
   ``#error ImageMagick Version 7.0 or higher is required``
 
 
-## Standalone VDR with all dependent libraries (tested with Ubuntu Focal and Debian 11)
+## Build (tested with Ubuntu Focal and Debian 11)
 ### Install all dependencies
 ```
 apt-get install build-essential coreutils squashfuse git curl xfonts-utils xsltproc default-jre \
@@ -74,45 +74,37 @@ apt-get install build-essential coreutils squashfuse git curl xfonts-utils xsltp
                 gperf lzop unzip patchutils cpio
 ```
 ### Build
+The script build-local.sh supports several targets
+```
+$ ./build-local.sh 
+Usage:  [-t] [-i] [-9] [-0]
+-t  : Build tar (Matrix). Version containing only VDR and is installable in an existing Kodi installation
+-i  : Build images (Matrix). Images will be created which can be written to an SD card. Contains VDR in /usr/local
+-9  : Build images (corelec-19). Images will be created which can be written to an SD card. Contains VDR in /usr/local
+-0  : Build images (corelec-20). Images will be created which can be written to an SD card. Contains VDR in /usr/local
+```
+
 ```
     git checkout https://github.com/Zabrimus/CoreELEC.git
     cd CoreELEC
-    git checkout 19.4-Matrix-VDR
-    ./build-local.sh -t
+    ./build-local.sh -t or -i or -9 or -0
 ```
-In folder build-artifacts a new archive coreelec-19-vdr.tar.gz will be created, which contains VDR, Plugins 
-and all dependant libraries. The installation folder is /opt/vdr.
+If ```-t``` has been ussed, then in folder build-artifacts a new archive coreelec-19-vdr.tar.gz will be created, which contains VDR, Plugins 
+and all dependant libraries. The installation folder is ```/opt/vdr```.
+
+if ```-i```, ```-9``` or ```-0``` has been used, then all images and update tars are created in folder ```target```.
 
 The ```build.sh``` is used by Github Workflow and caches at least the ```sources``` folder.<br>
 
-### Installation
+### Installation VDR-Tar only
 ```
   cd / && tar -xf coreelec-vdr.tar.gz
 ```
 
 ## Images with integrated VDR and plugins
-### Install all dependencies
+### Installation 
 ```
-apt-get install build-essential coreutils squashfuse git curl xfonts-utils xsltproc default-jre \
-                libxml-parser-perl libjson-perl libncurses5-dev bc gawk wget zip zstd libparse-yapp-perl \
-                gperf lzop unzip patchutils cpio
-```
-
-### Build
-If you want all images including VDR
-```
-    git checkout https://github.com/Zabrimus/CoreELEC.git
-    cd CoreELEC
-    git checkout 19.4-Matrix-VDR
-    ./build-local.sh -i
-```
-In folder ```target``` you can find all created CoreELEC images which includes VDR.
-
-The installation folder is /usr/local.
-
-### Installation
-```
-     scp target/CoreELEC-Amlogic-ng.arm-19.4-Matrix_devel_*.tar root@<ip der box>:/storage/.update
+     scp target/CoreELEC-Amlogic-ng.arm-*.tar root@<ip der box>:/storage/.update
      reboot
      
      or
