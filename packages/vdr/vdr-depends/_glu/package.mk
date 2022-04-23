@@ -11,7 +11,7 @@ PKG_LICENSE="OSS"
 PKG_SITE="http://gitlab.freedesktop.org/mesa/glu/"
 PKG_URL="https://gitlab.freedesktop.org/mesa/glu/-/archive/glu-${PKG_VERSION}/glu-glu-${PKG_VERSION}.tar.gz"
 PKG_DEPENDS_TARGET="toolchain libglvnd opengl-meson"
-PKG_NEED_UNPACK="$(get_pkg_directory _libglvnd)"
+PKG_NEED_UNPACK="$(get_pkg_directory libglvnd)"
 PKG_LONGDESC="libglu is the The OpenGL utility library"
 PKG_TOOLCHAIN="autotools"
 
