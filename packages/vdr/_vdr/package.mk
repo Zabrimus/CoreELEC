@@ -26,20 +26,21 @@ pre_configure_target() {
   fi
 
   export LDFLAGS="$(echo ${LDFLAGS} | sed -e "s|-Wl,--as-needed||") -L${SYSROOT_PREFIX}/usr/lib/iconv -liconv"
-
 }
 
 pre_make_target() {
   PREFIX="${VDR_PREFIX}"
 
   cat > Make.config <<EOF
-  PREFIX = ${PREFIX}
-  VIDEODIR = /storage/videos
-  CONFDIR = /storage/.config/vdropt
-  LIBDIR = ${PREFIX}/lib/vdr
-  CACHEDIR = /storage/.cache/vdr
-  LIBS += -liconv
-  VDR_USER=root
+PREFIX = ${PREFIX}
+VIDEODIR = /storage/videos
+CONFDIR = /storage/.config/vdropt
+LIBDIR = ${PREFIX}/lib/vdr
+LOCDIR = ${PREFIX}/vdrshare/locale
+RESDIR = ${PREFIX}/vdrshare/plugin
+CACHEDIR = /storage/.cache/vdr
+LIBS += -liconv
+VDR_USER=root
 EOF
 
   # Ein ganz übler Hack. Es ist nicht gelungen pkg-config zu überreden, bei --cflags oder --libs (aber nur nur bei bestimmten Libs),
@@ -88,11 +89,7 @@ makeinstall_target() {
   mkdir -p ${INSTALL}/${PREFIX}/system.d
   for i in $(ls ${PKG_DIR}/system.d/*); do
      cat ${i} | sed "${SED_SCRIPT}" > ${INSTALL}/${PREFIX}/system.d/$(basename $i)
-     chmod +x ${INSTALL}/${PREFIX}/system.d/*.service || echo ""
   done
-
-  # cp -a ${PKG_DIR}/system.d/* ${INSTALL}/${PREFIX}/system.d
-  # chmod +x ${INSTALL}/${PREFIX}/system.d/*.service
 }
 
 post_makeinstall_target() {
