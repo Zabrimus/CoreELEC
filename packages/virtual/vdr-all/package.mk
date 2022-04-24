@@ -44,12 +44,10 @@ PKG_DEPENDS_TARGET+=" _vdr-plugin-skinnopacity"
 PKG_DEPENDS_TARGET+=" _vdr-plugin-skinsoppalusikka"
 PKG_DEPENDS_TARGET+=" _vdr-plugin-skinflatplus"
 PKG_DEPENDS_TARGET+=" _vdr-plugin-easyvdr"
+PKG_DEPENDS_TARGET+=" _vdr-plugin-skinelchihd"
 
 # Makfile muss angepasst werden
 # PKG_DEPENDS_TARGET+=" _vdr-plugin-bgprocess"
-
-# error ImageMagick Version 7.0 or higher is required
-# PKG_DEPENDS_TARGET+=" _vdr-plugin-skinelchihd"
 
 post_install() {
   # Fix some links
