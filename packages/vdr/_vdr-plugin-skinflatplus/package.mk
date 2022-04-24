@@ -7,7 +7,7 @@ PKG_LICENSE="GPL"
 PKG_SITE="https://github.com/MegaV0lt/vdr-plugin-skinflatplus"
 PKG_URL="https://github.com/MegaV0lt/vdr-plugin-skinflatplus/archive/${PKG_VERSION}.zip"
 PKG_SOURCE_DIR="vdr-plugin-skinflatplus-${PKG_VERSION}"
-PKG_DEPENDS_TARGET="toolchain _vdr _imagemagick"
+PKG_DEPENDS_TARGET="toolchain _vdr _graphicsmagick"
 PKG_NEED_UNPACK="$(get_pkg_directory _vdr)"
 PKG_LONGDESC="TODO"
 PKG_TOOLCHAIN="manual"
@@ -27,7 +27,7 @@ make_target() {
   export PKG_CONFIG_PATH=${VDR_DIR}:${SYSROOT_PREFIX}/${VDR_PREFIX}/lib/pkgconfig:${PKG_CONFIG_PATH}
   export CPLUS_INCLUDE_PATH=${VDR_DIR}/include
 
-  IMAGELIB=imagemagick make
+  IMAGELIB=graphicsmagick make
 }
 
 makeinstall_target() {
