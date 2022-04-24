@@ -1,13 +1,15 @@
 # SPDX-License-Identifier: GPL-2.0-or-later
 
-PKG_NAME="_imagemagick"
-PKG_VERSION="6.9.11-60"
-PKG_SHA256="d32a11dc92ae03b4c85314dec51d68c7a69da49868391f50182d22602b334e1b"
-PKG_LICENSE="ImageMagick License"
-PKG_SITE="https://imagemagick.org"
-PKG_URL="https://github.com/ImageMagick/ImageMagick6/archive/refs/tags/${PKG_VERSION}.tar.gz"
+PKG_NAME="_graphicsmagick"
+PKG_VERSION="1.3.38"
+PKG_SHA256="35b8661f508337314e46aebcbdca6875cc6033a1cf3edff29aa5e14ef8d2d4e1"
+PKG_LICENSE="GraphiksMagick License"
+PKG_SITE="http://www.graphicsmagick.org/index.html"
+PKG_URL="https://sourceforge.net/projects/graphicsmagick/files/graphicsmagick/${PKG_VERSION}/GraphicsMagick-${PKG_VERSION}.tar.gz"
 PKG_DEPENDS_TARGET="toolchain"
-PKG_LONGDESC="Use ImageMagick to create, edit, compose, or convert digital images."
+PKG_LONGDESC="Use GraphiksMagick to create, edit, compose, or convert digital images."
+PKG_SOURCE_DIR="GraphicsMagick-${PKG_VERSION}"
+# PKG_TOOLCHAIN="manual"
 
 PKG_CONFIGURE_OPTS_TARGET="--disable-openmp \
                            --prefix=${VDR_PREFIX} \
@@ -31,3 +33,5 @@ post_makeinstall_target() {
   # drop all unneeded
   rm -rf ${INSTALL}/${VDR_PREFIX}/{bin,share,etc}
 }
+
+
