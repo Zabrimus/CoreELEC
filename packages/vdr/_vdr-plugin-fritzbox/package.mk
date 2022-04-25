@@ -1,6 +1,6 @@
 # SPDX-License-Identifier: GPL-2.0-or-later
 
-PKG_NAME="_vdr-plugin-fritz"
+PKG_NAME="_vdr-plugin-fritzbox"
 PKG_VERSION="368a393a3e56f49d5f8b3c4411acf511e1796690"
 PKG_SHA256="164c622ec32a4dbe2e448da94ad03ffb252f05602a4c1b31239ddf2082b39a4c"
 PKG_LICENSE="GPL"
@@ -24,7 +24,7 @@ pre_configure_target() {
 
 pre_make_target() {
    # reorganize build directory
-   FRITZ_DIR=$(get_build_dir _vdr-plugin-fritz)
+   FRITZ_DIR=$(get_build_dir _vdr-plugin-fritzbox)
    cd ..
 
    rm -rf "${FRITZ_DIR}/libconv++" "${FRITZ_DIR}/libfritz++" "${FRITZ_DIR}/liblog++" "${FRITZ_DIR}/libnet++"
@@ -35,7 +35,7 @@ pre_make_target() {
 }
 
 make_target() {
-  cd $(get_build_dir _vdr-plugin-fritz)
+  cd $(get_build_dir _vdr-plugin-fritzbox)
 
   VDR_DIR=$(get_build_dir _vdr)
   export PKG_CONFIG_PATH=${VDR_DIR}:${SYSROOT_PREFIX}/${VDR_PREFIX}/lib/pkgconfig:${PKG_CONFIG_PATH}
@@ -50,9 +50,9 @@ makeinstall_target() {
 }
 
 post_makeinstall_target() {
-  mkdir -p ${INSTALL}/storage/.config/vdropt-sample/plugins/fritz
-  cp -r $(get_build_dir _vdr-plugin-fritz)/templates/on-call.sh ${INSTALL}/storage/.config/vdropt-sample/plugins/fritz
-  chmod +x ${INSTALL}/storage/.config/vdropt-sample/plugins/fritz/on-call.sh
+  mkdir -p ${INSTALL}/storage/.config/vdropt-sample/plugins/fritzbox
+  cp -r $(get_build_dir _vdr-plugin-fritzbox)/templates/on-call.sh ${INSTALL}/storage/.config/vdropt-sample/plugins/fritzbox
+  chmod +x ${INSTALL}/storage/.config/vdropt-sample/plugins/fritzbox/on-call.sh
 
   mkdir -p ${INSTALL}/storage/.config/vdropt-sample/conf.d
   cp -PR ${PKG_DIR}/conf.d/* ${INSTALL}/storage/.config/vdropt-sample/conf.d/
@@ -66,5 +66,5 @@ post_makeinstall_target() {
   VERSION=$(pkg-config --variable=apiversion vdr)
   cd ${INSTALL}
   mkdir -p ${INSTALL}${VDR_PREFIX}/config/
-  zip -qrum9 "${INSTALL}${VDR_PREFIX}/config/fritz-sample-config.zip" storage
+  zip -qrum9 "${INSTALL}${VDR_PREFIX}/config/fritzbox-sample-config.zip" storage
 }
