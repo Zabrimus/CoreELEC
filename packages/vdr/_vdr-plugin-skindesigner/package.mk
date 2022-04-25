@@ -36,8 +36,15 @@ makeinstall_target() {
   LIB_DIR=${INSTALL}/$(pkg-config --variable=locdir vdr)/../../lib/vdr
   PLGRES_DIR="${INSTALL}/storage/.config/vdropt-sample/plugins/skindesigner"
   SKINDESIGNER_SCRIPTDIR="/storage/.config/vdropt/plugins/skindesigner/scripts"
+  SKINDESIGNER_DIR=$(get_install_dir _vdr-plugin-skindesigner)
 
-  make DESTDIR="${INSTALL}" LIBDIR="${LIB_DIR}" PLGRESDIR="${PLGRES_DIR}" SKINDESIGNER_SCRIPTDIR="${SKINDESIGNER_SCRIPTDIR}" install
+  make PREFIX="${VDR_PREFIX}" DESTDIR="${INSTALL}" LIBDIR="${LIB_DIR}" PLGRESDIR="${PLGRES_DIR}" SKINDESIGNER_SCRIPTDIR="${SKINDESIGNER_SCRIPTDIR}" install
+
+  # ugly hack. Similar to the one in _vdr
+  mkdir -p ${SKINDESIGNER_DIR}${VDR_PREFIX}/${VDR_PREFIX}
+  cd ${SKINDESIGNER_DIR}${VDR_PREFIX}/${VDR_PREFIX}
+  ln -s ../../include include
+  cd $(get_build_dir _vdr_plugin_skindesigner)
 }
 
 post_makeinstall_target() {
