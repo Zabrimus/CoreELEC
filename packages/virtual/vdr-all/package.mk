@@ -45,6 +45,7 @@ PKG_DEPENDS_TARGET+=" _vdr-plugin-skinsoppalusikka"
 PKG_DEPENDS_TARGET+=" _vdr-plugin-skinflatplus"
 PKG_DEPENDS_TARGET+=" _vdr-plugin-easyvdr"
 PKG_DEPENDS_TARGET+=" _vdr-plugin-skinelchihd"
+PKG_DEPENDS_TARGET+=" _vdr-plugin-tvguideng"
 
 # Makfile muss angepasst werden
 # PKG_DEPENDS_TARGET+=" _vdr-plugin-bgprocess"
