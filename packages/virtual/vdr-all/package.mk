@@ -49,6 +49,7 @@ PKG_DEPENDS_TARGET+=" _vdr-plugin-tvguideng"
 PKG_DEPENDS_TARGET+=" _vdr-plugin-weatherforecast"
 PKG_DEPENDS_TARGET+=" _vdr-plugin-systeminfo"
 PKG_DEPENDS_TARGET+=" _vdr-plugin-radio"
+PKG_DEPENDS_TARGET+=" _vdr-plugin-fritz"
 
 # Makfile muss angepasst werden
 # PKG_DEPENDS_TARGET+=" _vdr-plugin-bgprocess"
