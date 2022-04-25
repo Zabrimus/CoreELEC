@@ -44,6 +44,11 @@ projects/**/*.old
 # ignore build
 build.CoreELEC-Amlogic-ng.arm-19
 build.CoreELEC-Amlogic-ng.arm-20
+build.CoreELEC-Amlogic-ng.arm-19-image-19-VDR
+build.CoreELEC-Amlogic-ng.arm-19-image-Matrix-VDR
+build.CoreELEC-Amlogic-ng.arm-20-image-20-VDR
+target
+build-artifacts
 sources
 
 #
