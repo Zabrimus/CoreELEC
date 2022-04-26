@@ -51,6 +51,23 @@ PKG_DEPENDS_TARGET+=" _vdr-plugin-systeminfo"
 PKG_DEPENDS_TARGET+=" _vdr-plugin-radio"
 PKG_DEPENDS_TARGET+=" _vdr-plugin-fritzbox"
 
+PKG_DEPENDS_TARGET+=" _vdr-plugin-devstatus"
+PKG_DEPENDS_TARGET+=" _vdr-plugin-dynamite"
+PKG_DEPENDS_TARGET+=" _vdr-plugin-tvscraper"
+PKG_DEPENDS_TARGET+=" _vdr-plugin-targavfd"
+PKG_DEPENDS_TARGET+=" _vdr-plugin-externalplayer"
+PKG_DEPENDS_TARGET+=" _vdr-plugin-femon"
+PKG_DEPENDS_TARGET+=" _vdr-plugin-svdrpservice"
+PKG_DEPENDS_TARGET+=" _vdr-plugin-remoteosd"
+PKG_DEPENDS_TARGET+=" _vdr-plugin-zappilot"
+
+
+# PKG_DEPENDS_TARGET+=" _vdr-plugin-mp3"
+# PKG_DEPENDS_TARGET+=" _vdr-plugin-dvd"
+
+# currently disabled, because problems compiling dependent libs exists: libcdio_paranpia, libcdio
+# PKG_DEPENDS_TARGET+=" _vdr-plugin-cdplayer"
+
 # Makfile muss angepasst werden
 # PKG_DEPENDS_TARGET+=" _vdr-plugin-bgprocess"
 
