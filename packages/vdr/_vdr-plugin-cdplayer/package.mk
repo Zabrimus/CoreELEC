@@ -7,7 +7,7 @@ PKG_LICENSE="GPL"
 PKG_SITE="https://uli-eckhardt.de/vdr/cdplayer.en.shtml"
 PKG_URL="https://uli-eckhardt.de/vdr/download/vdr-cdplayer-${PKG_VERSION}.tgz"
 PKG_SOURCE_DIR="cdplayer-${PKG_VERSION}"
-PKG_DEPENDS_TARGET="toolchain _vdr _libcddb _libcdio_paranoia"
+PKG_DEPENDS_TARGET="toolchain _vdr _libcddb"
 PKG_NEED_UNPACK="$(get_pkg_directory _vdr)"
 PKG_LONGDESC="TODO"
 PKG_TOOLCHAIN="manual"
@@ -50,4 +50,3 @@ post_makeinstall_target() {
   mkdir -p ${INSTALL}${VDR_PREFIX}/config/
   zip -qrum9 "${INSTALL}${VDR_PREFIX}/config/cdplayer-sample-config.zip" storage
 }
-
