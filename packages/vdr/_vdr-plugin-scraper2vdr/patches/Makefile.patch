@@ -1,6 +1,6 @@
 diff -ru8bBw a/lib/Makefile b/lib/Makefile
 --- a/lib/Makefile	2022-01-04 06:54:16.000000000 +0100
-+++ b/lib/Makefile	2022-04-17 19:46:39.264376767 +0200
++++ b/lib/Makefile	2022-04-27 13:51:27.555058842 +0200
 @@ -18,49 +18,49 @@
     LIBOBJS += imgtools.o
  endif
@@ -57,7 +57,7 @@ diff -ru8bBw a/lib/Makefile b/lib/Makefile
  	$(doLib) $@ $(LIBOBJS)
 diff -ru8bBw a/Make.config b/Make.config
 --- a/Make.config	2022-01-04 06:54:16.000000000 +0100
-+++ b/Make.config	2022-04-17 22:43:23.727789971 +0200
++++ b/Make.config	2022-04-27 13:51:27.555058842 +0200
 @@ -14,17 +14,17 @@
  # internals
  
@@ -79,7 +79,25 @@ diff -ru8bBw a/Make.config b/Make.config
  
 diff -ru8bBw a/Makefile b/Makefile
 --- a/Makefile	2022-01-04 06:54:16.000000000 +0100
-+++ b/Makefile	2022-04-17 19:44:36.480151727 +0200
++++ b/Makefile	2022-04-27 13:52:03.563085109 +0200
+@@ -1,16 +1,16 @@
+ #
+ # Makefile for a Video Disk Recorder plugin
+ #
+ # $Id$
+ 
+ # External image lib to use: imagemagick, graphicsmagick
+ 
+-IMAGELIB = imagemagick
++IMAGELIB = graphicsmagick
+ 
+ PLUGIN = scraper2vdr
+ HLIB   = -L./lib -lhorchi
+ HISTFILE  = "HISTORY.h"
+ 
+ ### The version number of this plugin (taken from the main source file):
+ 
+ VERSION = $(shell grep 'define _VERSION ' $(HISTFILE) | awk '{ print $$3 }' | sed -e 's/[";]//g')
 @@ -20,17 +20,17 @@
  LASTTAG     = $(shell git describe --tags --abbrev=0)
  BRANCH      = $(shell git rev-parse --abbrev-ref HEAD)
