@@ -60,13 +60,11 @@ PKG_DEPENDS_TARGET+=" _vdr-plugin-femon"
 PKG_DEPENDS_TARGET+=" _vdr-plugin-svdrpservice"
 PKG_DEPENDS_TARGET+=" _vdr-plugin-remoteosd"
 PKG_DEPENDS_TARGET+=" _vdr-plugin-zappilot"
+PKG_DEPENDS_TARGET+=" _vdr-plugin-dvd"
+PKG_DEPENDS_TARGET+=" _vdr-plugin-mp3"
 
-
-# PKG_DEPENDS_TARGET+=" _vdr-plugin-mp3"
-# PKG_DEPENDS_TARGET+=" _vdr-plugin-dvd"
-
-# currently disabled, because problems compiling dependent libs exists: libcdio_paranpia, libcdio
-# PKG_DEPENDS_TARGET+=" _vdr-plugin-cdplayer"
+# Warning: Compiled without libcdio, libcdio_paranoia, libcdda due to compile problems for the mentioned libs
+PKG_DEPENDS_TARGET+=" _vdr-plugin-cdplayer"
 
 # Makfile muss angepasst werden
 # PKG_DEPENDS_TARGET+=" _vdr-plugin-bgprocess"
