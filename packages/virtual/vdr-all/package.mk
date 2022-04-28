@@ -62,6 +62,7 @@ PKG_DEPENDS_TARGET+=" _vdr-plugin-remoteosd"
 PKG_DEPENDS_TARGET+=" _vdr-plugin-zappilot"
 PKG_DEPENDS_TARGET+=" _vdr-plugin-dvd"
 PKG_DEPENDS_TARGET+=" _vdr-plugin-mp3"
+PKG_DEPENDS_TARGET+=" _vdr-plugin-cecremote"
 
 # Warning: Compiled without libcdio, libcdio_paranoia, libcdda due to compile problems for the mentioned libs
 PKG_DEPENDS_TARGET+=" _vdr-plugin-cdplayer"
