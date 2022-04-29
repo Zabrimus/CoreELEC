@@ -61,6 +61,11 @@ EOF
       echo "Skin already exists. Modification of DialogButtonMenu.xml will not be copied."
       echo "Please add VDR entry manually. Sample: ${CONF_DIR}/DialogButtonMenu.xml"
   fi
+
+  # if libcec exists, set a symbolic link
+  if [ -f /usr/lib/libcec.so.6.0.2 ] && [ ! -f /var/lib/libcec.so.6 ]; then
+     (cd /var/lib && ln -s /usr/lib/libcec.so.6.0.2 libcec.so.6)
+  fi
 }
 
 install_copy() {
