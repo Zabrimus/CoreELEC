@@ -12,6 +12,7 @@ Usage: $PROGNAME [-t] [-i] [-9] [-0] [-d] [-e] [-x] [-y]
 
 -d  : Enable vdr-plugin-dynamite. Default is disabled.
 -e  : Enable vdr-plugin-easyvdr. Default is disabled.
+-z  : Enable zapcockpit. Default is disabled.
 
 -x  : Development only: Build images but don't switch the branch.
 -y  : Development only: Build tar but don't switch the branch.
@@ -109,6 +110,8 @@ enable_plugin() {
   elif [ "$1" = "easyvdr" ]; then
     cp packages/vdr/_vdr/optional/vdr-plugin-easyvdr.patch packages/vdr/_vdr/patches
     sed -i -e "s/#\(PKG_DEPENDS_TARGET+=\" _vdr-plugin-easyvdr\"\)/\1/" packages/virtual/vdr-all/package.mk
+  elif [ "$1" = "zapcockpit" ]; then
+    cp packages/vdr/_vdr/optional/vdr-2.4.0_zapcockpit.patch packages/vdr/_vdr/patches
   fi
 }
 
@@ -120,6 +123,8 @@ disable_plugin() {
   elif [ "$1" = "easyvdr" ]; then
     rm -f packages/vdr/_vdr/patches/vdr-plugin-easyvdr.patch
     sed -i -e "s/\(PKG_DEPENDS_TARGET+=\" _vdr-plugin-easyvdr\"\)/#\1/" packages/virtual/vdr-all/package.mk
+  elif [ "$1" = "zapcockpit" ]; then
+    rm -f packages/vdr/_vdr/patches/vdr-2.4.0_zapcockpit.patch
   fi
 }
 
@@ -149,6 +154,7 @@ while [[ "$#" -gt 0 ]]; do
     case $1 in
         -d) enable_dynamite=1 ;;
         -e) enable_easyvdr=1 ;;
+        -z) enable_zapcockpit=1 ;;
         -t) c_vdr_tar=1 ;;
         -i) c_vdr_image_matrix=1 ;;
         -9) c_vdr_image_19=1 ;;
@@ -170,6 +176,12 @@ if [ "${enable_easyvdr}" = "1" ]; then
   enable_plugin "easyvdr"
 else
   disable_plugin "easyvdr"
+fi
+
+if [ "${enable_zapcockpit}" = "1" ]; then
+  enable_plugin "zapcockpit"
+else
+  disable_plugin "zapcockpit"
 fi
 
 if [ "${c_vdr_tar}" = "1" ]; then
@@ -198,3 +210,4 @@ fi
 
 disable_plugin "dynamite"
 disable_plugin "easyvdr"
+disable_plugin "zapcockpit"
