@@ -106,10 +106,10 @@ enable_plugin() {
   # copy the patches and enable plugin
   if [ "$1" = "dynamite" ]; then
     cp packages/vdr/_vdr/optional/vdr-2.4.6-dynamite.patch packages/vdr/_vdr/patches
-    sed -i -e "s/#\(PKG_DEPENDS_TARGET+=\" _vdr-plugin-dynamite\"\)/\1/" packages/virtual/vdr-all/package.mk
+    sed -i -e "s/^#\(PKG_DEPENDS_TARGET+=\" _vdr-plugin-dynamite\"\)/\1/" packages/virtual/vdr-all/package.mk
   elif [ "$1" = "easyvdr" ]; then
     cp packages/vdr/_vdr/optional/vdr-plugin-easyvdr.patch packages/vdr/_vdr/patches
-    sed -i -e "s/#\(PKG_DEPENDS_TARGET+=\" _vdr-plugin-easyvdr\"\)/\1/" packages/virtual/vdr-all/package.mk
+    sed -i -e "s/^#\(PKG_DEPENDS_TARGET+=\" _vdr-plugin-easyvdr\"\)/\1/" packages/virtual/vdr-all/package.mk
   elif [ "$1" = "zapcockpit" ]; then
     cp packages/vdr/_vdr/optional/vdr-2.4.0_zapcockpit.patch packages/vdr/_vdr/patches
   fi
@@ -119,10 +119,10 @@ disable_plugin() {
   # delete patches and disable plugin
   if [ "$1" = "dynamite" ]; then
     rm -f packages/vdr/_vdr/patches/vdr-2.4.6-dynamite.patch
-    sed -i -e "s/\(PKG_DEPENDS_TARGET+=\" _vdr-plugin-dynamite\"\)/#\1/" packages/virtual/vdr-all/package.mk
+    sed -i -e "s/^\(PKG_DEPENDS_TARGET+=\" _vdr-plugin-dynamite\"\)/#\1/" packages/virtual/vdr-all/package.mk
   elif [ "$1" = "easyvdr" ]; then
     rm -f packages/vdr/_vdr/patches/vdr-plugin-easyvdr.patch
-    sed -i -e "s/\(PKG_DEPENDS_TARGET+=\" _vdr-plugin-easyvdr\"\)/#\1/" packages/virtual/vdr-all/package.mk
+    sed -i -e "s/^\(PKG_DEPENDS_TARGET+=\" _vdr-plugin-easyvdr\"\)/#\1/" packages/virtual/vdr-all/package.mk
   elif [ "$1" = "zapcockpit" ]; then
     rm -f packages/vdr/_vdr/patches/vdr-2.4.0_zapcockpit.patch
   fi
