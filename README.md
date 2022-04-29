@@ -78,11 +78,17 @@ apt-get install build-essential coreutils squashfuse git curl xfonts-utils xsltp
 The script build-local.sh supports several targets
 ```
 $ ./build-local.sh 
-Usage:  [-t] [-i] [-9] [-0]
+Usage:  [-t] [-i] [-9] [-0] [-d] [-e] [-x] [-y]
 -t  : Build tar (Matrix). Version containing only VDR and is installable in an existing Kodi installation
 -i  : Build images (Matrix). Images will be created which can be written to an SD card. Contains VDR in /usr/local
 -9  : Build images (corelec-19). Images will be created which can be written to an SD card. Contains VDR in /usr/local
 -0  : Build images (corelec-20). Images will be created which can be written to an SD card. Contains VDR in /usr/local
+
+-d  : Enable vdr-plugin-dynamite. Default is disabled.
+-e  : Enable vdr-plugin-easyvdr. Default is disabled.
+
+-x  : Development only: Build images but don't switch the branch.
+-y  : Development only: Build tar but don't switch the branch.
 ```
 
 ```
