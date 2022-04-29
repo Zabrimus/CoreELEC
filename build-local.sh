@@ -4,13 +4,17 @@ set -e
 
 usage() {
   cat << EOF >&2
-Usage: $PROGNAME [-t] [-i] [-9] [-0] [-x] [-y]
+Usage: $PROGNAME [-t] [-i] [-9] [-0] [-d] [-e] [-x] [-y]
 -t  : Build tar (Matrix). Version containing only VDR and is installable in an existing Kodi installation
 -i  : Build images (Matrix). Images will be created which can be written to an SD card. Contains VDR in /usr/local
 -9  : Build images (corelec-19). Images will be created which can be written to an SD card. Contains VDR in /usr/local
 -0  : Build images (corelec-20). Images will be created which can be written to an SD card. Contains VDR in /usr/local
--x : Development only: Build images but don't switch the branch.
--y : Development only: Build tar but don't switch the branch.
+
+-d  : Enable vdr-plugin-dynamite. Default is disabled.
+-e  : Enable vdr-plugin-easyvdr. Default is disabled.
+
+-x  : Development only: Build images but don't switch the branch.
+-y  : Development only: Build tar but don't switch the branch.
 EOF
   exit 1
 }
@@ -72,8 +76,8 @@ create_vdr_tar() {
   rm -Rf vdr-tar
 
   # umount everything
-  umount target/pass1 || echo "umount pass1 failed"
-  umount target/pass2 || echo "umount pass2 failed"
+  umount -q target/pass1 || echo
+  umount -q target/pass2 || echo
 }
 
 create_vdr_image() {
@@ -97,13 +101,41 @@ create_vdr_image() {
   VDR_PREFIX="/usr/local" BUILD_SUFFIX="${SUFFIX}" make image
 }
 
+enable_plugin() {
+  # copy the patches and enable plugin
+  if [ "$1" = "dynamite" ]; then
+    cp packages/vdr/_vdr/optional/vdr-2.4.6-dynamite.patch packages/vdr/_vdr/patches
+    sed -i -e "s/#\(PKG_DEPENDS_TARGET+=\" _vdr-plugin-dynamite\"\)/\1/" packages/virtual/vdr-all/package.mk
+  elif [ "$1" = "easyvdr" ]; then
+    cp packages/vdr/_vdr/optional/vdr-plugin-easyvdr.patch packages/vdr/_vdr/patches
+    sed -i -e "s/#\(PKG_DEPENDS_TARGET+=\" _vdr-plugin-easyvdr\"\)/\1/" packages/virtual/vdr-all/package.mk
+  fi
+}
+
+disable_plugin() {
+  # delete patches and disable plugin
+  if [ "$1" = "dynamite" ]; then
+    rm -f packages/vdr/_vdr/patches/vdr-2.4.6-dynamite.patch
+    sed -i -e "s/\(PKG_DEPENDS_TARGET+=\" _vdr-plugin-dynamite\"\)/#\1/" packages/virtual/vdr-all/package.mk
+  elif [ "$1" = "easyvdr" ]; then
+    rm -f packages/vdr/_vdr/patches/vdr-plugin-easyvdr.patch
+    sed -i -e "s/\(PKG_DEPENDS_TARGET+=\" _vdr-plugin-easyvdr\"\)/#\1/" packages/virtual/vdr-all/package.mk
+  fi
+}
+
 cleanup() {
   mkdir -p build-artifacts
   rm -f build-artifacts/*
 
   # umount if still mounted
-  umount -q target/pass1 || echo "target/pass1 not mounted"
-  umount -q target/pass2 || echo "target/pass2 not mounted"
+  if [ -d target/pass1 ]; then
+    umount -q target/pass1 || echo
+  fi
+
+  if [ -d target/pass2 ]; then
+    umount -q target/pass2 || echo
+  fi
+
   rm -rf target/*
 }
 
@@ -113,14 +145,56 @@ fi
 
 cleanup
 
-while getopts ti90xy o; do
-  case $o in
-    (t) create_vdr_tar;;
-    (i) create_vdr_image "Matrix";;
-    (9) create_vdr_image "19";;
-    (0) create_vdr_image "20";;
-    (x) create_vdr_image "x";;
-    (y) create_vdr_tar "x";;
-    (*) usage
-  esac
+while [[ "$#" -gt 0 ]]; do
+    case $1 in
+        -d) enable_dynamite=1 ;;
+        -e) enable_easyvdr=1 ;;
+        -t) c_vdr_tar=1 ;;
+        -i) c_vdr_image_matrix=1 ;;
+        -9) c_vdr_image_19=1 ;;
+        -0) c_vdr_image_20=1 ;;
+        -x) dev_vdr_image=1 ;;
+        -y) dev_vdr_tar=1 ;;
+        *) echo "Unknown parameter passed: $1";  usage; exit 1 ;;
+    esac
+    shift
 done
+
+if [ "${enable_dynamite}" = "1" ]; then
+  enable_plugin "dynamite"
+else
+  disable_plugin "dynamite"
+fi
+
+if [ "${enable_easyvdr}" = "1" ]; then
+  enable_plugin "easyvdr"
+else
+  disable_plugin "easyvdr"
+fi
+
+if [ "${c_vdr_tar}" = "1" ]; then
+  create_vdr_tar
+fi
+
+if [ "${c_vdr_image_matrix}" = "1" ]; then
+  create_vdr_image "Matrix"
+fi
+
+if [ "${c_vdr_image_19}" = "1" ]; then
+  create_vdr_image "19"
+fi
+
+if [ "${c_vdr_image_20}" = "1" ]; then
+  create_vdr_image "20"
+fi
+
+if [ "${dev_vdr_image}" = "1" ]; then
+  create_vdr_image "x"
+fi
+
+if [ "${dev_vdr_tar}" = "1" ]; then
+  create_vdr_tar "x"
+fi
+
+disable_plugin "dynamite"
+disable_plugin "easyvdr"
