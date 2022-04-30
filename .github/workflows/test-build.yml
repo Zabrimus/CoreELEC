@@ -57,7 +57,7 @@ jobs:
 
       - name: Start build
         run: |
-          ./build-local -9 -e
+          ./build-local.sh -9 -e
           echo "Start Build"
 
       - name: Show free disk space after build
