@@ -15,31 +15,40 @@ CoreELEC:/usr/local/bin # ./easyvdrctl.sh --all-status
  Plugin             | install | ini     | AutoRun | Stop | Arguments
 --------------------------------------------------------------------------------
  ac3mode            | yes     | valid   | no      | yes  | 
+ cdplayer           | yes     | valid   | no      | yes  | 
+ cecremote          | yes     | valid   | no      | yes  | 
  chanman            | yes     | valid   | no      | yes  | 
  channellists       | yes     | valid   | no      | yes  | 
  conflictcheckonly  | yes     | valid   | no      | yes  | 
  control            | yes     | valid   | yes     | yes  | 
  ddci2              | yes     | valid   | no      | yes  | 
+ devstatus          | yes     | valid   | no      | yes  | 
  dummydevice        | yes     | valid   | no      | yes  | 
  dvbapi             | yes     | valid   | no      | yes  | 
+ dvd                | yes     | valid   | no      | yes  | 
+ dynamite           | no      | valid   | no      | yes  | 
  eepg               | yes     | valid   | no      | yes  | 
  epg2vdr            | yes     | valid   | no      | yes  | 
  epgfixer           | yes     | valid   | no      | yes  | 
  epgsearch          | yes     | valid   | no      | yes  | 
  epgsearchonly      | yes     | valid   | no      | yes  | 
  epgtableid0        | yes     | valid   | no      | yes  | 
+ externalplayer     | yes     | valid   | no      | yes  | 
+ femon              | yes     | valid   | no      | yes  | 
  filebrowser        | yes     | valid   | no      | yes  | 
  fritzbox           | yes     | valid   | no      | yes  | -c /storage/.config/vdropt/plugins/fritz/on-call.sh
  hello              | yes     | valid   | no      | yes  | 
  iptv               | yes     | valid   | no      | yes  | 
  live               | yes     | valid   | no      | yes  | 
  markad             | yes     | valid   | no      | yes  | 
+ mp3                | yes     | valid   | no      | yes  | 
  osd2web            | yes     | valid   | no      | yes  | 
  osddemo            | yes     | valid   | no      | yes  | 
  osdteletext        | yes     | valid   | no      | yes  | 
  pictures           | yes     | valid   | no      | yes  | 
  quickepgsearch     | yes     | valid   | no      | yes  | 
  radio              | yes     | valid   | no      | yes  | -f /storage/.config/vdropt/plugins/radio
+ remoteosd          | yes     | valid   | no      | yes  | 
  restfulapi         | yes     | valid   | no      | yes  | 
  robotv             | yes     | valid   | no      | yes  | 
  satip              | yes     | valid   | yes     | yes  | 
@@ -58,13 +67,17 @@ CoreELEC:/usr/local/bin # ./easyvdrctl.sh --all-status
  svccli             | yes     | valid   | no      | yes  | 
  svcsvr             | yes     | valid   | no      | yes  | 
  svdrpdemo          | yes     | valid   | no      | yes  | 
+ svdrpservice       | yes     | valid   | no      | yes  | 
  systeminfo         | yes     | valid   | no      | yes  | --script=/storage/.config/vdropt/plugins/systeminfo/systeminfo.sh
+ targavfd           | yes     | valid   | no      | yes  | 
  tvguideng          | yes     | valid   | no      | yes  | 
+ tvscraper          | yes     | valid   | no      | yes  | 
  vnsiserver         | yes     | valid   | no      | yes  | 
  weatherforecast    | yes     | valid   | no      | yes  | 
  wirbelscan         | yes     | valid   | no      | yes  | 
  wirbelscancontrol  | yes     | valid   | no      | yes  | 
  zaphistory         | yes     | valid   | no      | yes  | 
+ zappilot           | yes     | valid   | no      | yes  | 
 ```
 
 ## Build (tested with Ubuntu Focal and Debian 11)
