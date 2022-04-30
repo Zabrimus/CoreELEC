@@ -102,4 +102,4 @@ while getopts b:iC o; do
 done
 
 # create default directories
-mkdir -p /opt/vdr/cache/markad
+mkdir -p /storage/.cache/vdr/markad
