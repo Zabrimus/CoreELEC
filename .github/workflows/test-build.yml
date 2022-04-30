@@ -23,6 +23,7 @@ jobs:
 
       - name: Install dependencies
         run: |
+          sudo apt update
           sudo apt-get install build-essential coreutils squashfuse git curl xfonts-utils xsltproc default-jre \
                                libxml-parser-perl libjson-perl libncurses5-dev bc gawk wget zip zstd libparse-yapp-perl \
                                 gperf lzop unzip patchutils cpio
