@@ -1,0 +1,47 @@
+name: Build CoreELEC 19
+
+on:
+  workflow_dispatch:
+    branches: [ coreelec-19-VDR ]
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Maximize build space
+        uses: easimon/maximize-build-space@master
+        with:
+          root-reserve-mb: 512
+          swap-size-mb: 1024
+          remove-dotnet: 'true'
+          remove-android: 'true'
+          remove-haskell: 'true'
+
+      - uses: actions/checkout@v2
+
+      - name: Install dependencies
+        run: |
+          sudo apt-get install build-essential coreutils squashfuse git curl xfonts-utils xsltproc default-jre \
+                               libxml-parser-perl libjson-perl libncurses5-dev bc gawk wget zip zstd libparse-yapp-perl \
+                                gperf lzop unzip patchutils cpio
+          sudo apt-get clean
+
+      - name: Show installed packages
+        run: |
+          dpkg -l
+
+      - name: Show free disk space before build
+        run: |
+          df -h
+
+      - name: Start build
+        run: |
+          # make image
+          echo "Start Build"
+
+      - name: Show free disk space after build
+        run: |
+          df -h
+          ls -la
