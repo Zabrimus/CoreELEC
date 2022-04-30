@@ -1,4 +1,4 @@
-name: Build CoreELEC 19
+name: Test Build
 
 on:
   workflow_dispatch:
