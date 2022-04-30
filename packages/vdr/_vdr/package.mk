@@ -85,6 +85,10 @@ makeinstall_target() {
   cp ${PKG_DIR}/bin/autostart.sh ${INSTALL}/${PREFIX}/bin/autostart.sh
   chmod +x ${INSTALL}/${PREFIX}/bin/autostart.sh
 
+  # rename perl svdrpsend to svdrpsend.pl and copy the netcat variant
+  mv ${INSTALL}/${PREFIX}/bin/svdrpsend ${INSTALL}/${PREFIX}/bin/svdrpsend.pl
+  cp ${PKG_DIR}/bin/svdrpsend ${INSTALL}/${PREFIX}/bin/svdrpsend
+
   # copy system.d folder
   mkdir -p ${INSTALL}/${PREFIX}/system.d
   for i in $(ls ${PKG_DIR}/system.d/*); do
