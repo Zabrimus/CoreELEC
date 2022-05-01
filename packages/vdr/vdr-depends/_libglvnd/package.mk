@@ -7,7 +7,7 @@ PKG_SHA256="1eb5c2be8d213ad5d31cfb4efbb331d42f3d9f5617c885ce7e89f572ec2bb4b8"
 PKG_LICENSE="GPL"
 PKG_SITE="https://github.com/NVIDIA/libglvnd"
 PKG_URL="https://github.com/NVIDIA/libglvnd/archive/v${PKG_VERSION}.tar.gz"
-PKG_DEPENDS_TARGET="toolchain"
+PKG_DEPENDS_TARGET="toolchain libX11"
 PKG_LONGDESC="libglvnd is a vendor-neutral dispatch layer for arbitrating OpenGL API calls between multiple vendors."
 
 configure_package() {
@@ -25,7 +25,7 @@ pre_configure_target(){
 }
 
 post_makeinstall_target() {
-  #if [ "${DISPLAYSERVER}" = "x11" ]; then
+  if [ "${DISPLAYSERVER}" = "x11" ]; then
     # Remove old symlinks to libGL.so.1.7.0 (GLVND)
     safe_remove              ${INSTALL}/usr/lib/libGL.so
     safe_remove              ${INSTALL}/usr/lib/libGL.so.1
@@ -46,5 +46,5 @@ post_makeinstall_target() {
 
     # indirect rendering
     ln -sf /var/lib/libGLX_indirect.so.0 ${INSTALL}/usr/lib/libGLX_indirect.so.0
-  #fi
+  fi
 }
