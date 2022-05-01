@@ -9,6 +9,14 @@ PKG_SITE="https://github.com/NVIDIA/libglvnd"
 PKG_URL="https://github.com/NVIDIA/libglvnd/archive/v${PKG_VERSION}.tar.gz"
 PKG_DEPENDS_TARGET="toolchain libX11"
 PKG_LONGDESC="libglvnd is a vendor-neutral dispatch layer for arbitrating OpenGL API calls between multiple vendors."
+PKG_TOOLCHAIN="meson"
+
+PKG_MESON_OPTS_TARGET="--prefix=${VDR_PREFIX} \
+					   --bindir=${VDR_PREFIX}/bin \
+                       --libdir=${VDR_PREFIX}/lib \
+                       --libexecdir=${VDR_PREFIX}/bin \
+                       --sbindir=${VDR_PREFIX}/sbin \
+                       "
 
 configure_package() {
   if [ "${DISPLAYSERVER}" = "x11" ]; then
@@ -17,7 +25,7 @@ configure_package() {
 }
 
 pre_configure_target(){
-  PKG_MESON_OPTS_TARGET="-Dgles1=false"
+  PKG_MESON_OPTS_TARGET+="-Dgles1=false"
 
   if [ "${OPENGLES_SUPPORT}" = "no" ]; then
     PKG_MESON_OPTS_TARGET+=" -Dgles2=false"
