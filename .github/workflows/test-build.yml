@@ -24,7 +24,12 @@ jobs:
                       `dpkg -l | grep libmono | awk '{ print $2 }' | xargs` `dpkg -l | grep mongodb | awk '{ print $2 }' | xargs` \
                       `dpkg -l | grep mono | awk '{ print $2 }' | xargs` `dpkg -l | grep mysql | awk '{ print $2 }' | xargs` \
                       `dpkg -l | grep php | awk '{ print $2 }' | xargs` `dpkg -l | grep postgresql | awk '{ print $2 }' | xargs` \
-                      r-base r-base-dev rake `dpkg -l | grep ruby | awk '{ print $2 }' | xargs` 
+                      r-base r-base-dev rake `dpkg -l | grep ruby | awk '{ print $2 }' | xargs` `dpkg -l | grep X11 | awk '{ print $2 }' | xargs` \
+                      `dpkg -l | grep llvm | awk '{ print $2 }' | xargs` `dpkg -l | grep mssql | awk '{ print $2 }' | xargs` \
+                      subversion xargs` `dpkg -l | grep tcl | awk '{ print $2 }' | xargs` tex-common tk tk8.6 \
+                      `dpkg -l | grep fonts- | awk '{ print $2 }' | xargs`
+          
+                      
           sudo apt-get -y autoremove
 
       - name: Maximize build space
