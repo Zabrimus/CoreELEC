@@ -106,7 +106,7 @@ Usage:  [-t] [-i] [-9] [-0] [-d] [-e] [-x] [-y]
 ```
 
 ```
-    git checkout https://github.com/Zabrimus/CoreELEC.git
+    git clone https://github.com/Zabrimus/CoreELEC.git
     cd CoreELEC
     ./build-local.sh -t or -i or -9 or -0
 ```
@@ -146,7 +146,7 @@ In folder /opt/vdr/bin or /usr/local/bin contains an install script
           -b vdr  : VDR will be started after booting
 ```
 
-## Switch OSD languange
+## Switch OSD language
 To be able to switch the OSD languange you have to
 - install Kodi addon: locale
 - configure Kodi addon locale and choose your desired language
