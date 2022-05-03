@@ -35,7 +35,7 @@ jobs:
       - name: Maximize build space
         uses: easimon/maximize-build-space@master
         with:
-          root-reserve-mb: 4096
+          root-reserve-mb: 8192
           swap-size-mb: 12288
           remove-dotnet: 'true'
           remove-android: 'true'
@@ -46,6 +46,12 @@ jobs:
           dpkg -l
 
       - uses: actions/checkout@v2
+
+      - uses: actions/cache@v3
+        with:
+          path: |
+            ./sources
+          key: cache-coreelec-19-VDR
 
       - name: Install dependencies
         run: |
@@ -70,6 +76,12 @@ jobs:
           df -h
           ls -la
           ls -la target
-          
 
-# `dpkg -l | grep X11 | awk '{ print $2 }' | xargs`
+      - uses: actions/upload-artifact@v3
+        with:
+          name: CoreELEC-Amlogic-ng.arm-coreelec-19-VDR-Generic
+          path: |
+            target/CoreELEC-Amlogic-ng.arm-*-Generic.img.gz
+            target/CoreELEC-Amlogic-ng.arm-*-Generic.img.gz.sha256
+            target/CoreELEC-Amlogic-ng.arm-*.tar
+            target/CoreELEC-Amlogic-ng.arm-*.tar.sha256
