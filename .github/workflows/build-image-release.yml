@@ -52,7 +52,7 @@ jobs:
         with:
           path: |
             ./sources
-          key: cache-19.4-Matrix-VDR
+          key: cache-coreelec-20
 
       - name: Install dependencies
         run: |
