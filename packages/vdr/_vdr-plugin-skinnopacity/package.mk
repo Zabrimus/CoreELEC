@@ -2,7 +2,7 @@
 
 PKG_NAME="_vdr-plugin-skinnopacity"
 PKG_VERSION="1.1.10"
-PKG_SHA256="fd724a31d03e87fe59e2dadafd1ef386b287c10cc79b52ca1997ea6989297bfe"
+PKG_SHA256="fdb653b60ce86bb98acf7e43842c1428c0854135e2e5c64541152db08b22357f"
 PKG_LICENSE="GPL"
 PKG_SITE="https://gitlab.com/kamel5/SkinNopacity"
 PKG_URL="https://gitlab.com/kamel5/SkinNopacity/-/archive/${PKG_VERSION}/SkinNopacity-${PKG_VERSION}.zip"
