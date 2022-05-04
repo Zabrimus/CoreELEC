@@ -16,10 +16,10 @@ jobs:
 
       - uses: oprypin/find-latest-tag@v1
         with:
-          repository:  Zabrimus/CoreELEC
-          releases-only: true
-          prefix: 'v'
-          id: release_version
+            repository:  Zabrimus/CoreELEC
+            releases-only: true
+            prefix: 'v'
+        id: release_version
 
       - name: Checkout coreelec-19-VDR
         run: |
