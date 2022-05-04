@@ -1,0 +1,40 @@
+name: Build CoreELEC/VDR Matrix
+
+# Controls when the workflow will run
+on:
+  workflow_dispatch:
+    branches: [ workflowtest ]
+
+jobs:
+  build:
+    runs-on: self-hosted
+
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+
+      - name: Checkout coreelec-19-VDR
+        run: |
+          git checkout coreelec-19-VDR
+
+      - name: Checkout coreelec-20-VDR
+        run: |
+          git checkout coreelec-20-VDR
+
+      - name: Checkout 19.4-Matrix-VDR
+        run: |
+          git checkout 19.4-Matrix-VDR
+
+      - uses: actions/upload-artifact@v3
+        with:
+          name: README.md
+          path: README.md
+
+      - name: Release
+        uses: softprops/action-gh-release@v1
+        if: startsWith(github.ref, 'refs/tags/')
+        with:
+          files: |
+            README.md
+            build.sh
