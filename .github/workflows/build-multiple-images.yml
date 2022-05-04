@@ -24,6 +24,7 @@ jobs:
       - name: Prepare build
         run: |
           mkdir -p image-artifacts
+          rm -f image-artifacts/*
 
       - name: Restore sources cache
         run: |
