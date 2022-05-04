@@ -1,4 +1,4 @@
-name: Build CoreELEC/VDR Matrix Images
+name: Build CoreELEC/VDR Images
 
 # Controls when the workflow will run
 on:
@@ -28,38 +28,90 @@ jobs:
       - name: Restore sources cache
         run: |
           if [ -d ../build-cache/sources ]; then 
-            # rm -f sources  
-            # ln -s ../build-cache/sources sources
-            echo "Sources exists...."
-          else
-            echo "NO Sources exists...."
+            rm -f sources  
+            ln -s ../build-cache/sources sources
           fi
 
       - name: Build coreelec-19-VDR
         run: |
-          # ./build-local.sh -e -9
+          ./build-local.sh -e -9
           mv target/CoreELEC-Amlogic-ng.arm-19.5*-Generic.img.gz build-artifacts/CoreELEC-VDR-Amlogic-ng.arm-19.5-${{ steps.current_tag.outputs.tag }}-Generic.img.gz
           mv target/CoreELEC-Amlogic-ng.arm-19.5*-Generic.img.gz.sha256 build-artifacts/CoreELEC-VDR-Amlogic-ng.arm-19.5-${{ steps.current_tag.outputs.tag }}-Generic.img.gz.sha256          
           mv target/CoreELEC-Amlogic-ng.arm-19.5*.tar build-artifacts/CoreELEC-VDR-Amlogic-ng.arm-19.5-${{ steps.current_tag.outputs.tag }}.tar
 
       - name: Checkout coreelec-20-VDR
         run: |
-          # ./build-local.sh -e -0
+          ./build-local.sh -e -0
           mv target/CoreELEC-Amlogic-ng.arm-20.0*-Generic.img.gz build-artifacts/CoreELEC-VDR-Amlogic-ng.arm-20.0-${{ steps.current_tag.outputs.tag }}-Generic.img.gz
           mv target/CoreELEC-Amlogic-ng.arm-20.0*-Generic.img.gz.sha256 build-artifacts/CoreELEC-VDR-Amlogic-ng.arm-20.0-${{ steps.current_tag.outputs.tag }}-Generic.img.gz.sha256          
           mv target/CoreELEC-Amlogic-ng.arm-20.0*.tar build-artifacts/CoreELEC-VDR-Amlogic-ng.arm-20.0-${{ steps.current_tag.outputs.tag }}.tar
 
       - name: Checkout 19.4-Matrix-VDR
         run: |
-          # ./build-local.sh -e -i
+          ./build-local.sh -e -i
           mv target/CoreELEC-Amlogic-ng.arm-19.4*-Generic.img.gz build-artifacts/CoreELEC-VDR-Amlogic-ng.arm-19.4-${{ steps.current_tag.outputs.tag }}-Generic.img.gz
           mv target/CoreELEC-Amlogic-ng.arm-19.4*-Generic.img.gz.sha256 build-artifacts/CoreELEC-VDR-Amlogic-ng.arm-19.4-${{ steps.current_tag.outputs.tag }}-Generic.img.gz.sha256          
           mv target/CoreELEC-Amlogic-ng.arm-19.4*.tar build-artifacts/CoreELEC-VDR-Amlogic-ng.arm-19.4-${{ steps.current_tag.outputs.tag }}.tar
 
+      - name: Save sources cache
+        run: |
+          mkdir -p ../build-cache
+        
+          if [ ! -d ../build-cache/sources ]; then
+            mv sources ../build-cache/sources
+          else
+            rm sources
+          fi
+
       - uses: actions/upload-artifact@v3
         with:
-          name: README.md
-          path: README.md
+          name: CoreELEC-VDR-Amlogic-ng.arm-19.5-${{ steps.current_tag.outputs.tag }}-Generic.img.gz
+          path: build-artifacts/CoreELEC-VDR-Amlogic-ng.arm-19.5-${{ steps.current_tag.outputs.tag }}-Generic.img.gz
+
+      - uses: actions/upload-artifact@v3
+        with:
+          name: CoreELEC-VDR-Amlogic-ng.arm-19.5-${{ steps.current_tag.outputs.tag }}-Generic.img.gz.sha256
+          path: build-artifacts/CoreELEC-VDR-Amlogic-ng.arm-19.5-${{ steps.current_tag.outputs.tag }}-Generic.img.gz.sha256
+
+      - uses: actions/upload-artifact@v3
+        with:
+          name: CoreELEC-VDR-Amlogic-ng.arm-19.5-${{ steps.current_tag.outputs.tag }}.tar
+          path: build-artifacts/CoreELEC-VDR-Amlogic-ng.arm-19.5-${{ steps.current_tag.outputs.tag }}.tar
+
+      - uses: actions/upload-artifact@v3
+        with:
+          name: CoreELEC-VDR-Amlogic-ng.arm-19.5-${{ steps.current_tag.outputs.tag }}.tar
+          path: build-artifacts/CoreELEC-VDR-Amlogic-ng.arm-19.5-${{ steps.current_tag.outputs.tag }}.tar
+
+      - uses: actions/upload-artifact@v3
+        with:
+          name: CoreELEC-VDR-Amlogic-ng.arm-20.0-${{ steps.current_tag.outputs.tag }}-Generic.img.gz
+          path: build-artifacts/CoreELEC-VDR-Amlogic-ng.arm-20.0-${{ steps.current_tag.outputs.tag }}-Generic.img.gz
+
+      - uses: actions/upload-artifact@v3
+        with:
+          name: CoreELEC-VDR-Amlogic-ng.arm-20.0-${{ steps.current_tag.outputs.tag }}-Generic.img.gz.sha256
+          path: build-artifacts/CoreELEC-VDR-Amlogic-ng.arm-20.0-${{ steps.current_tag.outputs.tag }}-Generic.img.gz.sha256
+
+      - uses: actions/upload-artifact@v3
+        with:
+          name: CoreELEC-VDR-Amlogic-ng.arm-20.0-${{ steps.current_tag.outputs.tag }}.tar
+          path: build-artifacts/CoreELEC-VDR-Amlogic-ng.arm-20.0-${{ steps.current_tag.outputs.tag }}.tar
+
+      - uses: actions/upload-artifact@v3
+        with:
+          name: CoreELEC-VDR-Amlogic-ng.arm-19.4-${{ steps.current_tag.outputs.tag }}-Generic.img.gz
+          path: build-artifacts/CoreELEC-VDR-Amlogic-ng.arm-19.4-${{ steps.current_tag.outputs.tag }}-Generic.img.gz
+
+      - uses: actions/upload-artifact@v3
+        with:
+          name: CoreELEC-VDR-Amlogic-ng.arm-19.4-${{ steps.current_tag.outputs.tag }}-Generic.img.gz.sha256
+          path: build-artifacts/CoreELEC-VDR-Amlogic-ng.arm-19.4-${{ steps.current_tag.outputs.tag }}-Generic.img.gz.sha256
+
+      - uses: actions/upload-artifact@v3
+        with:
+          name: CoreELEC-VDR-Amlogic-ng.arm-19.4-${{ steps.current_tag.outputs.tag }}.tar
+          path: build-artifacts/CoreELEC-VDR-Amlogic-ng.arm-19.4-${{ steps.current_tag.outputs.tag }}.tar
 
 #      - name: Release
 #        uses: softprops/action-gh-release@v1
