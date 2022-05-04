@@ -19,22 +19,22 @@ jobs:
             repository:  Zabrimus/CoreELEC
             releases-only: true
             prefix: 'v'
-        id: release_version
+        id: current_tag
 
       - name: Checkout coreelec-19-VDR
         run: |
           git checkout coreelec-19-VDR
-          echo "Current Release: ${release_version}"          
+          echo "Current Release: ${{ steps.current_tag.outputs.tag }}"          
 
       - name: Checkout coreelec-20-VDR
         run: |
           git checkout coreelec-20-VDR
-          echo "Current Release: ${release_version}"
+          echo "Current Release: ${{ steps.current_tag.outputs.tag }}"
 
       - name: Checkout 19.4-Matrix-VDR
         run: |
           git checkout 19.4-Matrix-VDR
-          echo "Current Release: ${release_version}"
+          echo "Current Release: ${{ steps.current_tag.outputs.tag }}"
 
       - uses: actions/upload-artifact@v3
         with:
