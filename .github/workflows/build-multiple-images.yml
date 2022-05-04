@@ -21,30 +21,50 @@ jobs:
             prefix: 'v'
         id: current_tag
 
-      - name: Checkout coreelec-19-VDR
+      - name: Prepare build
         run: |
-          git checkout coreelec-19-VDR
-          echo "Current Release: ${{ steps.current_tag.outputs.tag }}"          
+          mkdir -p build-artifacts
+
+      - name: Restore sources cache
+        run: |
+          if [ -d ../build-cache/sources ]; then 
+            # rm -f sources  
+            # ln -s ../build-cache/sources sources
+            echo "Sources exists...."
+          else
+            echo "NO Sources exists...."
+          fi
+
+      - name: Build coreelec-19-VDR
+        run: |
+          # ./build-local.sh -e -9
+          mv target/CoreELEC-Amlogic-ng.arm-19.5*-Generic.img.gz build-artifacts/CoreELEC-VDR-Amlogic-ng.arm-19.5-${{ steps.current_tag.outputs.tag }}-Generic.img.gz
+          mv target/CoreELEC-Amlogic-ng.arm-19.5*-Generic.img.gz.sha256 build-artifacts/CoreELEC-VDR-Amlogic-ng.arm-19.5-${{ steps.current_tag.outputs.tag }}-Generic.img.gz.sha256          
+          mv target/CoreELEC-Amlogic-ng.arm-19.5*.tar build-artifacts/CoreELEC-VDR-Amlogic-ng.arm-19.5-${{ steps.current_tag.outputs.tag }}.tar
 
       - name: Checkout coreelec-20-VDR
         run: |
-          git checkout coreelec-20-VDR
-          echo "Current Release: ${{ steps.current_tag.outputs.tag }}"
+          # ./build-local.sh -e -0
+          mv target/CoreELEC-Amlogic-ng.arm-20.0*-Generic.img.gz build-artifacts/CoreELEC-VDR-Amlogic-ng.arm-20.0-${{ steps.current_tag.outputs.tag }}-Generic.img.gz
+          mv target/CoreELEC-Amlogic-ng.arm-20.0*-Generic.img.gz.sha256 build-artifacts/CoreELEC-VDR-Amlogic-ng.arm-20.0-${{ steps.current_tag.outputs.tag }}-Generic.img.gz.sha256          
+          mv target/CoreELEC-Amlogic-ng.arm-20.0*.tar build-artifacts/CoreELEC-VDR-Amlogic-ng.arm-20.0-${{ steps.current_tag.outputs.tag }}.tar
 
       - name: Checkout 19.4-Matrix-VDR
         run: |
-          git checkout 19.4-Matrix-VDR
-          echo "Current Release: ${{ steps.current_tag.outputs.tag }}"
+          # ./build-local.sh -e -i
+          mv target/CoreELEC-Amlogic-ng.arm-19.4*-Generic.img.gz build-artifacts/CoreELEC-VDR-Amlogic-ng.arm-19.4-${{ steps.current_tag.outputs.tag }}-Generic.img.gz
+          mv target/CoreELEC-Amlogic-ng.arm-19.4*-Generic.img.gz.sha256 build-artifacts/CoreELEC-VDR-Amlogic-ng.arm-19.4-${{ steps.current_tag.outputs.tag }}-Generic.img.gz.sha256          
+          mv target/CoreELEC-Amlogic-ng.arm-19.4*.tar build-artifacts/CoreELEC-VDR-Amlogic-ng.arm-19.4-${{ steps.current_tag.outputs.tag }}.tar
 
       - uses: actions/upload-artifact@v3
         with:
           name: README.md
           path: README.md
 
-      - name: Release
-        uses: softprops/action-gh-release@v1
-        if: startsWith(github.ref, 'refs/tags/')
-        with:
-          files: |
-            README.md
-            build.sh
+#      - name: Release
+#        uses: softprops/action-gh-release@v1
+#        if: startsWith(github.ref, 'refs/tags/')
+#        with:
+#          files: |
+#            README.md
+#            build.sh
