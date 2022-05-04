@@ -14,17 +14,27 @@ jobs:
         with:
           fetch-depth: 0
 
+      - uses: oprypin/find-latest-tag@v1
+        with:
+          repository:  Zabrimus/CoreELEC
+          releases-only: true
+          prefix: 'v'
+          id: release_version
+
       - name: Checkout coreelec-19-VDR
         run: |
           git checkout coreelec-19-VDR
+          echo "Current Release: ${release_version}"          
 
       - name: Checkout coreelec-20-VDR
         run: |
           git checkout coreelec-20-VDR
+          echo "Current Release: ${release_version}"
 
       - name: Checkout 19.4-Matrix-VDR
         run: |
           git checkout 19.4-Matrix-VDR
+          echo "Current Release: ${release_version}"
 
       - uses: actions/upload-artifact@v3
         with:
