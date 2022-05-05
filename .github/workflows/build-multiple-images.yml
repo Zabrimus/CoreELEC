@@ -1,9 +1,9 @@
-name: Build CoreELEC/VDR Matrix Images
+name: Build CoreELEC/VDR Images
 
 # Controls when the workflow will run
 on:
   workflow_dispatch:
-    branches: [ workflowtest ]
+    branches: [ coreelec-19-VDR, coreelec-20-VDR, 19.4-Matrix-VDR ]
 
 jobs:
   build:
@@ -14,27 +14,61 @@ jobs:
         with:
           fetch-depth: 0
 
-      - name: Checkout coreelec-19-VDR
+      - uses: oprypin/find-latest-tag@v1
+        with:
+          repository:  Zabrimus/CoreELEC
+          releases-only: true
+          prefix: 'v'
+        id: current_tag
+
+      - name: Prepare build
         run: |
-          git checkout coreelec-19-VDR
+          mkdir -p image-artifacts
+          rm -f image-artifacts/*
+
+      - name: Restore sources cache
+        run: |
+          if [ -d ../build-cache/sources ]; then 
+            rm -f sources  
+            ln -s ../build-cache/sources sources
+          fi
+
+      - name: Build coreelec-19-VDR
+        run: |
+          ./build-local.sh -e -9
+          mv target/CoreELEC-Amlogic-ng.arm-19.5*-Generic.img.gz image-artifacts/CoreELEC-VDR-Amlogic-ng.arm-19.5-${{ steps.current_tag.outputs.tag }}-Generic.img.gz
+          mv target/CoreELEC-Amlogic-ng.arm-19.5*-Generic.img.gz.sha256 image-artifacts/CoreELEC-VDR-Amlogic-ng.arm-19.5-${{ steps.current_tag.outputs.tag }}-Generic.img.gz.sha256          
+          mv target/CoreELEC-Amlogic-ng.arm-19.5*.tar image-artifacts/CoreELEC-VDR-Amlogic-ng.arm-19.5-${{ steps.current_tag.outputs.tag }}.tar
 
       - name: Checkout coreelec-20-VDR
         run: |
-          git checkout coreelec-20-VDR
+          ./build-local.sh -e -0
+          mv target/CoreELEC-Amlogic-ng.arm-20.0*-Generic.img.gz image-artifacts/CoreELEC-VDR-Amlogic-ng.arm-20.0-${{ steps.current_tag.outputs.tag }}-Generic.img.gz
+          mv target/CoreELEC-Amlogic-ng.arm-20.0*-Generic.img.gz.sha256 image-artifacts/CoreELEC-VDR-Amlogic-ng.arm-20.0-${{ steps.current_tag.outputs.tag }}-Generic.img.gz.sha256          
+          mv target/CoreELEC-Amlogic-ng.arm-20.0*.tar image-artifacts/CoreELEC-VDR-Amlogic-ng.arm-20.0-${{ steps.current_tag.outputs.tag }}.tar
 
       - name: Checkout 19.4-Matrix-VDR
         run: |
-          git checkout 19.4-Matrix-VDR
+          ./build-local.sh -e -i
+          mv target/CoreELEC-Amlogic-ng.arm-19.4*-Generic.img.gz image-artifacts/CoreELEC-VDR-Amlogic-ng.arm-19.4-${{ steps.current_tag.outputs.tag }}-Generic.img.gz
+          mv target/CoreELEC-Amlogic-ng.arm-19.4*-Generic.img.gz.sha256 image-artifacts/CoreELEC-VDR-Amlogic-ng.arm-19.4-${{ steps.current_tag.outputs.tag }}-Generic.img.gz.sha256          
+          mv target/CoreELEC-Amlogic-ng.arm-19.4*.tar image-artifacts/CoreELEC-VDR-Amlogic-ng.arm-19.4-${{ steps.current_tag.outputs.tag }}.tar
 
-      - uses: actions/upload-artifact@v3
-        with:
-          name: README.md
-          path: README.md
+      - name: Save sources cache
+        run: |
+          mkdir -p ../build-cache
+          
+          if [ ! -d ../build-cache/sources ]; then
+            mv sources ../build-cache/sources
+          else
+            rm sources
+          fi
 
-      - name: Release
-        uses: softprops/action-gh-release@v1
-        if: startsWith(github.ref, 'refs/tags/')
+      - name: Upload binaries to release
+        uses: svenstaro/upload-release-action@v2
         with:
-          files: |
-            README.md
-            build.sh
+          repo_token: ${{ secrets.GITHUB_TOKEN }}
+          file: image-artifacts/*
+          tag: ${{ steps.current_tag.outputs.tag }}
+          overwrite: true
+          file_glob: true
