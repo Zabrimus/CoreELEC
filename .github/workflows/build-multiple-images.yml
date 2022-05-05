@@ -112,7 +112,7 @@ jobs:
       - uses: actions/upload-artifact@v3
         with:
           name: CoreELEC-VDR-Amlogic-ng.arm-19.4-${{ steps.current_tag.outputs.tag }}.tar
-          path: iamge-artifacts/CoreELEC-VDR-Amlogic-ng.arm-19.4-${{ steps.current_tag.outputs.tag }}.tar
+          path: image-artifacts/CoreELEC-VDR-Amlogic-ng.arm-19.4-${{ steps.current_tag.outputs.tag }}.tar
 
 #      - name: Release
 #        uses: softprops/action-gh-release@v1
