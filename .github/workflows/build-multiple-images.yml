@@ -14,6 +14,13 @@ jobs:
         with:
           fetch-depth: 0
 
+      - uses: oprypin/find-latest-tag@v1
+        with:
+          repository:  Zabrimus/CoreELEC
+          releases-only: true
+          prefix: 'v'
+        id: current_tag
+
       - name: Prepare build
         run: |
           mkdir -p image-artifacts
@@ -27,6 +34,6 @@ jobs:
         with:
           repo_token: ${{ secrets.GITHUB_TOKEN }}
           file: image-artifacts/*
-          tag: ${{ github.ref }}
+          tag: ${{ steps.current_tag.outputs.tag }}
           overwrite: true
           file_glob: true
