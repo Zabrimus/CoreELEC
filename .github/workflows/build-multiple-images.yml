@@ -2,8 +2,9 @@ name: Build CoreELEC/VDR Images
 
 # Controls when the workflow will run
 on:
-  workflow_dispatch:
-    branches: [ coreelec-19-VDR, coreelec-20-VDR, 19.4-Matrix-VDR ]
+  push:
+    tags:
+      - "v*.*.*"
 
 jobs:
   build:
