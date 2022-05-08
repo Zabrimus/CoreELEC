@@ -33,6 +33,13 @@ makeinstall_target() {
   LOC_DIR=${INSTALL}/$(pkg-config --variable=locdir vdr)
   LIB_DIR=${INSTALL}/$(pkg-config --variable=locdir vdr)/../../lib/vdr
   make DESTDIR="${INSTALL}" LIBDIR="${LIB_DIR}" LOCDIR="${LOC_DIR}"  install
+
+  # Copy libstreamdev-client.so to enable multiple streamdev-clients (e.g. for PIP or using multiple servers)
+  PKG_CONFIG_PATH=${VDR_DIR}:${SYSROOT_PREFIX}/${VDR_PREFIX}/lib/pkgconfig:${PKG_CONFIG_PATH}
+  APIVERSION=$(pkg-config --variable=apiversion vdr)
+  cp ${INSTALL}/usr/local/lib/vdr/libvdr-streamdev-client.so.${APIVERSION} ${INSTALL}/usr/local/lib/vdr/libvdr-streamdev-client2.so.${APIVERSION}
+  cp ${INSTALL}/usr/local/lib/vdr/libvdr-streamdev-client.so.${APIVERSION} ${INSTALL}/usr/local/lib/vdr/libvdr-streamdev-client3.so.${APIVERSION}
+  cp ${INSTALL}/usr/local/lib/vdr/libvdr-streamdev-client.so.${APIVERSION} ${INSTALL}/usr/local/lib/vdr/libvdr-streamdev-client4.so.${APIVERSION}
 }
 
 post_makeinstall_target() {
