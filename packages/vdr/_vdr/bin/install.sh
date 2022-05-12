@@ -75,12 +75,16 @@ boot() {
   if [ "$1" = "kodi" ]; then
       echo "Boot Kodi"
 
-      sed -i -e "/^START_PRG.*$/d" /storage/.profile
+      if [ -f /storage/.profile ]; then
+          sed -i -e "/^START_PRG.*$/d" /storage/.profile
+      fi
       echo "START_PRG=kodi" >> /storage/.profile
   elif [ "$1" = "vdr" ]; then
       echo "Boot VDR"
 
-      sed -i -e "/^START_PRG.*$/d" /storage/.profile
+      if [ -f /storage/.profile ]; then
+          sed -i -e "/^START_PRG.*$/d" /storage/.profile
+      fi
       echo "START_PRG=vdr" >> /storage/.profile
   else
       echo "Unknown Boot parameter"
