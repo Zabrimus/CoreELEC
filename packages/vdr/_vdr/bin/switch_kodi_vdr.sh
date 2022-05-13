@@ -5,7 +5,7 @@
 #
 
 # Start either Kodi or VDR on request
-. /opt/tmp/switch_kodi_vdr
+. /storage/.cache/switch_kodi_vdr
 
 if [ "${START_PRG}" = "vdr" ]; then
    systemctl stop kodi

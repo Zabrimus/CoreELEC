@@ -7,8 +7,8 @@
 #
 
 # create file which will be watched to switch between Kodi and VDR
-rm -f /opt/tmp/switch_kodi_vdr
-touch /opt/tmp/switch_kodi_vdr
+rm -f /storage/.cache/switch_kodi_vdr
+touch /storage/.cache/switch_kodi_vdr
 
 # if libcec exists, set a symbolic link
 if [ -f /usr/lib/libcec.so.6.0.2 ] && [ ! -f /var/lib/libcec.so.6 ]; then
@@ -26,5 +26,8 @@ if [ "${START_PRG}" = "vdr" ]; then
    systemctl start vdropt
 elif [ "${START_PRG}" = "kodi" ]; then
    systemctl stop vdropt
+
+   # testweise eingebaut als workaround.
+   echo rm pip0 > /sys/class/vfm/map
 fi
 
