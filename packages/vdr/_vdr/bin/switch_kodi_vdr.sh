@@ -12,9 +12,5 @@ if [ "${START_PRG}" = "vdr" ]; then
    systemctl start vdropt
 elif [ "${START_PRG}" = "kodi" ]; then
    systemctl stop vdropt
-
-   # testweise eingebaut als workaround.
-   echo rm pip0 > /sys/class/vfm/map
-
    systemctl start kodi
 fi
