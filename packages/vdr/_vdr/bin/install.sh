@@ -40,6 +40,9 @@ install() {
      systemctl disable $(basename $i)
   done
 
+  # copy sysctl.d files
+  cp -a XXPREFIXXX/sysctl.d/* /storage/.config/sysctl.d
+
   # create autostart.sh if it does not exists
   if [ ! -f /storage/.config/autostart.sh ]; then
 cat > /storage/.config/autostart.sh<< EOF
