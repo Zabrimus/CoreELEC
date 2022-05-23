@@ -94,6 +94,10 @@ makeinstall_target() {
   for i in $(ls ${PKG_DIR}/system.d/*); do
      cat ${i} | sed "${SED_SCRIPT}" > ${INSTALL}/${PREFIX}/system.d/$(basename $i)
   done
+
+  # copy sysctl.d folder
+  mkdir -p ${INSTALL}/${PREFIX}/sysctl.d
+  cp ${PKG_DIR}/sysctl.d/* ${INSTALL}/${PREFIX}/sysctl.d
 }
 
 post_makeinstall_target() {
