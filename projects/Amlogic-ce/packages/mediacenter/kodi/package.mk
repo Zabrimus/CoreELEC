@@ -4,8 +4,8 @@
 # Copyright (C) 2020-present Team CoreELEC (https://coreelec.tv)
 
 PKG_NAME="kodi"
-PKG_VERSION="8598dfe945bc2a18afc57ee89c3ea163e2672cbb"
-PKG_SHA256="8fbb84df7f713a339866250e9087ab9233bd151b44ffca9dcec5ac84db10d7f5"
+PKG_VERSION="908c2d238d9c485c68fef4577313a876eee0df9d"
+PKG_SHA256="0b2d524b2172d635458b6d48b3a87b551fcb3710d667448d14c728c81f4a6f01"
 PKG_LICENSE="GPL"
 PKG_SITE="http://www.kodi.tv"
 PKG_URL="https://github.com/CoreELEC/xbmc/archive/$PKG_VERSION.tar.gz"
@@ -61,14 +61,14 @@ configure_package() {
     PKG_DEPENDS_TARGET="$PKG_DEPENDS_TARGET $OPENGLES"
   fi
 
-  if [ "$ALSA_SUPPORT" = yes ]; then
+  if [ "$KODI_ALSA_SUPPORT" = yes ]; then
     PKG_DEPENDS_TARGET="$PKG_DEPENDS_TARGET alsa-lib"
     KODI_ALSA="-DENABLE_ALSA=ON"
   else
     KODI_ALSA="-DENABLE_ALSA=OFF"
  fi
 
-  if [ "$PULSEAUDIO_SUPPORT" = yes ]; then
+  if [ "$KODI_PULSEAUDIO_SUPPORT" = yes ]; then
     PKG_DEPENDS_TARGET="$PKG_DEPENDS_TARGET pulseaudio"
     KODI_PULSEAUDIO="-DENABLE_PULSEAUDIO=ON"
   else
@@ -233,7 +233,9 @@ configure_package() {
                          $KODI_AIRTUNES \
                          $KODI_OPTICAL \
                          $KODI_BLURAY \
-                         $KODI_PLAYER"
+                         $KODI_PLAYER \
+                         $KODI_ALSA \
+                         $KODI_PULSEAUDIO"
 }
 
 pre_configure_target() {
@@ -298,7 +300,16 @@ post_makeinstall_target() {
         -e "s|@KODI_MAX_SECONDS@|${KODI_MAX_SECONDS:-900}|g" \
         -i $INSTALL/usr/lib/kodi/kodi.sh
 
-    cp $PKG_DIR/config/kodi.conf $INSTALL/usr/lib/kodi/kodi.conf
+    if [ "${KODI_PULSEAUDIO_SUPPORT}" = "yes" -a "${KODI_ALSA_SUPPORT}" = "yes" ]; then
+      KODI_AE_SINK="ALSA+PULSE"
+    elif [ "${KODI_PULSEAUDIO_SUPPORT}" = "yes" -a "${KODI_ALSA_SUPPORT}" != "yes" ]; then
+      KODI_AE_SINK="PULSE"
+    elif [ "${KODI_PULSEAUDIO_SUPPORT}" != "yes" -a "${KODI_ALSA_SUPPORT}" = "yes" ]; then
+      KODI_AE_SINK="ALSA"
+    fi
+
+    # adjust audio output device to what was built
+    sed "s/@KODI_AE_SINK@/${KODI_AE_SINK}/" ${PKG_DIR}/config/kodi.conf.in > ${INSTALL}/usr/lib/kodi/kodi.conf
 
     # set default display environment
     if [ "$DISPLAYSERVER" = "x11" ]; then
