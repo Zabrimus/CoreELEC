@@ -24,7 +24,7 @@ make_target() {
       RUST_TARGET_TRIPLE="x86_64-unknown-linux-gnu"
       ;;
   esac
-  "$(get_build_dir rustup.rs)/rustup-init.sh" \
+  "$(get_build_dir _rustup.rs)/rustup-init.sh" \
     --default-toolchain none \
     --no-modify-path \
     --profile minimal \
