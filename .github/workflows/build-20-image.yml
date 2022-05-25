@@ -35,26 +35,12 @@ jobs:
             ln -s ../build-cache/sources sources
           fi
 
-      - name: Build coreelec-19-VDR
-        run: |
-          ./build-local.sh -e -9
-          mv target/CoreELEC-Amlogic-ng.arm-19.5*-Generic.img.gz image-artifacts/CoreELEC-VDR-Amlogic-ng.arm-19.5-${{ steps.current_tag.outputs.tag }}-Generic.img.gz
-          mv target/CoreELEC-Amlogic-ng.arm-19.5*-Generic.img.gz.sha256 image-artifacts/CoreELEC-VDR-Amlogic-ng.arm-19.5-${{ steps.current_tag.outputs.tag }}-Generic.img.gz.sha256          
-          mv target/CoreELEC-Amlogic-ng.arm-19.5*.tar image-artifacts/CoreELEC-VDR-Amlogic-ng.arm-19.5-${{ steps.current_tag.outputs.tag }}.tar
-
       - name: Checkout coreelec-20-VDR
         run: |
           ./build-local.sh -e -0
           mv target/CoreELEC-Amlogic-ng.arm-20.0*-Generic.img.gz image-artifacts/CoreELEC-VDR-Amlogic-ng.arm-20.0-${{ steps.current_tag.outputs.tag }}-Generic.img.gz
           mv target/CoreELEC-Amlogic-ng.arm-20.0*-Generic.img.gz.sha256 image-artifacts/CoreELEC-VDR-Amlogic-ng.arm-20.0-${{ steps.current_tag.outputs.tag }}-Generic.img.gz.sha256          
           mv target/CoreELEC-Amlogic-ng.arm-20.0*.tar image-artifacts/CoreELEC-VDR-Amlogic-ng.arm-20.0-${{ steps.current_tag.outputs.tag }}.tar
-
-      - name: Checkout 19.4-Matrix-VDR
-        run: |
-          ./build-local.sh -e -i
-          mv target/CoreELEC-Amlogic-ng.arm-19.4*-Generic.img.gz image-artifacts/CoreELEC-VDR-Amlogic-ng.arm-19.4-${{ steps.current_tag.outputs.tag }}-Generic.img.gz
-          mv target/CoreELEC-Amlogic-ng.arm-19.4*-Generic.img.gz.sha256 image-artifacts/CoreELEC-VDR-Amlogic-ng.arm-19.4-${{ steps.current_tag.outputs.tag }}-Generic.img.gz.sha256          
-          mv target/CoreELEC-Amlogic-ng.arm-19.4*.tar image-artifacts/CoreELEC-VDR-Amlogic-ng.arm-19.4-${{ steps.current_tag.outputs.tag }}.tar
 
       - name: Save sources cache
         run: |
