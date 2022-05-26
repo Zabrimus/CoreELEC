@@ -61,6 +61,7 @@ PKG_DEPENDS_TARGET+=" _vdr-plugin-dvd"
 PKG_DEPENDS_TARGET+=" _vdr-plugin-mp3"
 PKG_DEPENDS_TARGET+=" _vdr-plugin-cecremote"
 PKG_DEPENDS_TARGET+=" _vdr-plugin-remote"
+PKG_DEPENDS_TARGET+=" _vdr-plugin-menuorg"
 
 #PKG_DEPENDS_TARGET+=" _vdr-plugin-easyvdr"
 #PKG_DEPENDS_TARGET+=" _vdr-plugin-dynamite"
