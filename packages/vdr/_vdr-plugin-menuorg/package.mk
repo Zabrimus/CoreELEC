@@ -39,6 +39,11 @@ post_makeinstall_target() {
   mkdir -p ${INSTALL}/storage/.config/vdropt-sample/conf.d
   cp -PR ${PKG_DIR}/conf.d/* ${INSTALL}/storage/.config/vdropt-sample/conf.d/
 
+  BUILD_DIR=$(get_build_dir _vdr-plugin-menuorg)
+  PLGRES_DIR="${INSTALL}/storage/.config/vdropt-sample/plugins"
+  mkdir -p ${PLGRES_DIR}
+  cp ${BUILD_DIR}/menuorg.xml ${PLGRES_DIR}
+
   if find ${INSTALL}/storage/.config/vdropt -mindepth 1 -maxdepth 1 2>/dev/null | read; then
     cp -ar ${INSTALL}/storage/.config/vdropt/* ${INSTALL}/storage/.config/vdropt-sample
     rm -Rf ${INSTALL}/storage/.config/vdropt
