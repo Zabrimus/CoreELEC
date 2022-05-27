@@ -1,6 +1,6 @@
 diff -ru8bBw a/Makefile b/Makefile
---- a/Makefile	2022-05-26 18:26:17.090970792 +0200
-+++ b/Makefile	2022-05-26 18:30:01.955518032 +0200
+--- a/Makefile	2022-05-27 12:35:29.949392282 +0200
++++ b/Makefile	2022-05-27 12:36:56.257534072 +0200
 @@ -10,17 +10,17 @@
  			grep -v GIT | awk '{ print $$6 }' | sed -e 's/[";]//g')
  
@@ -63,10 +63,9 @@ diff -ru8bBw a/Makefile b/Makefile
  	@mkdir $(TMPDIR)/$(ARCHIVE)
  	@cp -a * $(TMPDIR)/$(ARCHIVE)
  	@tar czf $(PACKAGE).tar.gz -C $(TMPDIR) --exclude .gitignore --exclude debian --exclude .git $(ARCHIVE)
-Nur in a/po: menuorg.pot.
 diff -ru8bBw a/src/MenuConfigurationRepository.cpp b/src/MenuConfigurationRepository.cpp
---- a/src/MenuConfigurationRepository.cpp	2022-05-26 18:26:17.090970792 +0200
-+++ b/src/MenuConfigurationRepository.cpp	2022-05-26 18:27:34.175158678 +0200
+--- a/src/MenuConfigurationRepository.cpp	2022-05-27 12:35:29.949392282 +0200
++++ b/src/MenuConfigurationRepository.cpp	2022-05-27 12:38:27.953686474 +0200
 @@ -22,17 +22,16 @@
   */
  
@@ -139,7 +138,7 @@ diff -ru8bBw a/src/MenuConfigurationRepository.cpp b/src/MenuConfigurationReposi
 +    return attribute ? attribute->get_value() : defaultValue;
  }
 diff -ru8bBw a/src/MenuConfigurationRepository.h b/src/MenuConfigurationRepository.h
---- a/src/MenuConfigurationRepository.h	2022-05-26 18:26:17.090970792 +0200
+--- a/src/MenuConfigurationRepository.h	2022-05-27 12:35:29.949392282 +0200
 +++ b/src/MenuConfigurationRepository.h	2022-05-26 17:59:51.695001048 +0200
 @@ -21,17 +21,16 @@
   *
@@ -174,3 +173,36 @@ diff -ru8bBw a/src/MenuConfigurationRepository.h b/src/MenuConfigurationReposito
  };
  
  #endif 
+diff -ru8bBw a/src/MenuOrgPlugin.h b/src/MenuOrgPlugin.h
+--- a/src/MenuOrgPlugin.h	2022-05-27 12:35:29.953392291 +0200
++++ b/src/MenuOrgPlugin.h	2022-05-27 12:28:17.212737239 +0200
+@@ -49,11 +49,9 @@
+         virtual bool ProcessArgs(int argc, char* argv[]);
+         virtual bool Initialize(void);
+         virtual const char* MainMenuEntry(void);
+         virtual cMenuSetupPage *SetupMenu(void);
+         virtual bool SetupParse(const char* Name, const char* Value);
+         virtual bool Service(const char* Id, void* Data = NULL);
+ };
+ 
+-extern "C" void* VDRPluginCreator();
+-
+ #endif
+diff -ru8bBw a/src/PluginCreator.cpp b/src/PluginCreator.cpp
+--- a/src/PluginCreator.cpp	2022-05-27 12:35:29.953392291 +0200
++++ b/src/PluginCreator.cpp	2022-05-27 12:40:35.953899162 +0200
+@@ -18,13 +18,9 @@
+  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA
+  *
+  * $Id$
+  *
+  */
+ 
+ #include "MenuOrgPlugin.h"
+ 
+-extern "C" void *VDRPluginCreator()
+-{
+-    MenuOrgPlugin* plugin = new MenuOrgPlugin();
+-    return plugin;
+-}
++VDRPLUGINCREATOR(MenuOrgPlugin); // Don't touch this!
