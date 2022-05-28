@@ -41,6 +41,7 @@ CoreELEC:/usr/local/bin # ./easyvdrctl.sh --all-status
  iptv               | yes     | valid   | no      | yes  | 
  live               | yes     | valid   | no      | yes  | 
  markad             | yes     | valid   | no      | yes  | 
+ menuorg            | yes     | valid   | no      | yes  | 
  mp3                | yes     | valid   | no      | yes  | 
  osd2web            | yes     | valid   | no      | yes  | 
  osddemo            | yes     | valid   | no      | yes  | 
@@ -48,6 +49,7 @@ CoreELEC:/usr/local/bin # ./easyvdrctl.sh --all-status
  pictures           | yes     | valid   | no      | yes  | 
  quickepgsearch     | yes     | valid   | no      | yes  | 
  radio              | yes     | valid   | no      | yes  | -f /storage/.config/vdropt/plugins/radio
+ remote             | yes     | valid   | no      | yes  | 
  remoteosd          | yes     | valid   | no      | yes  | 
  restfulapi         | yes     | valid   | no      | yes  | 
  robotv             | yes     | valid   | no      | yes  | 
@@ -63,6 +65,9 @@ CoreELEC:/usr/local/bin # ./easyvdrctl.sh --all-status
  softhdodroid       | yes     | valid   | yes     | no   | -a hw:CARD=AMLAUGESOUND,DEV=0
  status             | yes     | valid   | no      | yes  | 
  streamdev-client   | yes     | valid   | no      | yes  | 
+ streamdev-client2  | yes     | valid   | no      | yes  | 
+ streamdev-client3  | yes     | valid   | no      | yes  | 
+ streamdev-client4  | yes     | valid   | no      | yes  | 
  streamdev-server   | yes     | valid   | no      | yes  | 
  svccli             | yes     | valid   | no      | yes  | 
  svcsvr             | yes     | valid   | no      | yes  | 
@@ -154,6 +159,12 @@ To be able to switch the OSD languange you have to
    export LANG="de_DE.UTF-8"<br>
    export LC_ALL="de_DE.UTF-8
 - reboot
+
+## Skindesigner repository
+Skindesigner uses a git repository to install custom skins. To be able to use this feature installing git is necessary.
+- Install entware (see https://wiki.coreelec.org/coreelec:entware)
+- Install git and git-http
+  ```opgk install git git-http```
 
 ## Switch Kodi <-> VDR
 The install script (parameter -i) tries to modify/create as many default configuration as possible. 
