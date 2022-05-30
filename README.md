@@ -216,6 +216,13 @@ The configuration entries can be found in the ```/storage/.config/vdropt/*_setti
 Plugins can be started/stopped at runtime via the OSD.
 Additionally the command line tool easyvdrctl.sh (which uses easyvdrctl) can be found in the &lt;bindir&gt;.
 
+## LD_PRELOAD
+The VDR start scripts adds the mandatory library /usr/lib/libMali.so to LD_PRELOAD. It is possible to add other libraries if needed
+by setting a variable in ```/storage/.profile```
+```
+VDR_LD_PRELOAD=/path/to/lib1.so:/path/to/lib2.so
+```
+
 ## Löschen
 Wer sich dazu entscheidet, nach einer Installation alles wieder löschen zu wollen, muss nur die Vezeichnisse
 ```
