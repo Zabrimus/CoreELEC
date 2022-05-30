@@ -32,4 +32,8 @@ killall splash-image
 export LOCPATH=/storage/.kodi/addons/service.locale/locpath
 
 # really start VDR
-sh -c "LD_PRELOAD=/usr/lib/libMali.so LD_LIBRARY_PATH=$LIB_DIR:$LIB_DIR/vdr:$LD_LIBRARY_PATH ${BIN_DIR}/$arg"
+if [ -z "$VDR_LD_PRELOAD" ]; then
+   sh -c "LD_PRELOAD=/usr/lib/libMali.so LD_LIBRARY_PATH=$LIB_DIR:$LIB_DIR/vdr:$LD_LIBRARY_PATH ${BIN_DIR}/$arg"
+else
+   sh -c "LD_PRELOAD=\"/usr/lib/libMali.so:$VDR_LD_PRELOAD\" LD_LIBRARY_PATH=$LIB_DIR:$LIB_DIR/vdr:$LD_LIBRARY_PATH ${BIN_DIR}/$arg"
+fi
