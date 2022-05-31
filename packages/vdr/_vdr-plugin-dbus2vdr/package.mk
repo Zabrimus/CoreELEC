@@ -37,6 +37,13 @@ makeinstall_target() {
 }
 
 post_makeinstall_target() {
+  # remove unneeded
+  rm -Rf ${INSTALL}/etc/init
+
+  # move other files
+  mkdir -p ${INSTALL}/usr/local/bin
+  mv ${INSTALL}/usr/share/vdr-plugin-dbus2vdr/* ${INSTALL}/usr/local/bin
+
   mkdir -p ${INSTALL}/storage/.config/vdropt-sample/conf.d
   cp -PR ${PKG_DIR}/conf.d/* ${INSTALL}/storage/.config/vdropt-sample/conf.d/
 
