@@ -24,8 +24,10 @@ pre_configure_target() {
 
 make_target() {
   VDR_DIR=$(get_build_dir _vdr)
+  XMLPP_DIR=$(get_install_dir _libxmlplusplus)
+
   export PKG_CONFIG_PATH=${VDR_DIR}:${SYSROOT_PREFIX}/${VDR_PREFIX}/lib/pkgconfig:${PKG_CONFIG_PATH}
-  export CPLUS_INCLUDE_PATH=${VDR_DIR}/include
+  export CPLUS_INCLUDE_PATH=${VDR_DIR}/include:${XMLPP_DIR}${VDR_PREFIX}/include/libxml++-5.0
 
   make
 }

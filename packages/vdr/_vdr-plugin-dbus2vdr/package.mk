@@ -41,9 +41,9 @@ post_makeinstall_target() {
   rm -Rf ${INSTALL}/etc/init
 
   # move other files
-  mkdir -p ${INSTALL}/usr/local/bin
-  mv ${INSTALL}/usr/share/vdr-plugin-dbus2vdr/* ${INSTALL}/usr/local/bin
-  cp $(get_pkg_directory _vdr-plugin-dbus2vdr)/config/vdr-dbus-send.sh ${INSTALL}/usr/local/bin
+  mkdir -p ${INSTALL}${VDR_PREFIX}/bin
+  mv ${INSTALL}/usr/share/vdr-plugin-dbus2vdr/* ${INSTALL}${VDR_PREFIX}/bin
+  cp $(get_pkg_directory _vdr-plugin-dbus2vdr)/config/vdr-dbus-send.sh ${INSTALL}${VDR_PREFIX}/bin
 
   cp $(get_pkg_directory _vdr-plugin-dbus2vdr)/config/de.tvdr.vdr.conf ${INSTALL}/etc/dbus-1/system.d/de.tvdr.vdr.conf
 
