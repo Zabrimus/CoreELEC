@@ -7,14 +7,14 @@ PKG_LICENSE="LPGL"
 PKG_SITE="https://github.com/libxmlplusplus/libxmlplusplus"
 PKG_URL="https://github.com/libxmlplusplus/libxmlplusplus/releases/download/${PKG_VERSION}/libxml++-${PKG_VERSION}.tar.xz"
 PKG_DEPENDS_TARGET="toolchain"
-PKG_LONGDESC="glibmm is the official C++ interface for the popular cross-platform library Glib"
+PKG_LONGDESC="libxml++"
 PKG_TOOLCHAIN="meson"
 
-PKG_MESON_OPTS_TARGET="--prefix=/usr/local \
-					   --bindir=/usr/local/bin \
-					   --libexecdir=/usr/local/bin \
-					   --sbindir=/usr/local/sbin \
-					   --libdir=/usr/local/lib"
+PKG_MESON_OPTS_TARGET="--prefix=${VDR_PREFIX} \
+					   --bindir=${VDR_PREFIX}/bin \
+					   --libexecdir=${VDR_PREFIX}/bin \
+					   --sbindir=${VDR_PREFIX}/sbin \
+					   --libdir=${VDR_PREFIX}/lib"
 
 pre_configure_target() {
   # test if prefix is set
