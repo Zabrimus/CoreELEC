@@ -97,7 +97,7 @@ The script build-local.sh supports several targets
 ```
 $ ./build-local.sh 
 Usage:  [-t] [-i] [-9] [-0] [-d] [-e] [-x] [-y]
--t  : Build tar (Matrix). Version containing only VDR and is installable in an existing Kodi installation
+-t  : Build tar (Matrix). Version containing only VDR and is installable in an existing Kodi installation (Deprecated!)
 -i  : Build images (Matrix). Images will be created which can be written to an SD card. Contains VDR in /usr/local
 -9  : Build images (corelec-19). Images will be created which can be written to an SD card. Contains VDR in /usr/local
 -0  : Build images (corelec-20). Images will be created which can be written to an SD card. Contains VDR in /usr/local
@@ -122,7 +122,7 @@ if ```-i```, ```-9``` or ```-0``` has been used, then all images and update tars
 
 The ```build.sh``` is used by Github Workflow and caches at least the ```sources``` folder.<br>
 
-### Installation VDR-Tar only
+### Installation VDR-Tar only (deprecated!)
 ```
   cd / && tar -xf coreelec-vdr.tar.gz
 ```
