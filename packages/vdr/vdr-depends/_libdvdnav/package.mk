@@ -29,8 +29,11 @@ pre_configure_target() {
 
   export LDFLAGS="$(echo ${LDFLAGS} | sed -e "s|-Wl,--as-needed||") -L${SYSROOT_PREFIX}${VDR_PREFIX}/lib"
 
-  DVDNAV_DIR=$(get_install_dir _libdvdnav)
-  export PKG_CONFIG_PATH=${DVDNAV_DIR}/lib/pkgconfig:${SYSROOT_PREFIX}/${VDR_PREFIX}/lib/pkgconfig:${PKG_CONFIG_PATH}
+  DVDREAD_DIR=$(get_install_dir _libdvdread)
+  export PKG_CONFIG_PATH=${DVDREAD_DIR}/${VDR_PREFIX}/lib/pkgconfig:${SYSROOT_PREFIX}/${VDR_PREFIX}/lib/pkgconfig:${PKG_CONFIG_PATH}
+  export CPPFLAGS="-I${DVDREAD_DIR}/${VDR_PREFIX}/include"
+
+  echo "===> PKG: ${PKG_CONFIG_PATH}"
 }
 
 #make_target() {

@@ -5,7 +5,7 @@ set -e
 usage() {
   cat << EOF >&2
 Usage: $PROGNAME [-t] [-i] [-9] [-0] [-d] [-e] [-x] [-y]
--t  : Build tar (Matrix). Version containing only VDR and is installable in an existing Kodi installation
+-t  : Build tar (Matrix). Version containing only VDR and is installable in an existing Kodi installation (Deprecated!)
 -i  : Build images (Matrix). Images will be created which can be written to an SD card. Contains VDR in /usr/local
 -9  : Build images (corelec-19). Images will be created which can be written to an SD card. Contains VDR in /usr/local
 -0  : Build images (corelec-20). Images will be created which can be written to an SD card. Contains VDR in /usr/local
@@ -49,9 +49,7 @@ create_vdr_tar() {
 
   # copy VDR data
   mkdir -p vdr-tar
-  mkdir -p vdr-tar/storage/.fonts
   cp -a target/pass2/opt vdr-tar
-  cp -a target/pass2/storage/.fonts/* vdr-tar/storage/.fonts/
 
   # copy extra libs from pass1 to vdr-tar
   while read -r line; do
@@ -67,18 +65,25 @@ create_vdr_tar() {
   rm -f vdr-tar/opt/vdr/bin/{createcats,cxxtools-config,gdk-*,iconv,pango*,rsvg-convert,tntnet-config,update-mime-database}
   rm -Rf vdr-tar/opt/vdr/include
   rm -Rf vdr-tar/opt/vdr/lib/pkgconfig
-  rm -Rf vdr-tar/opt/vdr/share/{doc,mime,pkgconfig,tntnet}
+  rm -Rf vdr-tar/opt/vdr/vdrshare/{doc,mime,pkgconfig,tntnet}
+  rm -Rf vdr-tar/usr
+  rm -Rf vdr-tar/etc
 
-  find vdr-tar/opt/vdr/share/locale/ -not -name "vdr*" -and -not -type d -exec rm {} \;
+  find vdr-tar/opt/vdr/vdrshare/locale/ -not -name "vdr*" -and -not -type d -exec rm {} \;
   find vdr-tar -type d -empty -delete
 
   # build final archive
-  tar -czhf build-artifacts/coreelec-19-vdr.tar.gz -C vdr-tar .
+  tar -czf build-artifacts/coreelec-19-vdr.tar.gz -C vdr-tar .
   rm -Rf vdr-tar
 
   # umount everything
   umount -q target/pass1 || echo
   umount -q target/pass2 || echo
+
+  echo "======================================================="
+  echo "Warnning: This build is deprecated and will be removed!"
+  echo "Please use one of the image builds: -0 -9 -i"
+  echo "======================================================="
 }
 
 create_vdr_image() {
