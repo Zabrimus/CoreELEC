@@ -1,8 +1,8 @@
 # SPDX-License-Identifier: GPL-2.0-or-later
 
 PKG_NAME="_vdr-plugin-softhdodroid"
-PKG_VERSION="e18d28d78c19402c00c4da43c2403b444b299f5e"
-PKG_SHA256="0a0c25efd64d83a0eff93d6c29dd0563bdc02194fc716bf18b9ccbfff940af59"
+PKG_VERSION="ec731a34ff27f484fba83319832b81f58cb1f575"
+PKG_SHA256="6806199d751b1be0699046f74e11841877afccd5836b549a915e1e40898e6069"
 PKG_LICENSE="GPL"
 PKG_SITE="https://github.com/jojo61/vdr-plugin-softhdodroid"
 PKG_URL="https://github.com/jojo61/vdr-plugin-softhdodroid/archive/${PKG_VERSION}.zip"
