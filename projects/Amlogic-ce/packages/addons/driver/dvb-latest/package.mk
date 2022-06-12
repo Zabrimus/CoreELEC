@@ -72,6 +72,8 @@ make_target() {
     sed -e 's/# CONFIG_MEDIA_TUNER_TDA18250 is not set/CONFIG_MEDIA_TUNER_TDA18250=m/g' -i $PKG_BUILD/v4l/.config
   fi
 
+  sed -e 's/CONFIG_DVB_DEMUX_SECTION_LOSS_LOG=y/# CONFIG_DVB_DEMUX_SECTION_LOSS_LOG is not set/g' -i $PKG_BUILD/v4l/.config
+
   kernel_make VER=$KERNEL_VER SRCDIR=$(kernel_path)
 }
 
