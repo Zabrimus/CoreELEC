@@ -10,6 +10,10 @@ Usage: $PROGNAME [-t] [-i] [-9] [-0] [-d] [-e] [-x] [-y]
 -9  : Build images (corelec-19). Images will be created which can be written to an SD card. Contains VDR in /usr/local
 -0  : Build images (corelec-20). Images will be created which can be written to an SD card. Contains VDR in /usr/local
 
+-dvb-latest   : build dvb-latest device driver addon
+-dvb-crazycat : build dvb-crazycat device driver addon
+-dvb-all      : build dvb-latest and dvb-crazycat device driver addons
+
 -d  : Enable vdr-plugin-dynamite. Default is disabled.
 -e  : Enable vdr-plugin-easyvdr. Default is disabled.
 -z  : Enable zapcockpit. Default is disabled.
@@ -107,6 +111,19 @@ create_vdr_image() {
   VDR_PREFIX="/usr/local" BUILD_SUFFIX="${SUFFIX}" make image
 }
 
+create_dvb_addons() {
+  if [ "$dvb_all" = "1" ]; then
+      ADDONS="dvb-latest crazycat"
+  elif [ "$dvb_latest" = "1" ]; then
+      ADDONS="dvb-latest"
+  elif [ "$dvb_crazycat" = "1" ]; then
+      ADDONS="dvb-crazycat"
+  fi;
+
+  PROJECT=Amlogic-ce ARCH=arm ./scripts/create_addon $ADDONS
+}
+
+
 enable_plugin() {
   # copy the patches and enable plugin
   if [ "$1" = "dynamite" ]; then
@@ -166,6 +183,9 @@ while [[ "$#" -gt 0 ]]; do
         -0) c_vdr_image_20=1 ;;
         -x) dev_vdr_image=1 ;;
         -y) dev_vdr_tar=1 ;;
+        -dvb-latest) dvb_latest=1;;
+        -dvb-crazycat) dvb_crazycat=1;;
+        -dvb-all) dvb_all=1;;
         *) echo "Unknown parameter passed: $1";  usage; exit 1 ;;
     esac
     shift
@@ -212,6 +232,10 @@ fi
 if [ "${dev_vdr_tar}" = "1" ]; then
   create_vdr_tar "x"
 fi
+
+if [ "$dvb_latest" = "1" ] || [ "$dvb_crazycat" = "1" ] || [ "$dvb_all" = "1" ]; then
+  create_dvb_addons
+fi;
 
 disable_plugin "dynamite"
 disable_plugin "easyvdr"

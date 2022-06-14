@@ -102,6 +102,10 @@ Usage:  [-t] [-i] [-9] [-0] [-d] [-e] [-x] [-y]
 -9  : Build images (corelec-19). Images will be created which can be written to an SD card. Contains VDR in /usr/local
 -0  : Build images (corelec-20). Images will be created which can be written to an SD card. Contains VDR in /usr/local
 
+-dvb-latest   : build dvb-latest device driver addon
+-dvb-crazycat : build dvb-crazycat device driver addon
+-dvb-all      : build dvb-latest and dvb-crazycat device driver addons
+
 -d  : Enable vdr-plugin-dynamite. Default is disabled.
 -e  : Enable vdr-plugin-easyvdr. Default is disabled.
 -z  : Enable zapcockpit. Default is disabled.
