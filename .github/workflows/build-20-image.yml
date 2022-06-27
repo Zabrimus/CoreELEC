@@ -42,11 +42,6 @@ jobs:
           mv target/CoreELEC-Amlogic-ng.arm-20.0*-Generic.img.gz.sha256 image-artifacts/CoreELEC-VDR-Amlogic-ng.arm-20.0-${{ steps.current_tag.outputs.tag }}-Generic.img.gz.sha256          
           mv target/CoreELEC-Amlogic-ng.arm-20.0*.tar image-artifacts/CoreELEC-VDR-Amlogic-ng.arm-20.0-${{ steps.current_tag.outputs.tag }}.tar
 
-          ./build-local.sh -e -s -0
-          mv target/CoreELEC-Amlogic-ng.arm-20.0*-Generic.img.gz image-artifacts/CoreELEC-VDR-Amlogic-ng.arm-20.0-${{ steps.current_tag.outputs.tag }}-Generic-s.img.gz
-          mv target/CoreELEC-Amlogic-ng.arm-20.0*-Generic.img.gz.sha256 image-artifacts/CoreELEC-VDR-Amlogic-ng.arm-20.0-${{ steps.current_tag.outputs.tag }}-Generic-s.img.gz.sha256          
-          mv target/CoreELEC-Amlogic-ng.arm-20.0*.tar image-artifacts/CoreELEC-VDR-Amlogic-ng.arm-20.0-${{ steps.current_tag.outputs.tag }}-s.tar          
-
       - name: Save sources cache
         run: |
           mkdir -p ../build-cache
