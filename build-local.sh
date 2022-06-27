@@ -17,7 +17,6 @@ Usage: $PROGNAME [-t] [-i] [-9] [-0] [-d] [-e] [-x] [-y]
 -d  : Enable vdr-plugin-dynamite. Default is disabled.
 -e  : Enable vdr-plugin-easyvdr. Default is disabled.
 -z  : Enable zapcockpit. Default is disabled.
--s  : Enable softhdodoid test patch. Default is disabled.
 
 -x  : Development only: Build images but don't switch the branch.
 -y  : Development only: Build tar but don't switch the branch.
@@ -186,7 +185,6 @@ while [[ "$#" -gt 0 ]]; do
         -d) enable_dynamite=1 ;;
         -e) enable_easyvdr=1 ;;
         -z) enable_zapcockpit=1 ;;
-        -s) enable_softhdodroid_test=1 ;;
         -t) c_vdr_tar=1 ;;
         -i) c_vdr_image_matrix=1 ;;
         -9) c_vdr_image_19=1 ;;
@@ -219,11 +217,11 @@ else
   disable_plugin "zapcockpit"
 fi
 
-if [ "${enable_softhdodroid_test}" = "1" ]; then
-  enable_patch "softhdodroid" "softhdodroid-Test.patch"
-else
-  disable_patch "softhdodroid" "softhdodroid-Test.patch"
-fi
+#if [ "${enable_softhdodroid_test}" = "1" ]; then
+#  enable_patch "softhdodroid" "softhdodroid-Test.patch"
+#else
+#  disable_patch "softhdodroid" "softhdodroid-Test.patch"
+#fi
 
 if [ "${c_vdr_tar}" = "1" ]; then
   create_vdr_tar
