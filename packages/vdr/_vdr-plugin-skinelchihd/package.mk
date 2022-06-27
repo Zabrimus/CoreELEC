@@ -1,8 +1,8 @@
 # SPDX-License-Identifier: GPL-2.0-or-later
 
 PKG_NAME="_vdr-plugin-skinelchihd"
-PKG_VERSION="5c392fd727c3acbffead27cb60133165c6d95941"
-PKG_SHA256="345283e6e4a27fbc676514de7587a2c7a8e6b59f245d350d16089b6c769d29b1"
+PKG_VERSION="b71a1b9c0b705543ddf22b1c31fea32346a9d897"
+PKG_SHA256="15419f07ec0f78c66514f28a8c04da2519888b7d9299b6aeed95469e602cabb5"
 PKG_LICENSE="GPL"
 PKG_SITE="https://github.com/FireFlyVDR/vdr-plugin-skinelchihd"
 PKG_URL="https://github.com/FireFlyVDR/vdr-plugin-skinelchihd/archive/${PKG_VERSION}.zip"

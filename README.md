@@ -20,7 +20,8 @@ CoreELEC:/usr/local/bin # ./easyvdrctl.sh --all-status
  chanman            | yes     | valid   | no      | yes  | 
  channellists       | yes     | valid   | no      | yes  | 
  conflictcheckonly  | yes     | valid   | no      | yes  | 
- control            | yes     | valid   | yes     | yes  | 
+ control            | yes     | valid   | yes     | yes  |
+ dbus2vdr           | yes     | valid   | no      | yes  | 
  ddci2              | yes     | valid   | no      | yes  | 
  devstatus          | yes     | valid   | no      | yes  | 
  dummydevice        | yes     | valid   | no      | yes  | 
@@ -109,7 +110,6 @@ Usage:  [-t] [-i] [-9] [-0] [-d] [-e] [-x] [-y]
 -d  : Enable vdr-plugin-dynamite. Default is disabled.
 -e  : Enable vdr-plugin-easyvdr. Default is disabled.
 -z  : Enable zapcockpit. Default is disabled.
--s  : Enable softhdodoid test patch. Default is disabled.
 
 -x  : Development only: Build images but don't switch the branch.
 -y  : Development only: Build tar but don't switch the branch.
