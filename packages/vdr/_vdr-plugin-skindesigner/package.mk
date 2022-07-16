@@ -2,10 +2,10 @@
 
 PKG_NAME="_vdr-plugin-skindesigner"
 PKG_VERSION="1.2.18"
-PKG_SHA256="4ac259c2b2c9dadd140a22a7305be8965a9be6dfd7d9829b832ea95a667f1349"
+PKG_SHA256="e58ca15b0ddd846f1415f857cac995d154b528bab275a45a8008d874a005b35b"
 PKG_LICENSE="GPL"
-PKG_SITE="https://projects.vdr-developer.org/git/vdr-plugin-skindesigner.git/"
-PKG_URL="https://projects.vdr-developer.org/git/vdr-plugin-skindesigner.git/snapshot/vdr-plugin-skindesigner-${PKG_VERSION}.tar.gz"
+PKG_SITE="https://gitlab.com/kamel5/skindesigner"
+PKG_URL="https://gitlab.com/kamel5/skindesigner/-/archive/${PKG_VERSION}/skindesigner-${PKG_VERSION}.tar.bz2"
 PKG_DEPENDS_TARGET="toolchain _vdr cairo _librsvg _fonts"
 PKG_NEED_UNPACK="$(get_pkg_directory _vdr)"
 PKG_LONGDESC="A VDR skinning engine that displays XML based Skins"
