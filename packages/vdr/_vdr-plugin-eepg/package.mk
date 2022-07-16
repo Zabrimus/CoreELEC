@@ -2,12 +2,13 @@
 
 PKG_NAME="_vdr-plugin-eepg"
 PKG_VERSION="6be7f2ee644aa33bd6e6e038548be8a85514272e"
-PKG_SHA256="f8698d8e72c4e1239a57ba4a0b2f54020270506d5dce7298f3080fcc8d59f56f"
+PKG_SHA256="50298adb6dc0826ffc93a9f87d7dc110ffdd4bfecab94690ea77c6477cff1cc0"
 PKG_LICENSE="GPL"
-PKG_SITE="http://projects.vdr-developer.org/projects/plg-eepg"
-PKG_URL="https://github.com/vdr-projects/vdr-plugin-eepg/archive/${PKG_VERSION}.tar.gz"
+PKG_SITE="https://github.com/vdr-projects/vdr-plugin-eepg"
+PKG_URL="https://github.com/vdr-projects/vdr-plugin-eepg/archive/${PKG_VERSION}.zip"
 PKG_DEPENDS_TARGET="toolchain _vdr"
 PKG_NEED_UNPACK="$(get_pkg_directory _vdr)"
+PKG_SOURCE_DIR="vdr-plugin-eepg-${PKG_VERSION}"
 PKG_LONGDESC="This plugin parses the Extended EPG data which is send by providers on their portal channels."
 PKG_TOOLCHAIN="manual"
 

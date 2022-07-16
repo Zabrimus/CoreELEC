@@ -1,11 +1,11 @@
 # SPDX-License-Identifier: GPL-2.0-or-later
 
 PKG_NAME="_vdr-plugin-weatherforecast"
-PKG_VERSION="0.2.0"
-PKG_SHA256="c7b1740f096a576171b99bfa1c7ce2a785eed1596e0e510986c98f127cb3312d"
+PKG_VERSION="842b086b65a7116a7aa5a2142097a2b2220f4c3c"
+PKG_SHA256="9f9e8e58952655b9dda514bee993dff9ba2fb678f7aa1d71f367805c7c9d9db5"
 PKG_LICENSE="GPL"
-PKG_SITE="https://projects.vdr-developer.org/git/vdr-plugin-weatherforecast.git/"
-PKG_URL="https://projects.vdr-developer.org/git/vdr-plugin-weatherforecast.git/snapshot/vdr-plugin-weatherforecast-${PKG_VERSION}.tar.gz"
+PKG_SITE="https://github.com/vdr-projects/vdr-plugin-weatherforecast"
+PKG_URL="https://github.com/vdr-projects/vdr-plugin-weatherforecast/archive/842b086b65a7116a7aa5a2142097a2b2220f4c3c.zip"
 PKG_SOURCE_DIR="vdr-plugin-weatherforecast-${PKG_VERSION}"
 PKG_DEPENDS_TARGET="toolchain _vdr _vdr-plugin-skindesigner"
 PKG_NEED_UNPACK="$(get_pkg_directory _vdr)"
