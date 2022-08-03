@@ -18,6 +18,10 @@ PKG_BUILD_FLAGS="+pic"
 PKG_CONFIGURE_OPTS_HOST="--disable-demos --with-atomictype=pthread --disable-unittest"
 PKG_CONFIGURE_OPTS_TARGET="--enable-static --disable-shared --disable-demos --with-atomictype=pthread --disable-unittest"
 
+post_unpack() {
+  cd ${PKG_BUILD} && autoreconf -i
+}
+
 post_makeinstall_host() {
   rm -rf ${TOOLCHAIN}/bin/cxxtools-config
 }
