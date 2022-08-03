@@ -4,7 +4,8 @@
 
 PKG_NAME="cxxtools"
 PKG_VERSION="3.0"
-PKG_SHA256="07b18037fb0983f6292f5c8d53e2369e9e7a9711df2c9ad50838aacbc8c62f7c"
+#PKG_SHA256="07b18037fb0983f6292f5c8d53e2369e9e7a9711df2c9ad50838aacbc8c62f7c"
+PKG_SHA256="c48758af8c8bf993a45492fdd8acaf1109357f1c574810e353d3103277b4296b"
 PKG_LICENSE="GPL-2"
 PKG_SITE="http://www.tntnet.org/cxxtools.html"
 # PKG_URL="http://www.tntnet.org/download/${PKG_NAME}-${PKG_VERSION}.tar.gz"
