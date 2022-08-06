@@ -4,7 +4,7 @@
 
 PKG_NAME="tntnet"
 PKG_VERSION="3.0"
-PKG_SHA256="718e5519b0a403f7f766358bf66a85c008119c48189d1c2b7651fd0af9018e27"
+PKG_SHA256="bc16249f7af7c7b407ec37bb397fe1eb8b54d2410dd5208531ca58908fc19f48"
 PKG_LICENSE="GPL-2"
 PKG_SITE="https://github.com/maekitalo/tntnet"
 PKG_URL="https://github.com/maekitalo/tntnet/archive/refs/tags/V${PKG_VERSION}.tar.gz"
