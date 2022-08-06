@@ -91,6 +91,11 @@ create_vdr_tar() {
 }
 
 create_vdr_image() {
+  disable_plugin "dynamite"
+  disable_plugin "easyvdr"
+  disable_plugin "zapcockpit"
+  # disable_patch "softhdodroid" "softhdodroid-Test.patch"
+
   if [ "$1" = "Matrix" ]; then
      git checkout 19.4-Matrix-VDR
      SUFFIX="image-Matrix-VDR"
@@ -106,6 +111,30 @@ create_vdr_image() {
      echo "Unknown image \"$1\". Abort build."
      exit 1
   fi
+
+  if [ "${enable_dynamite}" = "1" ]; then
+    enable_plugin "dynamite"
+  else
+    disable_plugin "dynamite"
+  fi
+
+  if [ "${enable_easyvdr}" = "1" ]; then
+    enable_plugin "easyvdr"
+  else
+    disable_plugin "easyvdr"
+  fi
+
+  if [ "${enable_zapcockpit}" = "1" ]; then
+    enable_plugin "zapcockpit"
+  else
+    disable_plugin "zapcockpit"
+  fi
+
+  #if [ "${enable_softhdodroid_test}" = "1" ]; then
+  #  enable_patch "softhdodroid" "softhdodroid-Test.patch"
+  #else
+  #  disable_patch "softhdodroid" "softhdodroid-Test.patch"
+  #fi
 
   export VDR="yes"
   VDR_PREFIX="/usr/local" BUILD_SUFFIX="${SUFFIX}" make image
@@ -202,30 +231,6 @@ while [[ "$#" -gt 0 ]]; do
     esac
     shift
 done
-
-if [ "${enable_dynamite}" = "1" ]; then
-  enable_plugin "dynamite"
-else
-  disable_plugin "dynamite"
-fi
-
-if [ "${enable_easyvdr}" = "1" ]; then
-  enable_plugin "easyvdr"
-else
-  disable_plugin "easyvdr"
-fi
-
-if [ "${enable_zapcockpit}" = "1" ]; then
-  enable_plugin "zapcockpit"
-else
-  disable_plugin "zapcockpit"
-fi
-
-#if [ "${enable_softhdodroid_test}" = "1" ]; then
-#  enable_patch "softhdodroid" "softhdodroid-Test.patch"
-#else
-#  disable_patch "softhdodroid" "softhdodroid-Test.patch"
-#fi
 
 if [ "${c_vdr_tar}" = "1" ]; then
   create_vdr_tar
