@@ -172,6 +172,10 @@ cleanup() {
   fi
 
   rm -rf target/*
+
+  disable_plugin "easyvdr"
+  disable_plugin "dynamite"
+  disable_plugin "zapcockpit"
 }
 
 if [ "$#" = "0" ]; then
@@ -251,7 +255,7 @@ if [ "$dvb_latest" = "1" ] || [ "$dvb_crazycat" = "1" ] || [ "$dvb_all" = "1" ];
   create_dvb_addons
 fi;
 
-disable_plugin "dynamite"
 disable_plugin "easyvdr"
+disable_plugin "dynamite"
 disable_plugin "zapcockpit"
 disable_patch "softhdodroid" "softhdodroid-Test.patch"
