@@ -64,7 +64,7 @@ PKG_DEPENDS_TARGET+=" _vdr-plugin-remote"
 PKG_DEPENDS_TARGET+=" _vdr-plugin-menuorg"
 PKG_DEPENDS_TARGET+=" _vdr-plugin-dbus2vdr"
 
-PKG_DEPENDS_TARGET+=" _vdr-plugin-easyvdr"
+#PKG_DEPENDS_TARGET+=" _vdr-plugin-easyvdr"
 #PKG_DEPENDS_TARGET+=" _vdr-plugin-dynamite"
 
 # Warning: Compiled without libcdio, libcdio_paranoia, libcdda due to compile problems for the mentioned libs
