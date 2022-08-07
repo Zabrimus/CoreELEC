@@ -29,6 +29,10 @@ PKG_CONFIGURE_OPTS_TARGET="--disable-unittest \
                            --with-ssl=no \
                            --with-stressjob=no"
 
+post_unpack() {
+	cd ${PKG_BUILD} && patch -p1 < ${PKG_DIR}/patches/autoreconf.unpack_patch && autoreconf -i
+}
+
 post_configure_target() {
   libtool_remove_rpath libtool
 }

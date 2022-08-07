@@ -1,0 +1,63 @@
+diff -ru8bBw a/configure.ac b/configure.ac
+--- a/configure.ac	2020-05-07 07:34:47.000000000 +0200
++++ b/configure.ac	2022-08-07 09:06:48.322943826 +0200
+@@ -99,32 +99,16 @@
+   [
+     AS_IF([test "$enable_sdk" != "yes"],
+         [AC_MSG_ERROR([demos cannot be built without building sdk])])
+ 
+     AC_CHECK_HEADER([tntdb.h], , AC_MSG_ERROR([tntdb headers not found]))
+   ]
+ )
+ 
+-AC_ARG_WITH([md2man],
+-  AS_HELP_STRING([--with-md2man], [use go-md2man tool to generate man pages from markdown])
+-  [with_md2man=$withval])
+-
+-AS_IF(
+-  [test "$with_md2man"],
+-  AC_CHECK_PROG(MD2MAN, [go-md2man], [go-md2man])
+-  AS_IF(
+-    [test -z "$MD2MAN"],
+-    AC_MSG_ERROR([go-md2man not found])
+-  )
+-
+-)
+-
+-AM_CONDITIONAL(GENERATE_MAN, test ! -z "$with_md2man")
+-
+ #
+ # others
+ #
+ AC_CHECK_FUNCS([setenv])
+ 
+ case "${host_cpu}-${host_os}" in
+ *-aix*)
+     SHARED_LIB_FLAG=-qmkshrobj
+diff -ru8bBw a/doc/man/Makefile.am b/doc/man/Makefile.am
+--- a/doc/man/Makefile.am	2020-05-07 07:34:47.000000000 +0200
++++ b/doc/man/Makefile.am	2022-08-07 09:12:35.269638159 +0200
+@@ -1,23 +1,7 @@
+ dist_man_MANS = \
+ 	tntnet.8 \
+ 	ecppc.1 \
+ 	ecpp.7 \
+ 	tntnet-defcomp.1 \
+ 	tntnet.xml.7
+ 
+-if GENERATE_MAN
+-tntnet.8: tntnet.8.markdown
+-	$(MD2MAN) -in $< -out $@
+-
+-ecppc.1: ecppc.1.markdown
+-	$(MD2MAN) -in $< -out $@
+-
+-ecpp.7: ecpp.7.markdown
+-	$(MD2MAN) -in $< -out $@
+-
+-tntnet-defcomp.1: tntnet-defcomp.1.markdown
+-	$(MD2MAN) -in $< -out $@
+-
+-tntnet.xml.7: tntnet.xml.7.markdown
+-	$(MD2MAN) -in $< -out $@
+-endif
