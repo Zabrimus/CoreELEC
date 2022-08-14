@@ -7,10 +7,16 @@ PKG_LICENSE="GPL"
 PKG_SITE="https://github.com/jojo61/vdr-plugin-softhdodroid"
 PKG_URL="https://github.com/jojo61/vdr-plugin-softhdodroid/archive/${PKG_VERSION}.zip"
 PKG_SOURCE_DIR="vdr-plugin-softhdodroid-${PKG_VERSION}"
-PKG_DEPENDS_TARGET="toolchain glm alsa freetype ffmpeg _vdr libdrm opengl-meson"
+PKG_DEPENDS_TARGET="toolchain glm alsa freetype ffmpeg _vdr libdrm"
 PKG_NEED_UNPACK="$(get_pkg_directory _vdr)"
 PKG_LONGDESC="VDR Output Device (softhdodroid)"
 PKG_TOOLCHAIN="manual"
+
+if [ "${DISTRO}" = LibreELEC  ]; then
+	PKG_DEPENDS_TARGET+=" mesa"
+elif [ "${DISTRO}" = CoreELEC  ]; then
+	PKG_DEPENDS_TARGET+=" opengl-meson"
+fi;
 
 pre_configure_target() {
   # test if prefix is set

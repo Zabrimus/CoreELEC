@@ -16,6 +16,8 @@ PKG_CMAKE_OPTS_TARGET="-DBUILD_SHARED_LIBS=OFF \
                        -DPCRE2_BUILD_PCRE2_16=ON \
                        -DPCRE2_SUPPORT_LIBREADLINE=OFF"
 
+PKG_CMAKE_OPTS_HOST="-DPCRE2_STATIC_PIC=ON"
+
 post_makeinstall_target() {
   safe_remove ${INSTALL}/usr/bin
 }
