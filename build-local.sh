@@ -10,6 +10,9 @@ Usage: $PROGNAME [-t] [-i] [-9] [-0] [-d] [-e] [-x] [-y]
 -9  : Build images (corelec-19). Images will be created which can be written to an SD card. Contains VDR in /usr/local
 -0  : Build images (corelec-20). Images will be created which can be written to an SD card. Contains VDR in /usr/local
 
+-L9 : (highly experimental) Build images (libreelec-19). Images will be created which can be written to an SD card. Contains VDR in /usr/local
+-L0 : (highly experimental) Build images (libreelec-20). Images will be created which can be written to an SD card. Contains VDR in /usr/local
+
 -dvb-latest   : build dvb-latest device driver addon
 -dvb-crazycat : build dvb-crazycat device driver addon
 -dvb-all      : build dvb-latest and dvb-crazycat device driver addons
@@ -91,6 +94,8 @@ create_vdr_tar() {
 }
 
 create_vdr_image() {
+  MAKE_COREELEC=1
+
   disable_plugin "dynamite"
   disable_plugin "easyvdr"
   disable_plugin "zapcockpit"
@@ -105,6 +110,14 @@ create_vdr_image() {
   elif [ "$1" = "20" ]; then
      git checkout coreelec-20-VDR
      SUFFIX="image-20-VDR"
+  elif [ "$1" = "L19" ]; then
+     git checkout coreelec-19-VDR
+     SUFFIX="image-19-VDR"
+     MAKE_COREELEC=0
+  elif [ "$1" = "L20" ]; then
+     git checkout coreelec-20-VDR
+     SUFFIX="image-20-VDR"
+     MAKE_COREELEC=0
   elif [ "$1" = "x" ]; then
     SUFFIX="development"
   else
@@ -137,7 +150,12 @@ create_vdr_image() {
   #fi
 
   export VDR="yes"
-  VDR_PREFIX="/usr/local" BUILD_SUFFIX="${SUFFIX}" make image
+
+  if [ "${MAKE_COREELEC}" = "1" ]; then
+    VDR_PREFIX="/usr/local" BUILD_SUFFIX="${SUFFIX}" make image
+  else
+    VDR_PREFIX="/usr/local" BUILD_SUFFIX="${SUFFIX}" DISTRO="LibreELEC" PROJECT=Amlogic DEVICE=AMLGX ARCH=aarch64 make image
+  fi;
 }
 
 create_dvb_addons() {
@@ -222,6 +240,8 @@ while [[ "$#" -gt 0 ]]; do
         -i) c_vdr_image_matrix=1 ;;
         -9) c_vdr_image_19=1 ;;
         -0) c_vdr_image_20=1 ;;
+        -L9) c_vdr_image19_libreelec=1;;
+        -L0) c_vdr_image20_libreelec=1;;
         -x) dev_vdr_image=1 ;;
         -y) dev_vdr_tar=1 ;;
         -dvb-latest) dvb_latest=1;;
@@ -246,6 +266,14 @@ fi
 
 if [ "${c_vdr_image_20}" = "1" ]; then
   create_vdr_image "20"
+fi
+
+if [ "${c_vdr_image19_libreelec}" = "1" ]; then
+  create_vdr_image "L19"
+fi
+
+if [ "${c_vdr_image20_libreelec}" = "1" ]; then
+  create_vdr_image "L20"
 fi
 
 if [ "${dev_vdr_image}" = "1" ]; then
