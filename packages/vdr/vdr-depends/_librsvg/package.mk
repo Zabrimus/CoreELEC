@@ -8,7 +8,7 @@ PKG_SITE="https://gitlab.gnome.org/GNOME/librsvg"
 PKG_URL="${SOURCEFORGE_SRC}/libpng/librsvg-${PKG_VERSION}.tar.xz"
 PKG_URL="https://download.gnome.org/sources/librsvg/${PKG_VERSION}/librsvg-${PKG_VERSION}.0.tar.xz"
 PKG_DEPENDS_HOST=""
-PKG_DEPENDS_TARGET="toolchain cairo _rust gdk-pixbuf pango glib libjpeg-turbo libXft libpng jasper shared-mime-info tiff freetype"
+PKG_DEPENDS_TARGET="toolchain cairo rust gdk-pixbuf pango glib libjpeg-turbo libXft libpng jasper shared-mime-info tiff freetype"
 PKG_DEPENDS_CONFIG="shared-mime-info pango gdk-pixbuf pango libXft"
 PKG_LONGDESC="A library to render SVG images to Cairo surfaces."
 PKG_TOOLCHAIN="configure"
@@ -51,7 +51,7 @@ pre_configure_target() {
   autoreconf --verbose --force --install || exit 1
 
   export CPPFLAGS="${CPPFLAGS} -I${SYSROOT_PREFIX}/usr/include"
-  . "$(get_build_dir _rust)/cargo/env"
+  . "$(get_build_dir rust)/cargo/env"
 
   export PKG_CONFIG_PATH="$(get_install_dir shared-mime-info)/usr/share/pkgconfig":"$(get_install_dir pango)/usr/lib/pkgconfig":"$(get_install_dir libXft)/usr/lib/pkgconfig":${PKG_CONFIG_PATH}
 
