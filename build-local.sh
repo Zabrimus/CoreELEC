@@ -154,7 +154,7 @@ create_vdr_image() {
   if [ "${MAKE_COREELEC}" = "1" ]; then
     VDR_PREFIX="/usr/local" BUILD_SUFFIX="${SUFFIX}" make image
   else
-    VDR_PREFIX="/usr/local" BUILD_SUFFIX="${SUFFIX}" DISTRO="LibreELEC" PROJECT=Amlogic DEVICE=AMLGX ARCH=arm make image
+    VDR_PREFIX="/usr/local" BUILD_SUFFIX="${SUFFIX}" DISTRO="LibreELEC" PROJECT=Amlogic DEVICE=AMLGX ARCH=arm OS_MAJOR="11.0" make image
   fi;
 }
 
