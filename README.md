@@ -1,3 +1,16 @@
+# Important
+This repository will be replaced with the new version available at https://github.com/Zabrimus/VDRSternELEC.
+The new repository has some major advantages:
+- only one codebase for VDR
+- possibility to create LibreELEC images
+- possibility to use every existing branch/tag/revision for CoreELEC/LibreELEC
+- possibility to configure the build (cpu, arch, ...)
+
+The new repository is not yet finished, but already usable - at least for CoreELEC images.
+
+---
+
+
 # VDR
 VDR and plugins are integrated into the build system of CoreELEC to be able to start and use VDR and to be able to easily switch between VDR and KODI.
 
